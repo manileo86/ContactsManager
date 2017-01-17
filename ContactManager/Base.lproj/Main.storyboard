@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="GAM-Ww-WgU">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="it2-J6-RK0">
+            <objects>
+                <navigationController id="GAM-Ww-WgU" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="K0J-0L-vHH">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="X3Q-Jl-Lz8" kind="relationship" relationship="rootViewController" id="RRn-qN-DLz"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="P6o-uB-zzo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1166" y="38"/>
+        </scene>
+        <!--Contacts Book View Controller-->
+        <scene sceneID="IaU-4W-lBN">
+            <objects>
+                <viewController id="X3Q-Jl-Lz8" customClass="GJContactsBookViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="7mR-yN-Pdn"/>
+                        <viewControllerLayoutGuide type="bottom" id="7Fa-xZ-HTO"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="gyY-wJ-hJK">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="xma-3H-WOB"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Tpo-LB-Op2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-354" y="37"/>
+        </scene>
+        <!--Contact Details View Controller-->
+        <scene sceneID="xxm-ht-A11">
+            <objects>
+                <viewController id="kOv-Ls-AGA" customClass="GJContactDetailsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="CEP-Zd-xJg"/>
+                        <viewControllerLayoutGuide type="bottom" id="UYf-fM-jSd"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="19w-hV-vtt">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="B4n-Mi-IA0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="556" y="-175"/>
+        </scene>
+        <!--Add Contact View Controller-->
+        <scene sceneID="tzw-tZ-mh8">
+            <objects>
+                <viewController id="ZQ3-AC-zpO" customClass="GJAddContactViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="9Bv-eC-Qt8"/>
+                        <viewControllerLayoutGuide type="bottom" id="oxD-wO-njT"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="c44-Ci-bHh">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WdO-GO-c3e" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="556" y="560"/>
+        </scene>
+    </scenes>
+</document>
