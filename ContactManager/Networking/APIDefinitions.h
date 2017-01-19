@@ -58,7 +58,7 @@ static NSString * const APINotReachableErrorDescription      = @"API domain not 
 static const NSUInteger APIEmailTakenErrorCode               = 9003;
 
 /* Types */
-typedef void (^APICompletionBlock)(NSError *error, NSDictionary *data);
+typedef void (^APICompletionBlock)(NSError *error, id data);
 
 typedef void (^AFNSuccessBlock)(NSURLSessionDataTask *task, id responseObject);
 typedef void (^AFNFailureBlock)(NSURLSessionDataTask *task, NSError *error);

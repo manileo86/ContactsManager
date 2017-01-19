@@ -2,7 +2,7 @@
 //  GJContactEntity+CoreDataProperties.h
 //  ContactManager
 //
-//  Created by Manigandan Parthasarathi on 17/01/17.
+//  Created by Manigandan Parthasarathi on 18/01/17.
 //  Copyright © 2017 GJ. All rights reserved.
 //  This file was automatically generated and should not be edited.
 //
@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL isFavorite;
 @property (nullable, nonatomic, copy) NSString *lastName;
 @property (nullable, nonatomic, copy) NSString *phone;
+@property (nonatomic) int64_t contactId;
 
 @end
 

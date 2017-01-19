@@ -6,9 +6,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GJContactEntity+CoreDataClass.h"
 
 @interface GJContactDetailsViewController : UIViewController
 
+@property(nonatomic, strong) GJContactEntity *contactEntity;
 
 @end
 

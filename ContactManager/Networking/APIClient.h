@@ -6,19 +6,8 @@
 //
 
 #import <Foundation/Foundation.h>
-
 #import "APIDefinitions.h"
-
 #import "AFNetworking.h"
-
-//#define PS_BLOCK_SAFE_CALL(block, ...) block ? block(__VA_ARGS__) : nil
-
-/* Types */
-typedef void (^APICompletionBlock)(NSError *error, NSDictionary *data);
-
-typedef void (^AFNSuccessBlock)(NSURLSessionDataTask *task, id responseObject);
-typedef void (^AFNFailureBlock)(NSURLSessionDataTask *task, NSError *error);
-
 
 @interface APIClient : NSObject {
     
