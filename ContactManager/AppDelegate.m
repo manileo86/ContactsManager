@@ -6,6 +6,7 @@
 //
 
 #import "AppDelegate.h"
+#import "UIColor+HexString.h"
 
 @interface AppDelegate ()
 
@@ -16,6 +17,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithHexString:@"1EAFD8"]];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:
+                                                           [UIColor whiteColor], NSForegroundColorAttributeName,
+                                                           [UIFont fontWithName:@"Avenir-Heavy" size:16.0f], NSFontAttributeName,
+                                                           nil]];
+    
     return YES;
 }
 

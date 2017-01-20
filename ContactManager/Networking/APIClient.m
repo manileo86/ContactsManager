@@ -342,6 +342,36 @@ static APIClient *defaultClient = nil;
          {
              if(error)
              {
+                 NSError *errorInfo = [NSError errorWithDomain:@"GJ" code:1 userInfo:@{NSLocalizedDescriptionKey:@"Contact Details Fetch Failed"}];
+                 completionBlock(errorInfo, nil);
+             }
+             else
+             {
+                 completionBlock(nil, data);
+             }
+         }
+         else if(error)
+         {
+             NSError *errorInfo = [NSError errorWithDomain:@"GJ" code:1 userInfo:@{NSLocalizedDescriptionKey:@"Contact Details Fetch Failed"}];
+             completionBlock(errorInfo, nil);
+         }
+         else
+         {
+             completionBlock(nil, nil);
+         }
+     }];
+}
+
+- (void)getContactDetailsForId:(NSString*)contactId withCompletionBlock:(APICompletionBlock)completionBlock
+{
+    NSString *path = [NSString stringWithFormat:APIClientGetContactDetailsURLPath, contactId];
+    
+    [self runGETRequestWithEndpoint:path parameters:nil completion:
+     ^(NSError *error, NSDictionary *data) {
+         if(data)
+         {
+             if(error)
+             {
                  NSError *errorInfo = [NSError errorWithDomain:@"GJ" code:1 userInfo:@{NSLocalizedDescriptionKey:@"Contacts Fetch Failed"}];
                  completionBlock(errorInfo, nil);
              }
@@ -361,6 +391,5 @@ static APIClient *defaultClient = nil;
          }
      }];
 }
-
 
 @end

@@ -14,6 +14,7 @@ static NSString * const APIUrlPath                         = @"https://gojek-con
 /* Authenticate */
 
 static NSString * const APIClientGetContactsURLPath                    = @"contacts.json";
+static NSString * const APIClientGetContactDetailsURLPath               = @"contacts/%@.json";
 
 /* Request headers */
 static NSString * const APIContentTypeHeader                         = @"application/json; charset=utf-8";

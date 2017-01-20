@@ -7,6 +7,7 @@
 
 #import "GJContactDetailsViewController.h"
 #import "UIImageView+Network.h"
+#import "GJContactsSyncManager.h"
 
 @interface GJContactDetailsViewController ()
 
@@ -29,6 +30,14 @@
     _nameLabel.text = [NSString stringWithFormat:@"%@ %@", _contactEntity.firstName, _contactEntity.lastName];
     _phoneLabel.text = _contactEntity.phone;
     _emailLabel.text = _contactEntity.email;
+    
+    [[GJContactsSyncManager defaultManager] getContactDetailsForId:[NSString stringWithFormat:@"%lld",_contactEntity.contactId] withCompletionBlock:^{
+        [_avatarView loadImageFromURL:[NSURL URLWithString:_contactEntity.imageUrl] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
+        
+        _nameLabel.text = [NSString stringWithFormat:@"%@ %@", _contactEntity.firstName, _contactEntity.lastName];
+        _phoneLabel.text = _contactEntity.phone;
+        _emailLabel.text = _contactEntity.email;
+    }];
 }
 
 
