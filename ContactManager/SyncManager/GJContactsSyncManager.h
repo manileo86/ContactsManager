@@ -12,6 +12,7 @@ static NSString * const GJContactsFetchDidEndNotification = @"GJContactsFetchDid
 static NSString * const GJContactsFetchDidFailNotification = @"GJContactsFetchDidFailNotification";
 
 typedef void (^ContactDetailsFetchCompletionBlock)();
+typedef void (^ContactCreateCompletionBlock)(NSError *error, NSDictionary *data);
 
 @interface GJContactsSyncManager : NSObject
 
@@ -20,5 +21,7 @@ typedef void (^ContactDetailsFetchCompletionBlock)();
 
 - (void) fetchContacts;
 - (void) getContactDetailsForId:(NSString*)contactId withCompletionBlock:(ContactDetailsFetchCompletionBlock)completionBlock;
+- (void) postContactDetails:(NSDictionary*)contactInfo withCompletionBlock:(ContactCreateCompletionBlock)completionBlock;
+
 
 @end

@@ -7,6 +7,7 @@
 
 #import "GJContactsBookViewController.h"
 #import "GJContactDetailsViewController.h"
+#import "GJAddContactViewController.h"
 #import <CoreData/CoreData.h>
 #import "APIClient.h"
 #import "GJContactTableViewCell.h"
@@ -18,6 +19,7 @@
 
 @property (strong, nonatomic) NSFetchedResultsController *myContactsFRC;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIButton *addContactButton;
 
 @end
 
@@ -32,6 +34,7 @@
     self.navigationController.navigationBarHidden = NO;
     self.title = @"Contact Book";
     [self loadContacts];
+    [self applyShadowToAddContactButton];
 }
 
 - (void)loadContacts
@@ -45,17 +48,17 @@
     [self.tableView reloadData];
 }
 
-//- (NSArray *)sectionIndexTitlesForTableView: (UITableView *) tableView
-//{
-//    return [self.myContactsFRC sectionIndexTitles];
-//}
+- (NSArray *)sectionIndexTitlesForTableView: (UITableView *) tableView
+{
+    return [self.myContactsFRC sectionIndexTitles];
+}
 
 #pragma mark - UITableViewDataSource
 
-//- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
-//{
-//    return [self.myContactsFRC sectionForSectionIndexTitle:title atIndex:index];
-//}
+- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
+{
+    return [self.myContactsFRC sectionForSectionIndexTitle:title atIndex:index];
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -112,8 +115,27 @@
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     GJContactDetailsViewController *detailsVC = [storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([GJContactDetailsViewController class])];
-    detailsVC.contactEntity = [self.myContactsFRC objectAtIndexPath:indexPath];
+    detailsVC.contactId = ((GJContactEntity*)[self.myContactsFRC objectAtIndexPath:indexPath]).contactId;
+    //detailsVC.contactEntity = [self.myContactsFRC objectAtIndexPath:indexPath];
     [self.navigationController pushViewController:detailsVC animated:YES];
+}
+
+#pragma mark - Add Contact
+
+- (void) applyShadowToAddContactButton
+{
+    _addContactButton.layer.masksToBounds = NO;
+    _addContactButton.layer.shadowColor = [UIColor grayColor].CGColor;
+    _addContactButton.layer.shadowOpacity = 0.8;
+    _addContactButton.layer.shadowRadius = 10.0f;
+    _addContactButton.layer.shadowOffset = CGSizeMake(2.0f, 2.0f);
+}
+
+-(IBAction)addContactButtonPressed:(id)sender
+{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    GJAddContactViewController *addVC = [storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([GJAddContactViewController class])];
+    [self.navigationController pushViewController:addVC animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

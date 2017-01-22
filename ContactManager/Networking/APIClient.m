@@ -271,7 +271,7 @@ static APIClient *defaultClient = nil;
     //if (![self apiDomainReachable:completionBlock]) return;
     
     NSString *requestPath = [self requestPathWithEndpointPath:endpointPath];
-    //[self.jsonSessionManager POST:requestPath parameters:parameters progress:nil success:[self wrapSuccessBlock:completionBlock] failure:[self wrapFailureBlock:completionBlock]];
+    [self.jsonSessionManager POST:requestPath parameters:parameters progress:nil success:[self wrapSuccessBlock:completionBlock] failure:[self wrapFailureBlock:completionBlock]];
     
 #ifdef PS_NETWORK_LOGGING
     NSLog(@"APIClient: POST request: %@\n%@", requestPath, parameters);
@@ -280,10 +280,10 @@ static APIClient *defaultClient = nil;
 
 - (void)runPOSTRequestWithEndpoint:(NSString *)endpointPath parameters:(id)parameters bodyConstructingBlock:(void (^)(id <AFMultipartFormData> formData))body completion:(APICompletionBlock)completionBlock
 {
-    if (![self apiDomainReachable:completionBlock]) return;
+    //if (![self apiDomainReachable:completionBlock]) return;
     
     NSString *requestPath = [self requestPathWithEndpointPath:endpointPath];
-    //[self.jsonSessionManager POST:requestPath parameters:parameters constructingBodyWithBlock:body progress:nil success:[self wrapSuccessBlock:completionBlock] failure:[self wrapFailureBlock:completionBlock]];
+    [self.jsonSessionManager POST:requestPath parameters:parameters constructingBodyWithBlock:body progress:nil success:[self wrapSuccessBlock:completionBlock] failure:[self wrapFailureBlock:completionBlock]];
     
 #ifdef PS_NETWORK_LOGGING
     NSLog(@"APIClient: POST request: %@\n%@", requestPath, parameters);
@@ -336,7 +336,7 @@ static APIClient *defaultClient = nil;
 
 - (void)getContactsWithCompletionBlock:(APICompletionBlock)completionBlock
 {
-    [self runGETRequestWithEndpoint:APIClientGetContactsURLPath parameters:nil completion:
+    [self runGETRequestWithEndpoint:APIClientContactsURLPath parameters:nil completion:
      ^(NSError *error, NSDictionary *data) {
          if(data)
          {
@@ -372,7 +372,7 @@ static APIClient *defaultClient = nil;
          {
              if(error)
              {
-                 NSError *errorInfo = [NSError errorWithDomain:@"GJ" code:1 userInfo:@{NSLocalizedDescriptionKey:@"Contacts Fetch Failed"}];
+                 NSError *errorInfo = [NSError errorWithDomain:@"GJ" code:1 userInfo:@{NSLocalizedDescriptionKey:@"Contact Details Fetch Failed"}];
                  completionBlock(errorInfo, nil);
              }
              else
@@ -382,7 +382,36 @@ static APIClient *defaultClient = nil;
          }
          else if(error)
          {
-             NSError *errorInfo = [NSError errorWithDomain:@"GJ" code:1 userInfo:@{NSLocalizedDescriptionKey:@"Contacts Fetch Failed"}];
+             NSError *errorInfo = [NSError errorWithDomain:@"GJ" code:1 userInfo:@{NSLocalizedDescriptionKey:@"Contact Details Fetch Failed"}];
+             completionBlock(errorInfo, nil);
+         }
+         else
+         {
+             completionBlock(nil, nil);
+         }
+     }];
+}
+
+- (void)postContact:(NSDictionary*)contactInfo WithCompletionBlock:(APICompletionBlock)completionBlock
+{
+    [self runPOSTRequestWithEndpoint:APIClientContactsURLPath parameters:contactInfo completion:
+     ^(NSError *error, NSDictionary *data) {
+         if(data)
+         {
+             NSArray *errors = (NSArray*)[data objectForKey:@"errors"];
+             if(errors)
+             {
+                 NSError *errorInfo = [NSError errorWithDomain:@"GJ" code:1 userInfo:@{NSLocalizedDescriptionKey:[NSString stringWithFormat:@"Contact Create Failed : %@", [errors componentsJoinedByString:@","]]}];
+                 completionBlock(errorInfo, nil);
+             }
+             else
+             {
+                 completionBlock(nil, data);
+             }
+         }
+         else if(error)
+         {
+             NSError *errorInfo = [NSError errorWithDomain:@"GJ" code:1 userInfo:@{NSLocalizedDescriptionKey:@"Contact Create Failed"}];
              completionBlock(errorInfo, nil);
          }
          else

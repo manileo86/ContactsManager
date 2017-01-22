@@ -74,8 +74,12 @@ static NSDateFormatter * _dateFormatter = nil;
                     //contactEntity.isFavorite = NO;
                 }
                 
-                NSError	*error	= nil;
-                [context save:(&error)];
+                [(AppDelegate *)[UIApplication sharedApplication].delegate saveContext];
+                
+//                NSError *error = nil;
+//                if (![context save:&error]) {
+//                    NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
+//                }
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"contactsFetched"];
@@ -113,17 +117,6 @@ static NSDateFormatter * _dateFormatter = nil;
                                                                                        error:&requestError];
                                               
                                               GJContactEntity *contactEntity = result[0];
-//                                              if (requestError != nil || result.count == 0) {
-//                                                  
-//                                                  return  nil;
-//                                                  
-//                                              }else {
-//                                                  
-//                                                  return   result[0];
-//                                              }
-    
-                                              
-//                                              GJContactEntity *contactEntity = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([GJContactEntity class]) inManagedObjectContext:context];
                                               contactEntity.contactId = [[contactInfo objectForKey:@"id"] integerValue];
                                               contactEntity.firstName = [contactInfo objectForKey:@"first_name"];
                                               contactEntity.lastName = [contactInfo objectForKey:@"last_name"];
@@ -131,16 +124,54 @@ static NSDateFormatter * _dateFormatter = nil;
                                               contactEntity.email = [contactInfo objectForKey:@"email"];
                                               contactEntity.phone = [contactInfo objectForKey:@"phone_number"];
                                               //contactEntity.isFavorite = [[contactInfo objectForKey:@"favorite"] boolValue];
-                                              
-                                              NSError	*error	= nil;
-                                              [context save:(&error)];
+
+                                              //[(AppDelegate *)[UIApplication sharedApplication].delegate saveContext];
                                               
                                               dispatch_async(dispatch_get_main_queue(), ^{
+                                                  
+                                              NSError *error = nil;
+                                              if (![context save:&error]) {
+                                                  NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
+                                              }
+                                              
                                                   completionBlock();                                                  
                                               });
                                           }];
                                       }
                                   }];
+}
+
+-(void)postContactDetails:(NSDictionary *)contactInfo withCompletionBlock:(ContactCreateCompletionBlock)completionBlock
+{
+    [[APIClient defaultClient] postContact:contactInfo WithCompletionBlock:^(NSError *error, id data) {
+               
+        if(!error)
+        {
+            [self.persistentContainer performBackgroundTask:^(NSManagedObjectContext * context) {
+                
+                NSDictionary *contactInfo = (NSDictionary*)data;
+                GJContactEntity *contactEntity = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([GJContactEntity class]) inManagedObjectContext:context];
+                contactEntity.contactId = [[contactInfo objectForKey:@"id"] integerValue];
+                contactEntity.firstName = [contactInfo objectForKey:@"first_name"];
+                contactEntity.lastName = [contactInfo objectForKey:@"last_name"];
+                contactEntity.imageUrl = [contactInfo objectForKey:@"profile_pic"];
+                contactEntity.email = [contactInfo objectForKey:@""];
+                contactEntity.phone = [contactInfo objectForKey:@""];
+                contactEntity.isFavorite = NO;
+                
+                [(AppDelegate *)[UIApplication sharedApplication].delegate saveContext];
+                
+                //                NSError *error = nil;
+                //                if (![context save:&error]) {
+                //                    NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
+                //                }
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                });
+            }];
+        }
+    }];
 }
 
 @end

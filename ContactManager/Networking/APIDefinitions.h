@@ -13,14 +13,14 @@ static NSString * const APIUrlPath                         = @"https://gojek-con
 
 /* Authenticate */
 
-static NSString * const APIClientGetContactsURLPath                    = @"contacts.json";
-static NSString * const APIClientGetContactDetailsURLPath               = @"contacts/%@.json";
+static NSString * const APIClientContactsURLPath                    = @"contacts.json";
+static NSString * const APIClientGetContactDetailsURLPath           = @"contacts/%@.json";
 
 /* Request headers */
-static NSString * const APIContentTypeHeader                         = @"application/json; charset=utf-8";
-static NSString * const APIContentTypeMultipartHeader                = @"multipart/form-data";
-static NSString * const APIAcceptHeader                              = @"*/*";
-static NSString * const APIAcceptEncodingHeader                      = @"gzip,deflate";
+static NSString * const APIContentTypeHeader                        = @"application/json; charset=utf-8";
+static NSString * const APIContentTypeMultipartHeader               = @"multipart/form-data";
+static NSString * const APIAcceptHeader                             = @"*/*";
+static NSString * const APIAcceptEncodingHeader                     = @"gzip,deflate";
 
 /**
  *  Requests parameters
