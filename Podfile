@@ -8,6 +8,7 @@ target 'ContactManager' do
   # Pods for ContactManager
   
   pod 'AFNetworking'
+  pod 'SDWebImage', '~>3.8'
 
   target 'ContactManagerTests' do
     inherit! :search_paths

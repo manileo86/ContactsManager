@@ -27,7 +27,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.dismissKeyboardButton.hidden = YES;
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    _firstnameField.layer.sublayerTransform = CATransform3DMakeTranslation(10, 0, 0);
+    _lastnameField.layer.sublayerTransform = CATransform3DMakeTranslation(10, 0, 0);
+    _phoneField.layer.sublayerTransform = CATransform3DMakeTranslation(10, 0, 0);
+    _emailField.layer.sublayerTransform = CATransform3DMakeTranslation(10, 0, 0);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -66,12 +70,19 @@
 
 - (IBAction)savePressed:(id)sender
 {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZ"];
+    NSString *dateFromString = [dateFormatter stringFromDate:[NSDate date]];
+    
     NSDictionary *contactInfo = @{
         @"first_name": _firstnameField.text,
         @"last_name": _lastnameField.text,
         @"email": _emailField.text,
         @"phone_number": _phoneField.text,
-        @"profile_pic": @""};
+        //@"profile_pic": @"",
+        @"created_at":dateFromString,
+        @"updated_at":dateFromString
+        };
     [[GJContactsSyncManager defaultManager] postContactDetails:contactInfo withCompletionBlock:^(NSError *error, NSDictionary *data) {        
     }];
     

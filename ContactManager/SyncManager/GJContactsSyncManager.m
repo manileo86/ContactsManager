@@ -10,6 +10,8 @@
 #import "AppDelegate.h"
 #import "GJContactEntity+CoreDataClass.h"
 
+#define NULL_TO_NIL(obj) ({ __typeof__ (obj) __obj = (obj); __obj == [NSNull null] ? nil : obj; })
+
 @implementation GJContactsSyncManager
 
 static NSDateFormatter * _dateFormatter = nil;
@@ -65,21 +67,13 @@ static NSDateFormatter * _dateFormatter = nil;
                 for(NSDictionary *contactInfo in contacts)
                 {
                     GJContactEntity *contactEntity = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([GJContactEntity class]) inManagedObjectContext:context];
-                    contactEntity.contactId = [[contactInfo objectForKey:@"id"] integerValue];
-                    contactEntity.firstName = [contactInfo objectForKey:@"first_name"];
-                    contactEntity.lastName = [contactInfo objectForKey:@"last_name"];
-                    contactEntity.imageUrl = [contactInfo objectForKey:@"profile_pic"];
-                    //contactEntity.email = [contactInfo objectForKey:@""];
-                    //contactEntity.phone = [contactInfo objectForKey:@""];
-                    //contactEntity.isFavorite = NO;
+                    [self fillContact:contactEntity fromDictionary:contactInfo];
                 }
                 
-                [(AppDelegate *)[UIApplication sharedApplication].delegate saveContext];
-                
-//                NSError *error = nil;
-//                if (![context save:&error]) {
-//                    NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
-//                }
+                NSError *error = nil;
+                if (![context save:&error]) {
+                    NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
+                }
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"contactsFetched"];
@@ -117,24 +111,16 @@ static NSDateFormatter * _dateFormatter = nil;
                                                                                        error:&requestError];
                                               
                                               GJContactEntity *contactEntity = result[0];
-                                              contactEntity.contactId = [[contactInfo objectForKey:@"id"] integerValue];
-                                              contactEntity.firstName = [contactInfo objectForKey:@"first_name"];
-                                              contactEntity.lastName = [contactInfo objectForKey:@"last_name"];
-                                              contactEntity.imageUrl = [contactInfo objectForKey:@"profile_pic"];
-                                              contactEntity.email = [contactInfo objectForKey:@"email"];
-                                              contactEntity.phone = [contactInfo objectForKey:@"phone_number"];
-                                              //contactEntity.isFavorite = [[contactInfo objectForKey:@"favorite"] boolValue];
-
-                                              //[(AppDelegate *)[UIApplication sharedApplication].delegate saveContext];
+                                              [self fillContact:contactEntity fromDictionary:contactInfo];
+                                              contactEntity.isInfoFetched = YES;
                                               
-                                              dispatch_async(dispatch_get_main_queue(), ^{
-                                                  
                                               NSError *error = nil;
                                               if (![context save:&error]) {
                                                   NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
                                               }
                                               
-                                                  completionBlock();                                                  
+                                              dispatch_async(dispatch_get_main_queue(), ^{
+                                                  completionBlock();
                                               });
                                           }];
                                       }
@@ -151,20 +137,13 @@ static NSDateFormatter * _dateFormatter = nil;
                 
                 NSDictionary *contactInfo = (NSDictionary*)data;
                 GJContactEntity *contactEntity = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([GJContactEntity class]) inManagedObjectContext:context];
-                contactEntity.contactId = [[contactInfo objectForKey:@"id"] integerValue];
-                contactEntity.firstName = [contactInfo objectForKey:@"first_name"];
-                contactEntity.lastName = [contactInfo objectForKey:@"last_name"];
-                contactEntity.imageUrl = [contactInfo objectForKey:@"profile_pic"];
-                contactEntity.email = [contactInfo objectForKey:@""];
-                contactEntity.phone = [contactInfo objectForKey:@""];
-                contactEntity.isFavorite = NO;
+                [self fillContact:contactEntity fromDictionary:contactInfo];
+                contactEntity.isInfoFetched = YES;
                 
-                [(AppDelegate *)[UIApplication sharedApplication].delegate saveContext];
-                
-                //                NSError *error = nil;
-                //                if (![context save:&error]) {
-                //                    NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
-                //                }
+                NSError *error = nil;
+                if (![context save:&error]) {
+                    NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
+                }
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     
@@ -172,6 +151,86 @@ static NSDateFormatter * _dateFormatter = nil;
             }];
         }
     }];
+}
+
+- (void) updateContactDetails:(NSDictionary*)contactInfo withCompletionBlock:(ContactUpdateCompletionBlock)completionBlock
+{
+    [[APIClient defaultClient] updateContact:contactInfo WithCompletionBlock:^(NSError *error, id data) {
+        
+        if(!error)
+        {
+            [self.persistentContainer performBackgroundTask:^(NSManagedObjectContext * context) {
+                
+                NSDictionary *contactInfo = (NSDictionary*)data;
+                GJContactEntity *contactEntity = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([GJContactEntity class]) inManagedObjectContext:context];
+                [self fillContact:contactEntity fromDictionary:contactInfo];                
+                
+                NSError *error = nil;
+                if (![context save:&error]) {
+                    NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
+                }
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                });
+            }];
+        }
+    }];
+}
+
+- (void)fillContact:(GJContactEntity*)contactEntity fromDictionary:(NSDictionary*)contactInfo
+{
+    contactEntity.contactId = [NULL_TO_NIL([contactInfo objectForKey:@"id"]) integerValue];
+    contactEntity.firstName = NULL_TO_NIL([contactInfo objectForKey:@"first_name"]);
+    contactEntity.lastName = NULL_TO_NIL([contactInfo objectForKey:@"last_name"]);
+    contactEntity.imageUrl = NULL_TO_NIL([contactInfo objectForKey:@"profile_pic"]);
+    contactEntity.email = NULL_TO_NIL([contactInfo objectForKey:@"email"]);
+    contactEntity.phone = NULL_TO_NIL([contactInfo objectForKey:@"phone_number"]);
+    contactEntity.isFavorite = NULL_TO_NIL([contactInfo objectForKey:@"favorite"])?YES:NO;
+    
+    NSString *createdAt = NULL_TO_NIL([contactInfo objectForKey:@"created_at"]);
+    NSDataDetector *detector = nil;
+    if(createdAt)
+    {
+        detector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeDate error:nil];
+        [detector enumerateMatchesInString:createdAt
+                                   options:kNilOptions
+                                     range:NSMakeRange(0, [createdAt length])
+                                usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop)
+         {
+             contactEntity.createdAt = result.date;
+         }];
+    }
+    
+    NSString *updatedAt = NULL_TO_NIL([contactInfo objectForKey:@"updated_at"]);
+    if(updatedAt)
+    {
+        if(!detector)
+        {
+            detector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeDate error:nil];
+        }
+        [detector enumerateMatchesInString:updatedAt
+                                   options:kNilOptions
+                                     range:NSMakeRange(0, [createdAt length])
+                                usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop)
+         {
+             contactEntity.updatedAt = result.date;
+         }];
+    }
+
+    
+//    NSString *dateString = @"2016-05-29T10:10:10.995Z";
+//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//    // this is imporant - we set our input date format to match our input string
+//    // if format doesn't match you'll get nil from your string, so be careful
+//    [dateFormatter setDateFormat:@"yyyy-MM-ddTHH:"];
+//    NSDate *dateFromString = [[NSDate alloc] init];
+//    // voila!
+//    dateFromString = [dateFormatter dateFromString:dateString];
+
+    
+//    contactEntity.createdAt = NULL_TO_NIL([contactInfo objectForKey:@"created_at"]);
+//    contactEntity.updatedAt = NULL_TO_NIL([contactInfo objectForKey:@"updated_at"]);
 }
 
 @end

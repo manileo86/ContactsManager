@@ -8,8 +8,8 @@
 
 #import "APIClient.h"
 
-#define PS_SAFE_BLOCK(block, ...) block ? block(__VA_ARGS__) : nil
-#define PS_WEAK_SELF __weak __typeof(self)
+#define GJ_SAFE_BLOCK(block, ...) block ? block(__VA_ARGS__) : nil
+#define GJ_WEAK_SELF __weak __typeof(self)
 
 #define SYSTEM_VERSION_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
 #define SYSTEM_VERSION_GREATER_THAN(v)              ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedDescending)
@@ -17,11 +17,10 @@
 #define SYSTEM_VERSION_LESS_THAN(v)                 ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
 #define SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v)     ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedDescending)
 
-
 /**
  *  Comment this macro to turn off API requests logging
  */
-//#define PS_NETWORK_LOGGING 1
+//#define GJ_NETWORK_LOGGING 1
 
 static APIClient *defaultClient = nil;
 
@@ -114,8 +113,8 @@ static APIClient *defaultClient = nil;
     self.jsonSessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
     NSMutableIndexSet *statusCodes = [[NSMutableIndexSet alloc] init];
     [statusCodes addIndex:200];  // Generic OK status
-    [statusCodes addIndex:201];  // 'Created' status, for example for sign up request for new user
-    [statusCodes addIndex:422];  // RoR sends this by default on any logic errors, for example when trying to sign up already existent user
+    [statusCodes addIndex:422];  // Validation Errors
+    [statusCodes addIndex:500];  // Internal Server Error
     [self.jsonSessionManager.responseSerializer setAcceptableStatusCodes:statusCodes];
     
     AFHTTPRequestSerializer *requestSerializer = [AFJSONRequestSerializer serializer];
@@ -137,8 +136,6 @@ static APIClient *defaultClient = nil;
         [self.jsonSessionManager.requestSerializer setValue:APIContentTypeHeader forHTTPHeaderField:@"Content-Type"];
         [self.jsonSessionManager.requestSerializer setValue:APIAcceptHeader forHTTPHeaderField:@"Accept"];
         [self.jsonSessionManager.requestSerializer setValue:APIAcceptEncodingHeader forHTTPHeaderField:@"Accept-Encoding"];
-        //[self.jsonSessionManager.requestSerializer setValue:[self.settings userToken] forHTTPHeaderField:@"Access-Token"];
-        //[self.jsonSessionManager.requestSerializer setValue:[self.settings getUUID] forHTTPHeaderField:@"device-id"];
     }
     
     // Key-value serialized request headers
@@ -146,8 +143,6 @@ static APIClient *defaultClient = nil;
         [self.keyedSessionManager.requestSerializer setValue:APIContentTypeMultipartHeader forHTTPHeaderField:@"Content-Type"];
         [self.keyedSessionManager.requestSerializer setValue:APIAcceptHeader forHTTPHeaderField:@"Accept"];
         [self.keyedSessionManager.requestSerializer setValue:APIAcceptEncodingHeader forHTTPHeaderField:@"Accept-Encoding"];
-        //[self.keyedSessionManager.requestSerializer setValue:[self.settings userToken] forHTTPHeaderField:@"Access-Token"];
-        //[self.keyedSessionManager.requestSerializer setValue:[self.settings getUUID] forHTTPHeaderField:@"device-id"];
     }
 }
 
@@ -228,7 +223,7 @@ static APIClient *defaultClient = nil;
     AFNSuccessBlock successBlock = ^(NSURLSessionDataTask *task, id responseObject) {
         NSError *requestError = nil;
         [self populateError:&requestError withTask:task response:responseObject underlyingError:nil];
-        PS_SAFE_BLOCK(completionBlock, requestError, responseObject);
+        GJ_SAFE_BLOCK(completionBlock, requestError, responseObject);
     };
     
     return successBlock;
@@ -239,7 +234,7 @@ static APIClient *defaultClient = nil;
     AFNFailureBlock failureBlock = ^(NSURLSessionDataTask *task, NSError *error) {
         NSError *requestError = nil;
         [self populateError:&requestError withTask:task response:nil underlyingError:error];
-        PS_SAFE_BLOCK(completionBlock, requestError, nil);
+        GJ_SAFE_BLOCK(completionBlock, requestError, nil);
     };
     
     return failureBlock;
@@ -273,7 +268,7 @@ static APIClient *defaultClient = nil;
     NSString *requestPath = [self requestPathWithEndpointPath:endpointPath];
     [self.jsonSessionManager POST:requestPath parameters:parameters progress:nil success:[self wrapSuccessBlock:completionBlock] failure:[self wrapFailureBlock:completionBlock]];
     
-#ifdef PS_NETWORK_LOGGING
+#ifdef GJ_NETWORK_LOGGING
     NSLog(@"APIClient: POST request: %@\n%@", requestPath, parameters);
 #endif
 }
@@ -285,7 +280,7 @@ static APIClient *defaultClient = nil;
     NSString *requestPath = [self requestPathWithEndpointPath:endpointPath];
     [self.jsonSessionManager POST:requestPath parameters:parameters constructingBodyWithBlock:body progress:nil success:[self wrapSuccessBlock:completionBlock] failure:[self wrapFailureBlock:completionBlock]];
     
-#ifdef PS_NETWORK_LOGGING
+#ifdef GJ_NETWORK_LOGGING
     NSLog(@"APIClient: POST request: %@\n%@", requestPath, parameters);
 #endif
 }
@@ -298,12 +293,12 @@ static APIClient *defaultClient = nil;
     NSMutableURLRequest *request = [self.keyedSessionManager.requestSerializer multipartFormRequestWithMethod:@"PUT" URLString:requestPath parameters:parameters constructingBodyWithBlock:body error:nil];
     
     NSURLSessionDataTask *dataTask = [self.keyedSessionManager dataTaskWithRequest:request completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
-        PS_SAFE_BLOCK(completionBlock, error, responseObject);
+        GJ_SAFE_BLOCK(completionBlock, error, responseObject);
     }];
     
     [dataTask resume];
     
-#ifdef PS_NETWORK_LOGGING
+#ifdef GJ_NETWORK_LOGGING
     NSLog(@"APIClient: PUT request: %@\n%@", requestPath, parameters);
 #endif
 }
@@ -315,21 +310,19 @@ static APIClient *defaultClient = nil;
     NSString *requestPath = [self requestPathWithEndpointPath:endpointPath];
     [self.jsonSessionManager GET:requestPath parameters:parameters progress:nil success:[self wrapSuccessBlock:completionBlock] failure:[self wrapFailureBlock:completionBlock]];
     
-#ifdef PS_NETWORK_LOGGING
+#ifdef GJ_NETWORK_LOGGING
     NSLog(@"APIClient: GET request: %@\n%@", requestPath, parameters);
 #endif
 }
 
 - (void)runPUTRequestWithEndpoint:(NSString *)endpointPath parameters:(id)parameters completion:(APICompletionBlock)completionBlock
 {
-    if (![self apiDomainReachable:completionBlock]) return;
+    //if (![self apiDomainReachable:completionBlock]) return;
     
     NSString *requestPath = [self requestPathWithEndpointPath:endpointPath];
     [self.jsonSessionManager PUT:requestPath parameters:parameters success:[self wrapSuccessBlock:completionBlock] failure:[self wrapFailureBlock:completionBlock]];
     
-#ifdef PS_NETWORK_LOGGING
     NSLog(@"APIClient: PUT request: %@\n%@", requestPath, parameters);
-#endif
 }
 
 #pragma mark - API Calls
@@ -340,10 +333,18 @@ static APIClient *defaultClient = nil;
      ^(NSError *error, NSDictionary *data) {
          if(data)
          {
-             if(error)
+             if([data isKindOfClass:[NSDictionary class]])
              {
-                 NSError *errorInfo = [NSError errorWithDomain:@"GJ" code:1 userInfo:@{NSLocalizedDescriptionKey:@"Contact Details Fetch Failed"}];
-                 completionBlock(errorInfo, nil);
+                 NSArray *errors = (NSArray*)[data objectForKey:@"errors"];
+                 if(errors)
+                 {
+                     NSError *errorInfo = [NSError errorWithDomain:@"GJ" code:1 userInfo:@{NSLocalizedDescriptionKey:[NSString stringWithFormat:@"Contacts Fetch Failed : %@", [errors componentsJoinedByString:@","]]}];
+                     completionBlock(errorInfo, nil);
+                 }
+                 else
+                 {
+                     completionBlock(nil, data);
+                 }
              }
              else
              {
@@ -352,7 +353,7 @@ static APIClient *defaultClient = nil;
          }
          else if(error)
          {
-             NSError *errorInfo = [NSError errorWithDomain:@"GJ" code:1 userInfo:@{NSLocalizedDescriptionKey:@"Contact Details Fetch Failed"}];
+             NSError *errorInfo = [NSError errorWithDomain:@"GJ" code:1 userInfo:@{NSLocalizedDescriptionKey:@"Contacts Fetch Failed"}];
              completionBlock(errorInfo, nil);
          }
          else
@@ -370,9 +371,10 @@ static APIClient *defaultClient = nil;
      ^(NSError *error, NSDictionary *data) {
          if(data)
          {
-             if(error)
+             NSArray *errors = (NSArray*)[data objectForKey:@"errors"];
+             if(errors)
              {
-                 NSError *errorInfo = [NSError errorWithDomain:@"GJ" code:1 userInfo:@{NSLocalizedDescriptionKey:@"Contact Details Fetch Failed"}];
+                 NSError *errorInfo = [NSError errorWithDomain:@"GJ" code:1 userInfo:@{NSLocalizedDescriptionKey:[NSString stringWithFormat:@"Contact Create Failed : %@", [errors componentsJoinedByString:@","]]}];
                  completionBlock(errorInfo, nil);
              }
              else
@@ -412,6 +414,41 @@ static APIClient *defaultClient = nil;
          else if(error)
          {
              NSError *errorInfo = [NSError errorWithDomain:@"GJ" code:1 userInfo:@{NSLocalizedDescriptionKey:@"Contact Create Failed"}];
+             completionBlock(errorInfo, nil);
+         }
+         else
+         {
+             completionBlock(nil, nil);
+         }
+     }];
+}
+
+- (void)updateContact:(NSDictionary*)contactInfo WithCompletionBlock:(APICompletionBlock)completionBlock
+{
+    NSString *path = [NSString stringWithFormat:APIClientGetContactDetailsURLPath, [contactInfo objectForKey:@"id"]];
+    
+    [self runPUTRequestWithEndpoint:path parameters:contactInfo completion:
+     ^(NSError *error, NSDictionary *data) {
+         
+         NSString* errResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
+         NSLog(@"%@",errResponse);
+         
+         if(data)
+         {
+             NSArray *errors = (NSArray*)[data objectForKey:@"errors"];
+             if(errors)
+             {
+                 NSError *errorInfo = [NSError errorWithDomain:@"GJ" code:1 userInfo:@{NSLocalizedDescriptionKey:[NSString stringWithFormat:@"Contact Update Failed : %@", [errors componentsJoinedByString:@","]]}];
+                 completionBlock(errorInfo, nil);
+             }
+             else
+             {
+                 completionBlock(nil, data);
+             }
+         }
+         else if(error)
+         {
+             NSError *errorInfo = [NSError errorWithDomain:@"GJ" code:1 userInfo:@{NSLocalizedDescriptionKey:@"Contact Update Failed"}];
              completionBlock(errorInfo, nil);
          }
          else

@@ -31,4 +31,6 @@
 
 - (void)postContact:(NSDictionary*)contactInfo WithCompletionBlock:(APICompletionBlock)completionBlock;
 
+- (void)updateContact:(NSDictionary*)contactInfo WithCompletionBlock:(APICompletionBlock)completionBlock;
+
 @end

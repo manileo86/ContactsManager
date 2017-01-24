@@ -17,7 +17,7 @@
 
 @interface GJContactsBookViewController ()<NSFetchedResultsControllerDelegate, UITableViewDataSource, UITableViewDelegate, GJContactTableViewCellDelegate>
 
-@property (strong, nonatomic) NSFetchedResultsController *myContactsFRC;
+@property (strong, nonatomic) NSFetchedResultsController *contactsFRC;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *addContactButton;
 
@@ -31,6 +31,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(refreshData:)
+                                                 name:NSManagedObjectContextDidSaveNotification
+                                               object:nil];
+    
     self.navigationController.navigationBarHidden = NO;
     self.title = @"Contact Book";
     [self loadContacts];
@@ -42,40 +48,32 @@
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([GJContactEntity class])];
     NSSortDescriptor *sd = [NSSortDescriptor sortDescriptorWithKey:@"firstName" ascending:YES];
     fetchRequest.sortDescriptors = @[sd];
-    self.myContactsFRC = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[self persistentContainer].viewContext sectionNameKeyPath:@"firstName.stringGroupByFirstInitial" cacheName:nil];
-    self.myContactsFRC.delegate = self;
-    [self.myContactsFRC performFetch:nil];
+    self.contactsFRC = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[self persistentContainer].viewContext sectionNameKeyPath:@"firstName.stringGroupByFirstInitial" cacheName:nil];
+    self.contactsFRC.delegate = self;
+    [self.contactsFRC performFetch:nil];
     [self.tableView reloadData];
 }
 
-- (NSArray *)sectionIndexTitlesForTableView: (UITableView *) tableView
-{
-    return [self.myContactsFRC sectionIndexTitles];
-}
+//- (NSArray *)sectionIndexTitlesForTableView: (UITableView *) tableView
+//{
+//    return [self.contactsFRC sectionIndexTitles];
+//}
 
 #pragma mark - UITableViewDataSource
 
-- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
-{
-    return [self.myContactsFRC sectionForSectionIndexTitle:title atIndex:index];
-}
+//- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
+//{
+//    return [self.contactsFRC sectionForSectionIndexTitle:title atIndex:index];
+//}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [self.myContactsFRC sections].count;
+    return [self.contactsFRC sections].count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return 44.0f;
-    if(section == 0)
-    {
-        return 44.0f;
-    }
-    else
-    {
-        return 44.0f;
-    }
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -83,14 +81,14 @@
     UILabel *header = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320.0f, 44.0f)];
     header.backgroundColor = [UIColor colorWithHexString:@"BBE7F3"];
     header.font = [UIFont boldSystemFontOfSize:15.0f];
-    id <NSFetchedResultsSectionInfo> sectionInfo = [self.myContactsFRC sections][section];
+    id <NSFetchedResultsSectionInfo> sectionInfo = [self.contactsFRC sections][section];
     header.text = [NSString stringWithFormat:@"    %@",sectionInfo.name];
     return header;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    id <NSFetchedResultsSectionInfo> sectionInfo = [self.myContactsFRC sections][section];
+    id <NSFetchedResultsSectionInfo> sectionInfo = [self.contactsFRC sections][section];
     return [sectionInfo numberOfObjects];
 }
 
@@ -103,7 +101,7 @@
 {
     GJContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[GJContactTableViewCell reuseIdentifier]];
     cell.delegate = self;
-    [cell reloadCellWithContactEntity:[self.myContactsFRC objectAtIndexPath:indexPath]];
+    [cell reloadCellWithContactEntity:[self.contactsFRC objectAtIndexPath:indexPath]];
     return cell;
 }
 
@@ -115,9 +113,24 @@
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     GJContactDetailsViewController *detailsVC = [storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([GJContactDetailsViewController class])];
-    detailsVC.contactId = ((GJContactEntity*)[self.myContactsFRC objectAtIndexPath:indexPath]).contactId;
-    //detailsVC.contactEntity = [self.myContactsFRC objectAtIndexPath:indexPath];
+    detailsVC.contactId = ((GJContactEntity*)[self.contactsFRC objectAtIndexPath:indexPath]).contactId;    
     [self.navigationController pushViewController:detailsVC animated:YES];
+}
+
+#pragma mark - NSFetchedResultsControllerDelegate
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+{
+    [self refreshUI];
+}
+
+- (void)refreshUI
+{
+    [self.tableView reloadData];
+}
+
+- (void) refreshData:(NSNotification *)notif {
+    [[[self contactsFRC] managedObjectContext] mergeChangesFromContextDidSaveNotification:notif];
 }
 
 #pragma mark - Add Contact

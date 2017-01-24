@@ -10,8 +10,7 @@
 
 @interface GJContactDetailsViewController : UIViewController
 
-@property(nonatomic, assign) int64_t *contactId;
-@property(nonatomic, strong) GJContactEntity *contactEntity;
+@property(nonatomic, assign) int64_t contactId;
 
 @end
 

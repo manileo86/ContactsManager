@@ -35,6 +35,25 @@
 - (void)testExample {
     // Use recording to get started writing UI tests.
     // Use XCTAssert and related functions to verify your tests produce the correct results.
+    
+    XCUIApplication *app = [[XCUIApplication alloc] init];
+    [[[app.tables childrenMatchingType:XCUIElementTypeCell] elementBoundByIndex:36].staticTexts[@"3452 43"] tap];
+    
+    XCUIElement *detailNavigationBar = app.navigationBars[@"Detail"];
+    [detailNavigationBar.buttons[@"Detail"] tap];
+    [detailNavigationBar.buttons[@"Contact Book"] tap];
+    [app.buttons[@"+"] tap];
+    
+    XCUIElement *firstNameTextField = app.textFields[@"  First name"];
+    [firstNameTextField tap];
+    [firstNameTextField typeText:@"test"];
+    
+    XCUIElement *keyboardDismissButton = app.buttons[@"keyboard dismiss"];
+    [keyboardDismissButton tap];
+    [app.textFields[@"  Last name"] tap];
+    [keyboardDismissButton tap];
+    [app.navigationBars[@"Contact Book"].buttons[@"Contact Book"] tap];
+    
 }
 
 @end

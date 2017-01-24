@@ -7,6 +7,7 @@
 
 #import "GJContactTableViewCell.h"
 #import "UIImageView+Network.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface GJContactTableViewCell ()
 
@@ -21,7 +22,10 @@
 - (void)reloadCellWithContactEntity:(GJContactEntity *)contactEntity
 {
     _nameLabel.text = [NSString stringWithFormat:@"%@ %@", contactEntity.firstName, contactEntity.lastName];
-    [_avatarView loadImageFromURL:[NSURL URLWithString:contactEntity.imageUrl] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
+//    [_avatarView loadImageFromURL:[NSURL URLWithString:contactEntity.imageUrl] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
+    
+    [_avatarView sd_setImageWithURL:[NSURL URLWithString:contactEntity.imageUrl]
+                 placeholderImage:[UIImage imageNamed:@"default_avatar"]];
 }
 
 + (NSString *)reuseIdentifier
