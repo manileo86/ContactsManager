@@ -21,7 +21,6 @@
 		3C9814A31E2E778B00A1993C /* ContactManager.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3C9814A01E2E778B00A1993C /* ContactManager.xcdatamodeld */; };
 		3C9FA8BF1E2E88810022C102 /* APIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C9FA8BD1E2E88810022C102 /* APIClient.m */; };
 		3C9FA8C41E2F74F60022C102 /* GJContactTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C9FA8C31E2F74F60022C102 /* GJContactTableViewCell.m */; };
-		3C9FA8C81E2FB2090022C102 /* UIImageView+Network.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C9FA8C71E2FB2090022C102 /* UIImageView+Network.m */; };
 		3C9FA8D11E3103E10022C102 /* NSString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C9FA8D01E3103E10022C102 /* NSString+Additions.m */; };
 		3C9FA8D51E3242B50022C102 /* GJContactsSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C9FA8D41E3242B50022C102 /* GJContactsSyncManager.m */; };
 		3C9FA8D81E3245440022C102 /* GJContactsFetchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C9FA8D71E3245440022C102 /* GJContactsFetchViewController.m */; };
@@ -80,8 +79,6 @@
 		3C9FA8BE1E2E88810022C102 /* APIDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIDefinitions.h; sourceTree = "<group>"; };
 		3C9FA8C21E2F74F60022C102 /* GJContactTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJContactTableViewCell.h; sourceTree = "<group>"; };
 		3C9FA8C31E2F74F60022C102 /* GJContactTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJContactTableViewCell.m; sourceTree = "<group>"; };
-		3C9FA8C61E2FB2090022C102 /* UIImageView+Network.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Network.h"; sourceTree = "<group>"; };
-		3C9FA8C71E2FB2090022C102 /* UIImageView+Network.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Network.m"; sourceTree = "<group>"; };
 		3C9FA8CF1E3103E10022C102 /* NSString+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Additions.h"; sourceTree = "<group>"; };
 		3C9FA8D01E3103E10022C102 /* NSString+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Additions.m"; sourceTree = "<group>"; };
 		3C9FA8D31E3242B50022C102 /* GJContactsSyncManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJContactsSyncManager.h; sourceTree = "<group>"; };
@@ -276,8 +273,6 @@
 			children = (
 				3C9FA8D91E324F4C0022C102 /* UIColor+HexString.h */,
 				3C9FA8DA1E324F4C0022C102 /* UIColor+HexString.m */,
-				3C9FA8C61E2FB2090022C102 /* UIImageView+Network.h */,
-				3C9FA8C71E2FB2090022C102 /* UIImageView+Network.m */,
 				3C9FA8CF1E3103E10022C102 /* NSString+Additions.h */,
 				3C9FA8D01E3103E10022C102 /* NSString+Additions.m */,
 				3CD4B6FD1E37E5EB0040BC6A /* UIButton+Position.h */,
@@ -615,7 +610,6 @@
 				3CD4B6FF1E37E5EB0040BC6A /* UIButton+Position.m in Sources */,
 				3C9FA8BF1E2E88810022C102 /* APIClient.m in Sources */,
 				3C9FA8C41E2F74F60022C102 /* GJContactTableViewCell.m in Sources */,
-				3C9FA8C81E2FB2090022C102 /* UIImageView+Network.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
