@@ -17,15 +17,15 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSFetchRequest<GJContactEntity *> *)fetchRequest;
 
 @property (nonatomic) int64_t contactId;
+@property (nullable, nonatomic, copy) NSDate *createdAt;
 @property (nullable, nonatomic, copy) NSString *email;
 @property (nullable, nonatomic, copy) NSString *firstName;
 @property (nullable, nonatomic, copy) NSString *imageUrl;
 @property (nonatomic) BOOL isFavorite;
+@property (nonatomic) BOOL isInfoFetched;
 @property (nullable, nonatomic, copy) NSString *lastName;
 @property (nullable, nonatomic, copy) NSString *phone;
-@property (nullable, nonatomic, copy) NSDate *createdAt;
 @property (nullable, nonatomic, copy) NSDate *updatedAt;
-@property (nonatomic) BOOL isInfoFetched;
 
 @end
 

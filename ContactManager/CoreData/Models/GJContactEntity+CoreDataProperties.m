@@ -16,14 +16,14 @@
 }
 
 @dynamic contactId;
+@dynamic createdAt;
 @dynamic email;
 @dynamic firstName;
 @dynamic imageUrl;
 @dynamic isFavorite;
+@dynamic isInfoFetched;
 @dynamic lastName;
 @dynamic phone;
-@dynamic createdAt;
 @dynamic updatedAt;
-@dynamic isInfoFetched;
 
 @end

@@ -66,7 +66,7 @@
 - (void)loadContacts
 {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([GJContactEntity class])];
-    NSSortDescriptor *sd = [NSSortDescriptor sortDescriptorWithKey:@"firstName" ascending:YES];
+    NSSortDescriptor *sd = [NSSortDescriptor sortDescriptorWithKey:@"firstName" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
     fetchRequest.sortDescriptors = @[sd];
     self.contactsFRC = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[self persistentContainer].viewContext sectionNameKeyPath:@"firstName.stringGroupByFirstInitial" cacheName:nil];
     self.contactsFRC.delegate = self;
@@ -125,7 +125,7 @@
     header.backgroundColor = [UIColor colorWithHexString:@"BBE7F3"];
     header.font = [UIFont boldSystemFontOfSize:15.0f];
     id <NSFetchedResultsSectionInfo> sectionInfo = [self.contactsFRC sections][section];
-    header.text = [NSString stringWithFormat:@"    %@",sectionInfo.name];
+    header.text = [NSString stringWithFormat:@"    %@",[sectionInfo.name uppercaseString]];
     return header;
 }
 

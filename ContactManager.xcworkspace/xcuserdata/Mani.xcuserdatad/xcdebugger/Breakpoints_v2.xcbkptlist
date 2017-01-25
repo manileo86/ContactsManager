@@ -116,7 +116,7 @@
                   moduleName = "ContactManager"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Mani/ContactsManager/ContactManager/SyncManager/GJContactsSyncManager.m"
-                  timestampString = "507047450.128046"
+                  timestampString = "507062930.368468"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "221"
@@ -131,7 +131,7 @@
                   moduleName = "ContactManager"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Mani/ContactsManager/ContactManager/SyncManager/GJContactsSyncManager.m"
-                  timestampString = "507047450.129115"
+                  timestampString = "507062930.369508"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "221"
@@ -250,22 +250,6 @@
             startingLineNumber = "223"
             endingLineNumber = "223"
             landmarkName = "-postContactDetails:withCompletionBlock:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ContactManager/ViewControllers/GJContactsBookViewController.m"
-            timestampString = "507046261.096037"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "167"
-            endingLineNumber = "167"
-            landmarkName = "-controllerDidChangeContent:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

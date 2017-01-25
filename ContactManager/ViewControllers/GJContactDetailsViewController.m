@@ -128,9 +128,6 @@
                                   };
     [[GJContactsSyncManager defaultManager] updateContactDetails:contactInfo withCompletionBlock:^(NSError *error, NSDictionary *data) {
     }];
-    
-    [self.navigationController popViewControllerAnimated:YES];
-    
 }
 
 - (IBAction)phoneButtonPressed:(id)sender
