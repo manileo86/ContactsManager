@@ -13,6 +13,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (weak, nonatomic) IBOutlet UIButton *retryButton;
 
 @end
 
@@ -34,6 +35,8 @@
                                                  name:GJContactsFetchDidBeginNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEndContactsFetch)
                                                      name:GJContactsFetchDidEndNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didFailContactsFetch:)
+                                                 name:GJContactsFetchDidFailNotification object:nil];
 }
 
 - (void)didBeginContactsFetch
@@ -53,6 +56,21 @@
     GJContactsBookViewController *bookVC = [storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([GJContactsBookViewController class])];
     
     [self.navigationController setViewControllers:[NSArray arrayWithObject:bookVC] animated:YES];
+}
+
+- (void)didFailContactsFetch:(NSNotification*)notification
+{
+    self.statusLabel.text = notification.object[@"error"];// @"Contacts Fetching Failed";
+    [self.activityIndicator stopAnimating];
+    [self.activityIndicator setHidden:YES];
+    
+    self.retryButton.hidden = NO;
+}
+
+- (IBAction)retryPressed:(id)sender
+{
+    self.retryButton.hidden = YES;    
+    [[GJContactsSyncManager defaultManager] fetchContacts];
 }
 
 - (void)didReceiveMemoryWarning {

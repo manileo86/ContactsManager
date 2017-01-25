@@ -84,11 +84,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ContactManager/ViewControllers/GJContactsBookViewController.m"
-            timestampString = "507024420.694615"
+            timestampString = "507046261.096037"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
             landmarkName = "-viewDidLoad"
             landmarkType = "7">
          </BreakpointContent>
@@ -100,11 +100,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ContactManager/SyncManager/GJContactsSyncManager.m"
-            timestampString = "507031747.904679"
+            timestampString = "507046760.232301"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "177"
-            endingLineNumber = "177"
+            startingLineNumber = "220"
+            endingLineNumber = "220"
             landmarkName = "-postContactDetails:withCompletionBlock:"
             landmarkType = "7">
             <Locations>
@@ -116,11 +116,11 @@
                   moduleName = "ContactManager"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Mani/ContactsManager/ContactManager/SyncManager/GJContactsSyncManager.m"
-                  timestampString = "507032133.076314"
+                  timestampString = "507047450.128046"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "178"
-                  endingLineNumber = "178"
+                  startingLineNumber = "221"
+                  endingLineNumber = "221"
                   offsetFromSymbolStart = "87">
                </Location>
                <Location
@@ -131,11 +131,11 @@
                   moduleName = "ContactManager"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Mani/ContactsManager/ContactManager/SyncManager/GJContactsSyncManager.m"
-                  timestampString = "507032133.077417"
+                  timestampString = "507047450.129115"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "178"
-                  endingLineNumber = "178"
+                  startingLineNumber = "221"
+                  endingLineNumber = "221"
                   offsetFromSymbolStart = "19">
                </Location>
             </Locations>
@@ -148,11 +148,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ContactManager/Networking/APIClient.m"
-            timestampString = "507031747.904679"
+            timestampString = "507047418.2925"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "482"
-            endingLineNumber = "482"
+            startingLineNumber = "479"
+            endingLineNumber = "479"
             landmarkName = "-uploadImage:WithCompletionBlock:"
             landmarkType = "7">
          </BreakpointContent>
@@ -164,11 +164,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ContactManager/Networking/APIClient.m"
-            timestampString = "507031747.904679"
+            timestampString = "507047418.2925"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "477"
-            endingLineNumber = "477"
+            startingLineNumber = "474"
+            endingLineNumber = "474"
             landmarkName = "-uploadImage:WithCompletionBlock:"
             landmarkType = "7">
          </BreakpointContent>
@@ -196,74 +196,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ContactManager/Networking/APIClient.m"
-            timestampString = "507031747.904679"
+            timestampString = "507047418.2925"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "413"
-            endingLineNumber = "413"
-            landmarkName = "-postContact:WithCompletionBlock:"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__45-[APIClient postContact:WithCompletionBlock:]_block_invoke"
-                  moduleName = "ContactManager"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Mani/ContactsManager/ContactManager/Networking/APIClient.m"
-                  timestampString = "507032133.086738"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "435"
-                  endingLineNumber = "435"
-                  offsetFromSymbolStart = "126">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__copy_helper_block_.229"
-                  moduleName = "ContactManager"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Mani/ContactsManager/ContactManager/Networking/APIClient.m"
-                  timestampString = "507032133.088319"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "435"
-                  endingLineNumber = "435"
-                  offsetFromSymbolStart = "42">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__destroy_helper_block_.230"
-                  moduleName = "ContactManager"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Mani/ContactsManager/ContactManager/Networking/APIClient.m"
-                  timestampString = "507032133.089757"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "435"
-                  endingLineNumber = "435"
-                  offsetFromSymbolStart = "29">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ContactManager/Networking/APIClient.m"
-            timestampString = "507029516.945869"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "408"
-            endingLineNumber = "408"
+            startingLineNumber = "406"
+            endingLineNumber = "406"
             landmarkName = "-postContact:WithCompletionBlock:"
             landmarkType = "7">
          </BreakpointContent>
@@ -275,11 +212,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ContactManager/SyncManager/GJContactsSyncManager.m"
-            timestampString = "507031747.904679"
+            timestampString = "507046760.232301"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "251"
-            endingLineNumber = "251"
+            startingLineNumber = "294"
+            endingLineNumber = "294"
             landmarkName = "-uploadImageData:withCompletionBlock:"
             landmarkType = "7">
          </BreakpointContent>
@@ -291,11 +228,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ContactManager/SyncManager/GJContactsSyncManager.m"
-            timestampString = "507031747.904679"
+            timestampString = "507046760.232301"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "176"
-            endingLineNumber = "176"
+            startingLineNumber = "219"
+            endingLineNumber = "219"
             landmarkName = "-postContactDetails:withCompletionBlock:"
             landmarkType = "7">
          </BreakpointContent>
@@ -307,11 +244,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ContactManager/SyncManager/GJContactsSyncManager.m"
-            timestampString = "507031779.186982"
+            timestampString = "507046760.232301"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "180"
-            endingLineNumber = "180"
+            startingLineNumber = "223"
+            endingLineNumber = "223"
             landmarkName = "-postContactDetails:withCompletionBlock:"
             landmarkType = "7">
          </BreakpointContent>
@@ -323,12 +260,60 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ContactManager/ViewControllers/GJContactsBookViewController.m"
-            timestampString = "507031919.964002"
+            timestampString = "507046261.096037"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "164"
-            endingLineNumber = "164"
+            startingLineNumber = "167"
+            endingLineNumber = "167"
             landmarkName = "-controllerDidChangeContent:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ContactManager/ViewControllers/GJContactsFetchViewController.m"
+            timestampString = "507046825.552495"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "63"
+            endingLineNumber = "63"
+            landmarkName = "-didFailContactsFetch:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ContactManager/SyncManager/GJContactsSyncManager.m"
+            timestampString = "507047333.25208"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "98"
+            endingLineNumber = "98"
+            landmarkName = "-syncContacts"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ContactManager/Networking/APIClient.m"
+            timestampString = "507047347.979441"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "343"
+            endingLineNumber = "343"
+            landmarkName = "-getContactsWithCompletionBlock:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

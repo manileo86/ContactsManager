@@ -362,8 +362,7 @@ static APIClient *defaultClient = nil;
          }
          else if(error)
          {
-             NSError *errorInfo = [NSError errorWithDomain:@"GJ" code:1 userInfo:@{NSLocalizedDescriptionKey:@"Contacts Fetch Failed"}];
-             completionBlock(errorInfo, nil);
+             completionBlock(error, nil);
          }
          else
          {
@@ -393,8 +392,7 @@ static APIClient *defaultClient = nil;
          }
          else if(error)
          {
-             NSError *errorInfo = [NSError errorWithDomain:@"GJ" code:1 userInfo:@{NSLocalizedDescriptionKey:@"Contact Details Fetch Failed"}];
-             completionBlock(errorInfo, nil);
+             completionBlock(error, nil);
          }
          else
          {
@@ -460,8 +458,7 @@ static APIClient *defaultClient = nil;
          }
          else if(error)
          {
-             NSError *errorInfo = [NSError errorWithDomain:@"GJ" code:1 userInfo:@{NSLocalizedDescriptionKey:@"Contact Update Failed"}];
-             completionBlock(errorInfo, nil);
+             completionBlock(error, nil);
          }
          else
          {
@@ -485,8 +482,7 @@ static APIClient *defaultClient = nil;
         }
         else if(error)
         {
-            NSError *errorInfo = [NSError errorWithDomain:@"GJ" code:1 userInfo:@{NSLocalizedDescriptionKey:@"Image upload failed"}];
-            completionBlock(errorInfo, nil);
+            completionBlock(error, nil);
         }
         else
         {

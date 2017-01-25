@@ -97,7 +97,7 @@ static NSDateFormatter * _dateFormatter = nil;
         
         if(error)
         {
-            [[NSNotificationCenter defaultCenter] postNotificationName:GJContactsFetchDidFailNotification object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:GJContactsFetchDidFailNotification object:@{@"error":error.localizedDescription}];
         }
         else
         {
@@ -122,6 +122,49 @@ static NSDateFormatter * _dateFormatter = nil;
             }];
         }
     }];
+}
+
+- (void) getContactDetailsForId:(NSString*)contactId withCompletionBlock:(GJCompletionBlock)completionBlock
+{
+    [[APIClient defaultClient] getContactDetailsForId:contactId
+                                  withCompletionBlock:^(NSError *error, id data) {
+                                      if(error)
+                                      {
+                                          [[NSNotificationCenter defaultCenter] postNotificationName:GJContactsFetchDidFailNotification object:nil];
+                                      }
+                                      else
+                                      {
+                                          [self.persistentContainer performBackgroundTask:^(NSManagedObjectContext * context) {
+                                              
+                                              NSDictionary *contactInfo = (NSDictionary*)data;
+                                              
+                                              NSPredicate *predicate = [NSPredicate predicateWithFormat:@"contactId == %@", contactId];
+                                              NSEntityDescription *entity = [NSEntityDescription entityForName:NSStringFromClass([GJContactEntity class])
+                                                                                        inManagedObjectContext:context];
+                                              NSFetchRequest *request = [[NSFetchRequest alloc] init];
+                                              request.entity = entity;
+                                              request.predicate = predicate;
+                                              request.fetchLimit = 1;
+                                              
+                                              NSError *requestError = nil;
+                                              NSArray *result = [context executeFetchRequest:request
+                                                                                       error:&requestError];
+                                              
+                                              GJContactEntity *contactEntity = result[0];
+                                              [self fillContact:contactEntity fromDictionary:contactInfo];
+                                              contactEntity.isInfoFetched = YES;
+                                              
+                                              NSError *error = nil;
+                                              if (![context save:&error]) {
+                                                  NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
+                                              }
+                                              
+                                              dispatch_async(dispatch_get_main_queue(), ^{
+                                                  completionBlock();
+                                              });
+                                          }];
+                                      }
+                                  }];
 }
 
 - (void)createContactFromInfo:(NSDictionary*)contactInfo removeContactUpload:(GJContactToUpload*)contactToUpload  withCompletionBlock:(GJCompletionBlock)completionBlock;

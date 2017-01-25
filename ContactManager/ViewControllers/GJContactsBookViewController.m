@@ -23,6 +23,7 @@
 @property (strong, nonatomic) NSFetchedResultsController *contactToUploadFRC;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *addContactButton;
+@property (weak, nonatomic) IBOutlet UIView *noContactView;
 @property (weak, nonatomic) IBOutlet GJContactUploadHeaderView *headerView;
 
 @end
@@ -71,6 +72,8 @@
     self.contactsFRC.delegate = self;
     [self.contactsFRC performFetch:nil];
     [self.tableView reloadData];
+    
+    _tableView.hidden = (self.contactsFRC.fetchedObjects.count==0);
 }
 
 - (void)loadContactsToUpload
@@ -167,14 +170,12 @@
     {
         GJContactToUpload *contactToUpload = [self.contactToUploadFRC.fetchedObjects firstObject];
         if(!contactToUpload)
-        {
-            [self.headerView loadViewWithContactToUpload:nil];
+        {            
             self.tableView.tableHeaderView = nil;
         }
         else
         {
             self.tableView.tableHeaderView = self.headerView;
-            [self.headerView loadViewWithContactToUpload:contactToUpload];
         }
     }
 }
