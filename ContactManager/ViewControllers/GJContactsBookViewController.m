@@ -14,12 +14,16 @@
 #import "AppDelegate.h"
 #import "NSString+Additions.h"
 #import "UIColor+HexString.h"
+#import "GJContactToUpload+CoreDataClass.h"
+#import "GJContactUploadHeaderView.h"
 
 @interface GJContactsBookViewController ()<NSFetchedResultsControllerDelegate, UITableViewDataSource, UITableViewDelegate, GJContactTableViewCellDelegate>
 
 @property (strong, nonatomic) NSFetchedResultsController *contactsFRC;
+@property (strong, nonatomic) NSFetchedResultsController *contactToUploadFRC;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *addContactButton;
+@property (weak, nonatomic) IBOutlet GJContactUploadHeaderView *headerView;
 
 @end
 
@@ -43,6 +47,21 @@
     [self applyShadowToAddContactButton];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self loadContactsToUpload];
+}
+
+- (void)viewDidLayoutSubviews{
+    [super viewDidLayoutSubviews];
+    CGRect expectedFrame = CGRectMake(0.0,0.0,self.tableView.bounds.size.width, [GJContactUploadHeaderView viewHeight]);
+    if (!CGRectEqualToRect(self.headerView.frame, expectedFrame)) {
+        self.headerView.frame = expectedFrame;
+        self.tableView.tableHeaderView = self.headerView;
+    }
+}
+
 - (void)loadContacts
 {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([GJContactEntity class])];
@@ -52,6 +71,25 @@
     self.contactsFRC.delegate = self;
     [self.contactsFRC performFetch:nil];
     [self.tableView reloadData];
+}
+
+- (void)loadContactsToUpload
+{
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([GJContactToUpload class])];
+    fetchRequest.sortDescriptors = @[];
+    self.contactToUploadFRC = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[self persistentContainer].viewContext sectionNameKeyPath:nil cacheName:nil];
+    self.contactToUploadFRC.delegate = self;
+    [self.contactToUploadFRC performFetch:nil];
+    
+    GJContactToUpload *contactToUpload = [self.contactToUploadFRC.fetchedObjects firstObject];
+    if(contactToUpload)
+    {
+        self.tableView.tableHeaderView = nil;
+    }
+    else
+    {
+        self.tableView.tableHeaderView = self.headerView;
+    }
 }
 
 //- (NSArray *)sectionIndexTitlesForTableView: (UITableView *) tableView

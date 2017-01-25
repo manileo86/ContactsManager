@@ -41,9 +41,71 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="yxs-wr-gAi">
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <view key="tableHeaderView" contentMode="scaleToFill" id="3jF-mK-jMP" customClass="GJContactUploadHeaderView">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="75"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="fMj-uv-s9f">
+                                            <rect key="frame" x="20" y="17.5" width="40" height="40"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="40" id="LVS-Fh-AZa"/>
+                                                <constraint firstAttribute="height" constant="40" id="aA2-PW-36C"/>
+                                            </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                    <integer key="value" value="20"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                            </userDefinedRuntimeAttributes>
+                                        </imageView>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Firstname Lastname" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BoD-f4-2LX">
+                                            <rect key="frame" x="75" y="17.5" width="220" height="20"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="20" id="KKU-6U-qmp"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="16"/>
+                                            <color key="textColor" red="0.086693026130000003" green="0.083239622410000005" blue="0.1060726345" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SFB-3W-TBM" userLabel="Progress Image View">
+                                            <rect key="frame" x="60" y="37.5" width="150" height="20"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="150" id="49W-cW-4SF"/>
+                                                <constraint firstAttribute="height" constant="20" id="esk-PS-oSO"/>
+                                            </constraints>
+                                        </imageView>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="alN-tg-QFF">
+                                            <rect key="frame" x="303" y="0.0" width="72" height="75"/>
+                                            <state key="normal" image="retry"/>
+                                            <connections>
+                                                <action selector="retryPressed:" destination="3jF-mK-jMP" eventType="touchUpInside" id="4JJ-xe-3Lj"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="alN-tg-QFF" secondAttribute="bottom" id="4mz-yA-2xD"/>
+                                        <constraint firstAttribute="trailing" secondItem="alN-tg-QFF" secondAttribute="trailing" id="BIW-CR-lK4"/>
+                                        <constraint firstItem="BoD-f4-2LX" firstAttribute="centerY" secondItem="fMj-uv-s9f" secondAttribute="centerY" constant="-10" id="J7V-7O-nma"/>
+                                        <constraint firstItem="alN-tg-QFF" firstAttribute="leading" secondItem="BoD-f4-2LX" secondAttribute="trailing" constant="8" id="JeA-ph-6IO"/>
+                                        <constraint firstItem="BoD-f4-2LX" firstAttribute="leading" secondItem="fMj-uv-s9f" secondAttribute="trailing" constant="15" id="Krg-h5-gSL"/>
+                                        <constraint firstItem="SFB-3W-TBM" firstAttribute="centerY" secondItem="fMj-uv-s9f" secondAttribute="centerY" constant="10" id="Pu3-qe-vAC"/>
+                                        <constraint firstAttribute="trailing" secondItem="BoD-f4-2LX" secondAttribute="trailing" constant="80" id="QbY-2g-kp9"/>
+                                        <constraint firstItem="fMj-uv-s9f" firstAttribute="leading" secondItem="3jF-mK-jMP" secondAttribute="leading" constant="20" id="S6c-JZ-maM"/>
+                                        <constraint firstItem="SFB-3W-TBM" firstAttribute="leading" secondItem="fMj-uv-s9f" secondAttribute="trailing" id="djK-dU-PS6"/>
+                                        <constraint firstItem="alN-tg-QFF" firstAttribute="top" secondItem="3jF-mK-jMP" secondAttribute="top" id="rud-H9-2FK"/>
+                                        <constraint firstItem="fMj-uv-s9f" firstAttribute="centerY" secondItem="3jF-mK-jMP" secondAttribute="centerY" id="wAc-Ev-msb"/>
+                                    </constraints>
+                                    <connections>
+                                        <outlet property="avatarView" destination="fMj-uv-s9f" id="NaK-gI-Wct"/>
+                                        <outlet property="contactNameLabel" destination="BoD-f4-2LX" id="S8q-NP-vYY"/>
+                                        <outlet property="progressImageView" destination="SFB-3W-TBM" id="miV-Ah-EeN"/>
+                                        <outlet property="retryButton" destination="alN-tg-QFF" id="ptY-ao-7d8"/>
+                                    </connections>
+                                </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="GJContactTableViewCell" rowHeight="50" id="4mE-98-Eyt" customClass="GJContactTableViewCell">
-                                        <rect key="frame" x="0.0" y="1" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="76" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4mE-98-Eyt" id="yvb-S9-OOn">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="49.5"/>
@@ -122,6 +184,7 @@
                     </view>
                     <connections>
                         <outlet property="addContactButton" destination="MpL-Eh-ERt" id="kZc-lm-9WR"/>
+                        <outlet property="headerView" destination="3jF-mK-jMP" id="Sgw-Jf-dQp"/>
                         <outlet property="tableView" destination="yxs-wr-gAi" id="ndb-Qk-geH"/>
                     </connections>
                 </viewController>
@@ -232,18 +295,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="ClO-xB-3ee">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X0V-LR-say" userLabel="Avatar Button">
                                 <rect key="frame" x="138" y="40" width="100" height="100"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="100" id="3Ua-yT-Y9p"/>
-                                    <constraint firstAttribute="height" constant="100" id="rO4-fl-5dT"/>
+                                    <constraint firstAttribute="height" constant="100" id="NbA-kX-5O6"/>
+                                    <constraint firstAttribute="width" constant="100" id="NbM-tc-cEH"/>
                                 </constraints>
+                                <state key="normal" title="Button" image="default_avatar"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="75"/>
+                                        <integer key="value" value="50"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                 </userDefinedRuntimeAttributes>
-                            </imageView>
+                                <connections>
+                                    <action selector="avatarPressed:" destination="ZQ3-AC-zpO" eventType="touchUpInside" id="GAi-Kj-xiW"/>
+                                </connections>
+                            </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="First name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7ST-tL-CKA">
                                 <rect key="frame" x="20" y="160" width="335" height="44"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -375,8 +443,10 @@
                             <constraint firstItem="UXO-tO-lIv" firstAttribute="leading" secondItem="c44-Ci-bHh" secondAttribute="leading" constant="30" id="KJy-Hm-ZSr"/>
                             <constraint firstItem="etI-dB-1Oy" firstAttribute="top" secondItem="7ST-tL-CKA" secondAttribute="bottom" constant="22" id="NF1-sr-0XW"/>
                             <constraint firstItem="etI-dB-1Oy" firstAttribute="leading" secondItem="c44-Ci-bHh" secondAttribute="leading" constant="20" id="OPY-F2-c8O"/>
+                            <constraint firstItem="X0V-LR-say" firstAttribute="top" secondItem="9Bv-eC-Qt8" secondAttribute="bottom" constant="20" id="PJC-nb-pk0"/>
                             <constraint firstAttribute="trailing" secondItem="Qwt-yy-mQj" secondAttribute="trailing" constant="20" id="PyL-ov-asn"/>
                             <constraint firstItem="hAP-7S-Mmw" firstAttribute="top" secondItem="etI-dB-1Oy" secondAttribute="bottom" constant="22" id="UoX-DE-Z1y"/>
+                            <constraint firstItem="X0V-LR-say" firstAttribute="centerX" secondItem="c44-Ci-bHh" secondAttribute="centerX" id="Waa-J9-fY8"/>
                             <constraint firstItem="hAP-7S-Mmw" firstAttribute="leading" secondItem="c44-Ci-bHh" secondAttribute="leading" constant="20" id="YO8-BV-JkN"/>
                             <constraint firstAttribute="trailing" secondItem="7ST-tL-CKA" secondAttribute="trailing" constant="20" id="bOV-Ab-Y2V"/>
                             <constraint firstItem="rJ6-DO-J9L" firstAttribute="top" secondItem="dty-9c-m91" secondAttribute="bottom" constant="2" id="cLW-Oo-cAt"/>
@@ -390,12 +460,10 @@
                             <constraint firstItem="ZRV-w0-9ne" firstAttribute="top" secondItem="etI-dB-1Oy" secondAttribute="bottom" constant="2" id="nde-R6-ivC"/>
                             <constraint firstItem="dty-9c-m91" firstAttribute="top" secondItem="hAP-7S-Mmw" secondAttribute="bottom" constant="22" id="nwZ-52-siE"/>
                             <constraint firstItem="UXO-tO-lIv" firstAttribute="top" secondItem="7ST-tL-CKA" secondAttribute="bottom" constant="2" id="qaX-be-p9e"/>
-                            <constraint firstItem="ClO-xB-3ee" firstAttribute="centerX" secondItem="c44-Ci-bHh" secondAttribute="centerX" id="wDV-WA-mjF"/>
-                            <constraint firstItem="ClO-xB-3ee" firstAttribute="top" secondItem="9Bv-eC-Qt8" secondAttribute="bottom" constant="20" id="xsU-iu-X82"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="avatarView" destination="ClO-xB-3ee" id="uGZ-Dk-hQb"/>
+                        <outlet property="avatarButton" destination="X0V-LR-say" id="u5c-Yi-z5W"/>
                         <outlet property="dismissKeyboardButton" destination="F5Z-mn-YMe" id="2db-AJ-VhG"/>
                         <outlet property="emailErrorLabel" destination="rJ6-DO-J9L" id="Qgp-sP-L6A"/>
                         <outlet property="emailField" destination="dty-9c-m91" id="lIP-Qe-bym"/>
@@ -478,5 +546,6 @@
         <image name="keyboard_dismiss" width="128" height="128"/>
         <image name="mail" width="32" height="32"/>
         <image name="phone" width="32" height="32"/>
+        <image name="retry" width="40" height="40"/>
     </resources>
 </document>

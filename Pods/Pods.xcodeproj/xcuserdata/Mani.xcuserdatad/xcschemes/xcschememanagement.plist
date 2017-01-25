@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>FlickrKit.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-ContactManager.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -32,7 +37,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>5BAF5F1B158AA8F60F30C610102DE8DE</key>
+		<key>2C31CFD94DEE840FB8A0F86298AAA950</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5FD7E35F572D5D657BAD441E47B73F63</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6C98ACCC5D32266396D954312DA44201</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -48,11 +63,6 @@
 			<true/>
 		</dict>
 		<key>A1440D53EE1FF94F71432F7D190C48BF</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>E2263400605384D724302BC715CD1419</key>
 		<dict>
 			<key>primary</key>
 			<true/>

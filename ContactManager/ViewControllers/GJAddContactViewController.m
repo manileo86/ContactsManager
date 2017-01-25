@@ -8,10 +8,13 @@
 #import "GJAddContactViewController.h"
 #import "GJContactsSyncManager.h"
 #import "UIColor+HexString.h"
+#import <FlickrKit/FlickrKit.h>
+#import <AVFoundation/AVFoundation.h>
+#import "UIImage+FixOrientation.h"
 
-@interface GJAddContactViewController ()<UITextFieldDelegate>
+@interface GJAddContactViewController ()<UITextFieldDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
-@property (weak, nonatomic) IBOutlet UIImageView *avatarView;
+@property (weak, nonatomic) IBOutlet UIButton *avatarButton;
 @property (weak, nonatomic) IBOutlet UITextField *firstnameField;
 @property (weak, nonatomic) IBOutlet UILabel *firstnameErrorLabel;
 @property (weak, nonatomic) IBOutlet UITextField *lastnameField;
@@ -24,6 +27,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *dismissKeyboardButton;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *firstNameLabelTopContraint;
+@property (assign, nonatomic) BOOL imagePicked;
 
 @end
 
@@ -56,7 +60,7 @@
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
     self.firstNameLabelTopContraint.constant = 20.0f;
-    self.avatarView.hidden = YES;
+    self.avatarButton.hidden = YES;
     self.dismissKeyboardButton.hidden = NO;
     [self.view setNeedsUpdateConstraints];
     
@@ -68,7 +72,7 @@
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField
 {
     self.firstNameLabelTopContraint.constant = 140.0f;
-    self.avatarView.hidden = NO;
+    self.avatarButton.hidden = NO;
     self.dismissKeyboardButton.hidden = YES;
     [self.view setNeedsUpdateConstraints];
     
@@ -217,6 +221,99 @@
     }
     
     return bOK;
+}
+
+#pragma mark - Photo picker
+
+-(IBAction)avatarPressed:(id)sender
+{
+//    NSMutableArray *buttons = [@[@"Open Camera", @"Select from Gallery"] mutableCopy];
+//    if(self.imagePicked)
+//        [buttons addObject:@"Remove Photo"];
+    
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                 delegate:self
+                        cancelButtonTitle:@"Cancel"
+                   destructiveButtonTitle:nil
+                        otherButtonTitles:@"Open Camera", @"Select from Gallery", self.imagePicked?@"Remove Photo":nil, nil];
+    actionSheet.destructiveButtonIndex = 2;
+    [actionSheet showInView:self.view];
+}
+
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex == actionSheet.destructiveButtonIndex)
+    {
+        [self.avatarButton setImage:[UIImage imageNamed:@"default_avatar"] forState:UIControlStateNormal];
+        self.imagePicked = NO;
+    }
+    else if(buttonIndex == 0)
+    {
+        // open camera
+        [self presentPickerWithSourceType:UIImagePickerControllerSourceTypeCamera];
+    }
+    else if(buttonIndex == 1)
+    {
+        // open gallery
+        [self presentPickerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+    }
+    else if(buttonIndex == 2)
+    {
+        // delete photo
+        [self.avatarButton setImage:[UIImage imageNamed:@"default_avatar"] forState:UIControlStateNormal];
+        self.imagePicked = NO;
+    }
+    else
+    {
+        [actionSheet dismissWithClickedButtonIndex:actionSheet.cancelButtonIndex animated:YES];
+    }
+}
+
+- (void)presentPickerWithSourceType:(UIImagePickerControllerSourceType)type {
+    
+    /* Check for camera avaliability */
+    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+    if(authStatus == AVAuthorizationStatusDenied && type == UIImagePickerControllerSourceTypeCamera) {
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Camera access permission denied"
+                                                        message:nil
+                                                       delegate:nil
+                                              cancelButtonTitle:@"Cancel"
+                                              otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+    
+    if (![UIImagePickerController isSourceTypeAvailable:type]) {
+        return;
+    }
+    
+    UIImagePickerController *pickerVC = [[UIImagePickerController alloc] init];
+    pickerVC.sourceType = type;
+    pickerVC.delegate = self;
+    pickerVC.allowsEditing = YES;
+    
+    if (type == UIImagePickerControllerSourceTypeCamera) {
+        pickerVC.cameraDevice = UIImagePickerControllerCameraDeviceFront;
+    }
+    [self presentViewController:pickerVC animated:YES completion:nil];
+}
+
+#pragma mark - UIImagePickerControllerDelegate
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *image = info[UIImagePickerControllerEditedImage];
+    image = [image imageWithFixedOrientation];    
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    
+    [self.avatarButton setImage:image forState:UIControlStateNormal];
+    self.imagePicked = YES;
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

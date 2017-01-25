@@ -9,6 +9,7 @@ target 'ContactManager' do
   
   pod 'AFNetworking'
   pod 'SDWebImage', '~>3.8'
+  pod 'FlickrKit'
 
   target 'ContactManagerTests' do
     inherit! :search_paths
