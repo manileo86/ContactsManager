@@ -7,14 +7,19 @@
 
 #import "GJAddContactViewController.h"
 #import "GJContactsSyncManager.h"
+#import "UIColor+HexString.h"
 
 @interface GJAddContactViewController ()<UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;
 @property (weak, nonatomic) IBOutlet UITextField *firstnameField;
+@property (weak, nonatomic) IBOutlet UILabel *firstnameErrorLabel;
 @property (weak, nonatomic) IBOutlet UITextField *lastnameField;
+@property (weak, nonatomic) IBOutlet UILabel *lastnameErrorLabel;
 @property (weak, nonatomic) IBOutlet UITextField *phoneField;
+@property (weak, nonatomic) IBOutlet UILabel *phoneErrorLabel;
 @property (weak, nonatomic) IBOutlet UITextField *emailField;
+@property (weak, nonatomic) IBOutlet UILabel *emailErrorLabel;
 @property (weak, nonatomic) IBOutlet UIButton *saveButton;
 @property (weak, nonatomic) IBOutlet UIButton *dismissKeyboardButton;
 
@@ -26,18 +31,27 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"Add Contact";
     self.dismissKeyboardButton.hidden = YES;
     
     _firstnameField.layer.sublayerTransform = CATransform3DMakeTranslation(10, 0, 0);
     _lastnameField.layer.sublayerTransform = CATransform3DMakeTranslation(10, 0, 0);
     _phoneField.layer.sublayerTransform = CATransform3DMakeTranslation(10, 0, 0);
     _emailField.layer.sublayerTransform = CATransform3DMakeTranslation(10, 0, 0);
+    
+    CGColorRef errorBorderColor = [UIColor colorWithHexString:@"FFC7C8"].CGColor;
+    _firstnameField.layer.borderColor = errorBorderColor;
+    _lastnameField.layer.borderColor = errorBorderColor;
+    _phoneField.layer.borderColor = errorBorderColor;
+    _emailField.layer.borderColor = errorBorderColor;
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - UITextFieldDelegate
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
@@ -51,9 +65,9 @@
     }];
 }
 
-- (void)textFieldDidEndEditing:(UITextField *)textField
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
 {
-    self.firstNameLabelTopContraint.constant = 190.0f;
+    self.firstNameLabelTopContraint.constant = 140.0f;
     self.avatarView.hidden = NO;
     self.dismissKeyboardButton.hidden = YES;
     [self.view setNeedsUpdateConstraints];
@@ -61,6 +75,36 @@
     [UIView animateWithDuration:0.25f animations:^{        
         [self.view layoutIfNeeded];
     }];
+    
+    return TRUE;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if(textField == _firstnameField)
+    {
+        [_lastnameField becomeFirstResponder];
+        return NO;
+    }
+    else if(textField == _lastnameField)
+    {
+        [_phoneField becomeFirstResponder];
+        return NO;
+    }
+    else if(textField == _phoneField)
+    {
+        [_emailField becomeFirstResponder];
+        return NO;
+    }
+    else if(textField == _emailField)
+    {
+        [_emailField resignFirstResponder];
+        return YES;
+    }
+    else
+    {
+        return YES;
+    }
 }
 
 - (IBAction)dismissKeyboardPressed:(id)sender
@@ -70,6 +114,15 @@
 
 - (IBAction)savePressed:(id)sender
 {
+    [self resetValidationUIHighlights];
+    
+    if(![self isInputsValid])
+    {
+        return;
+    }
+    
+    [self.view endEditing:YES];
+    
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZ"];
     NSString *dateFromString = [dateFormatter stringFromDate:[NSDate date]];
@@ -87,6 +140,83 @@
     }];
     
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (BOOL)isInputsValid
+{
+    BOOL bOK = [self isFirstNameValid];
+    bOK &= [self isLastNameValid];
+    bOK &= [self isPhoneNumberValid];
+    bOK &= [self isEmailValid];
+    return bOK;
+}
+
+- (void)resetValidationUIHighlights
+{
+    _firstnameField.layer.borderWidth = 0;
+    _lastnameField.layer.borderWidth = 0;
+    _phoneField.layer.borderWidth = 0;
+    _emailField.layer.borderWidth = 0;
+    
+    _firstnameErrorLabel.hidden = YES;
+    _lastnameErrorLabel.hidden = YES;
+    _phoneErrorLabel.hidden = YES;
+    _emailErrorLabel.hidden = YES;
+}
+
+-(BOOL)isFirstNameValid
+{
+    if(_firstnameField.text.length < 3)
+    {
+        _firstnameField.layer.borderWidth = 1.0f;
+        _firstnameErrorLabel.hidden = NO;
+        return FALSE;
+    }
+    
+    return TRUE;
+}
+
+-(BOOL)isLastNameValid
+{
+    // No validation as of now
+    return TRUE;
+}
+
+-(BOOL)isPhoneNumberValid
+{
+    __block BOOL bOK = NO;
+    NSString *phoneNumber = _phoneField.text;
+    NSDataDetector *detector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypePhoneNumber error:nil];
+    [detector enumerateMatchesInString:phoneNumber
+                               options:kNilOptions
+                                 range:NSMakeRange(0, [phoneNumber length])
+                            usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop)
+     {
+         bOK = (result.phoneNumber && result.phoneNumber.length > 0);
+     }];
+    
+    if(!bOK)
+    {
+        _phoneField.layer.borderWidth = 1.0f;
+        _phoneErrorLabel.hidden = NO;
+    }
+    return bOK;
+}
+
+-(BOOL)isEmailValid
+{
+    NSString *email = _emailField.text;
+    NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}";
+    NSPredicate *emailPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
+    BOOL bOK = [emailPredicate evaluateWithObject:email];
+    
+    if(!bOK)
+    {
+        _emailField.layer.borderWidth = 1.0f;
+        _emailErrorLabel.hidden = NO;
+    }
+    
+    return bOK;
 }
 
 @end

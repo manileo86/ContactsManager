@@ -217,20 +217,6 @@ static NSDateFormatter * _dateFormatter = nil;
              contactEntity.updatedAt = result.date;
          }];
     }
-
-    
-//    NSString *dateString = @"2016-05-29T10:10:10.995Z";
-//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-//    // this is imporant - we set our input date format to match our input string
-//    // if format doesn't match you'll get nil from your string, so be careful
-//    [dateFormatter setDateFormat:@"yyyy-MM-ddTHH:"];
-//    NSDate *dateFromString = [[NSDate alloc] init];
-//    // voila!
-//    dateFromString = [dateFormatter dateFromString:dateString];
-
-    
-//    contactEntity.createdAt = NULL_TO_NIL([contactInfo objectForKey:@"created_at"]);
-//    contactEntity.updatedAt = NULL_TO_NIL([contactInfo objectForKey:@"updated_at"]);
 }
 
 @end

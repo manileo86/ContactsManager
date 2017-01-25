@@ -233,10 +233,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="ClO-xB-3ee">
-                                <rect key="frame" x="112" y="40" width="150" height="150"/>
+                                <rect key="frame" x="138" y="40" width="100" height="100"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="150" id="3Ua-yT-Y9p"/>
-                                    <constraint firstAttribute="height" constant="150" id="rO4-fl-5dT"/>
+                                    <constraint firstAttribute="width" constant="100" id="3Ua-yT-Y9p"/>
+                                    <constraint firstAttribute="height" constant="100" id="rO4-fl-5dT"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -245,59 +245,59 @@
                                 </userDefinedRuntimeAttributes>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="First name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7ST-tL-CKA">
-                                <rect key="frame" x="20" y="210" width="335" height="44"/>
+                                <rect key="frame" x="20" y="160" width="335" height="44"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="rOG-zF-XxW"/>
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="17"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="namePhonePad" returnKeyType="next"/>
                                 <connections>
                                     <outlet property="delegate" destination="ZQ3-AC-zpO" id="eMO-dc-2QS"/>
                                 </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Last name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="etI-dB-1Oy">
-                                <rect key="frame" x="20" y="273" width="335" height="44"/>
+                                <rect key="frame" x="20" y="226" width="335" height="44"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="bbA-lT-4Ar"/>
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="17"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="namePhonePad" returnKeyType="next"/>
                                 <connections>
                                     <outlet property="delegate" destination="ZQ3-AC-zpO" id="XV9-3F-Dhl"/>
                                 </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Mobile Number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hAP-7S-Mmw">
-                                <rect key="frame" x="20" y="335" width="335" height="44"/>
+                                <rect key="frame" x="20" y="292" width="335" height="44"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="d33-zi-7iz"/>
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="17"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="phonePad" returnKeyType="next"/>
                                 <connections>
                                     <outlet property="delegate" destination="ZQ3-AC-zpO" id="cbe-WI-aB3"/>
                                 </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dty-9c-m91">
-                                <rect key="frame" x="20" y="399" width="335" height="44"/>
+                                <rect key="frame" x="20" y="358" width="335" height="44"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="Is2-5y-oPk"/>
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="17"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" returnKeyType="done"/>
                                 <connections>
                                     <outlet property="delegate" destination="ZQ3-AC-zpO" id="Q0V-jW-RbY"/>
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FqM-3u-pcu">
-                                <rect key="frame" x="112" y="463" width="150" height="44"/>
+                                <rect key="frame" x="112" y="424" width="150" height="44"/>
                                 <color key="backgroundColor" red="0.1176470588" green="0.68627450980000004" blue="0.84705882349999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="iKf-mX-8b3"/>
@@ -311,7 +311,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F5Z-mn-YMe">
-                                <rect key="frame" x="311" y="463" width="44" height="44"/>
+                                <rect key="frame" x="311" y="424" width="44" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="44" id="Gaw-sL-3nD"/>
                                     <constraint firstAttribute="height" constant="44" id="fxR-na-VFA"/>
@@ -321,25 +321,75 @@
                                     <action selector="dismissKeyboardPressed:" destination="ZQ3-AC-zpO" eventType="touchUpInside" id="qOK-uO-eDr"/>
                                 </connections>
                             </button>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="First name not valid" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UXO-tO-lIv">
+                                <rect key="frame" x="30" y="206" width="325" height="15"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="15" id="aNH-Jt-grs"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="12"/>
+                                <color key="textColor" red="0.90980392160000001" green="0.25490196079999999" blue="0.2274509804" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last name not valid" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZRV-w0-9ne">
+                                <rect key="frame" x="30" y="272" width="325" height="15"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="15" id="CQf-a0-FLr"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="12"/>
+                                <color key="textColor" red="0.90980392160000001" green="0.25490196079999999" blue="0.2274509804" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mobile phone number not valid" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qwt-yy-mQj">
+                                <rect key="frame" x="30" y="338" width="325" height="15"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="15" id="2dg-l5-2Xa"/>
+                                    <constraint firstAttribute="height" constant="15" id="BW4-A0-NGQ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="12"/>
+                                <color key="textColor" red="0.90980392160000001" green="0.25490196079999999" blue="0.2274509804" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email not valid" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rJ6-DO-J9L">
+                                <rect key="frame" x="30" y="404" width="325" height="15"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="15" id="GmL-6A-4Lm"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="15" id="xXQ-O7-Tl5"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="12"/>
+                                <color key="textColor" red="0.90980392160000001" green="0.25490196079999999" blue="0.2274509804" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.96377073049545292" green="0.96377073049545292" blue="0.96377073049545292" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="FqM-3u-pcu" firstAttribute="centerX" secondItem="c44-Ci-bHh" secondAttribute="centerX" id="2wH-dk-Ypk"/>
                             <constraint firstAttribute="trailing" secondItem="dty-9c-m91" secondAttribute="trailing" constant="20" id="3vV-1N-AOp"/>
                             <constraint firstAttribute="trailing" secondItem="etI-dB-1Oy" secondAttribute="trailing" constant="20" id="55y-GM-4Tf"/>
+                            <constraint firstAttribute="trailing" secondItem="UXO-tO-lIv" secondAttribute="trailing" constant="20" id="5xP-NB-QbM"/>
                             <constraint firstItem="7ST-tL-CKA" firstAttribute="leading" secondItem="c44-Ci-bHh" secondAttribute="leading" constant="20" id="60F-XM-b8s"/>
-                            <constraint firstItem="7ST-tL-CKA" firstAttribute="top" secondItem="9Bv-eC-Qt8" secondAttribute="bottom" constant="190" id="8Sb-lm-nX0"/>
-                            <constraint firstItem="F5Z-mn-YMe" firstAttribute="top" secondItem="dty-9c-m91" secondAttribute="bottom" constant="20" id="F93-w7-iVI"/>
+                            <constraint firstItem="7ST-tL-CKA" firstAttribute="top" secondItem="9Bv-eC-Qt8" secondAttribute="bottom" constant="140" id="8Sb-lm-nX0"/>
+                            <constraint firstItem="F5Z-mn-YMe" firstAttribute="top" secondItem="dty-9c-m91" secondAttribute="bottom" constant="22" id="F93-w7-iVI"/>
                             <constraint firstAttribute="trailing" secondItem="hAP-7S-Mmw" secondAttribute="trailing" constant="20" id="G0X-3r-559"/>
+                            <constraint firstItem="Qwt-yy-mQj" firstAttribute="leading" secondItem="c44-Ci-bHh" secondAttribute="leading" constant="30" id="GRf-Dy-nFH"/>
                             <constraint firstItem="dty-9c-m91" firstAttribute="leading" secondItem="c44-Ci-bHh" secondAttribute="leading" constant="20" id="IkP-n3-Izv"/>
-                            <constraint firstItem="etI-dB-1Oy" firstAttribute="top" secondItem="7ST-tL-CKA" secondAttribute="bottom" constant="19" id="NF1-sr-0XW"/>
+                            <constraint firstItem="UXO-tO-lIv" firstAttribute="leading" secondItem="c44-Ci-bHh" secondAttribute="leading" constant="30" id="KJy-Hm-ZSr"/>
+                            <constraint firstItem="etI-dB-1Oy" firstAttribute="top" secondItem="7ST-tL-CKA" secondAttribute="bottom" constant="22" id="NF1-sr-0XW"/>
                             <constraint firstItem="etI-dB-1Oy" firstAttribute="leading" secondItem="c44-Ci-bHh" secondAttribute="leading" constant="20" id="OPY-F2-c8O"/>
-                            <constraint firstItem="hAP-7S-Mmw" firstAttribute="top" secondItem="etI-dB-1Oy" secondAttribute="bottom" constant="18" id="UoX-DE-Z1y"/>
+                            <constraint firstAttribute="trailing" secondItem="Qwt-yy-mQj" secondAttribute="trailing" constant="20" id="PyL-ov-asn"/>
+                            <constraint firstItem="hAP-7S-Mmw" firstAttribute="top" secondItem="etI-dB-1Oy" secondAttribute="bottom" constant="22" id="UoX-DE-Z1y"/>
                             <constraint firstItem="hAP-7S-Mmw" firstAttribute="leading" secondItem="c44-Ci-bHh" secondAttribute="leading" constant="20" id="YO8-BV-JkN"/>
                             <constraint firstAttribute="trailing" secondItem="7ST-tL-CKA" secondAttribute="trailing" constant="20" id="bOV-Ab-Y2V"/>
+                            <constraint firstItem="rJ6-DO-J9L" firstAttribute="top" secondItem="dty-9c-m91" secondAttribute="bottom" constant="2" id="cLW-Oo-cAt"/>
                             <constraint firstAttribute="trailing" secondItem="F5Z-mn-YMe" secondAttribute="trailing" constant="20" id="ehz-W3-1uI"/>
-                            <constraint firstItem="FqM-3u-pcu" firstAttribute="top" secondItem="dty-9c-m91" secondAttribute="bottom" constant="20" id="lyZ-bq-WKZ"/>
-                            <constraint firstItem="dty-9c-m91" firstAttribute="top" secondItem="hAP-7S-Mmw" secondAttribute="bottom" constant="20" id="nwZ-52-siE"/>
+                            <constraint firstItem="ZRV-w0-9ne" firstAttribute="leading" secondItem="c44-Ci-bHh" secondAttribute="leading" constant="30" id="gVa-Tu-KNb"/>
+                            <constraint firstItem="rJ6-DO-J9L" firstAttribute="leading" secondItem="c44-Ci-bHh" secondAttribute="leading" constant="30" id="kfb-Ol-m9J"/>
+                            <constraint firstAttribute="trailing" secondItem="ZRV-w0-9ne" secondAttribute="trailing" constant="20" id="kxr-aR-Q8p"/>
+                            <constraint firstItem="FqM-3u-pcu" firstAttribute="top" secondItem="dty-9c-m91" secondAttribute="bottom" constant="22" id="lyZ-bq-WKZ"/>
+                            <constraint firstItem="Qwt-yy-mQj" firstAttribute="top" secondItem="hAP-7S-Mmw" secondAttribute="bottom" constant="2" id="mRj-6l-AAF"/>
+                            <constraint firstAttribute="trailing" secondItem="rJ6-DO-J9L" secondAttribute="trailing" constant="20" id="n5a-Br-fEx"/>
+                            <constraint firstItem="ZRV-w0-9ne" firstAttribute="top" secondItem="etI-dB-1Oy" secondAttribute="bottom" constant="2" id="nde-R6-ivC"/>
+                            <constraint firstItem="dty-9c-m91" firstAttribute="top" secondItem="hAP-7S-Mmw" secondAttribute="bottom" constant="22" id="nwZ-52-siE"/>
+                            <constraint firstItem="UXO-tO-lIv" firstAttribute="top" secondItem="7ST-tL-CKA" secondAttribute="bottom" constant="2" id="qaX-be-p9e"/>
                             <constraint firstItem="ClO-xB-3ee" firstAttribute="centerX" secondItem="c44-Ci-bHh" secondAttribute="centerX" id="wDV-WA-mjF"/>
                             <constraint firstItem="ClO-xB-3ee" firstAttribute="top" secondItem="9Bv-eC-Qt8" secondAttribute="bottom" constant="20" id="xsU-iu-X82"/>
                         </constraints>
@@ -347,10 +397,14 @@
                     <connections>
                         <outlet property="avatarView" destination="ClO-xB-3ee" id="uGZ-Dk-hQb"/>
                         <outlet property="dismissKeyboardButton" destination="F5Z-mn-YMe" id="2db-AJ-VhG"/>
+                        <outlet property="emailErrorLabel" destination="rJ6-DO-J9L" id="Qgp-sP-L6A"/>
                         <outlet property="emailField" destination="dty-9c-m91" id="lIP-Qe-bym"/>
                         <outlet property="firstNameLabelTopContraint" destination="8Sb-lm-nX0" id="el0-tU-TZV"/>
+                        <outlet property="firstnameErrorLabel" destination="UXO-tO-lIv" id="0al-X3-Gss"/>
                         <outlet property="firstnameField" destination="7ST-tL-CKA" id="Z6i-zk-Yuh"/>
+                        <outlet property="lastnameErrorLabel" destination="ZRV-w0-9ne" id="yFg-E9-u0P"/>
                         <outlet property="lastnameField" destination="etI-dB-1Oy" id="OiE-i1-qHU"/>
+                        <outlet property="phoneErrorLabel" destination="Qwt-yy-mQj" id="Sw9-ae-BBq"/>
                         <outlet property="phoneField" destination="hAP-7S-Mmw" id="oqI-Is-fly"/>
                         <outlet property="saveButton" destination="FqM-3u-pcu" id="6xT-CA-3hV"/>
                     </connections>
