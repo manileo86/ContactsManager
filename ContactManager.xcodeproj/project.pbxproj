@@ -29,7 +29,6 @@
 		3CD4B7051E37F4DF0040BC6A /* GJContactEntity+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD4B7031E37F4DF0040BC6A /* GJContactEntity+CoreDataProperties.m */; };
 		3CD4B7081E3864830040BC6A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CD4B7071E3864830040BC6A /* AVFoundation.framework */; };
 		3CD4B70B1E3865700040BC6A /* UIImage+FixOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD4B70A1E3865700040BC6A /* UIImage+FixOrientation.m */; };
-		3CD4B70F1E386C3F0040BC6A /* GJContactsRetryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD4B70E1E386C3F0040BC6A /* GJContactsRetryManager.m */; };
 		3CD4B7151E386F030040BC6A /* GJContactToUpload+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD4B7131E386F030040BC6A /* GJContactToUpload+CoreDataProperties.m */; };
 		3CD4B71A1E3871090040BC6A /* GJContactUploadHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD4B7181E3871090040BC6A /* GJContactUploadHeaderView.m */; };
 		3CD4B71D1E38765D0040BC6A /* loading_bar.gif in Resources */ = {isa = PBXBuildFile; fileRef = 3CD4B71C1E38765D0040BC6A /* loading_bar.gif */; };
@@ -102,8 +101,6 @@
 		3CD4B7071E3864830040BC6A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		3CD4B7091E3865700040BC6A /* UIImage+FixOrientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+FixOrientation.h"; sourceTree = "<group>"; };
 		3CD4B70A1E3865700040BC6A /* UIImage+FixOrientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+FixOrientation.m"; sourceTree = "<group>"; };
-		3CD4B70D1E386C3F0040BC6A /* GJContactsRetryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJContactsRetryManager.h; sourceTree = "<group>"; };
-		3CD4B70E1E386C3F0040BC6A /* GJContactsRetryManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJContactsRetryManager.m; sourceTree = "<group>"; };
 		3CD4B7101E386F030040BC6A /* GJContactToUpload+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GJContactToUpload+CoreDataClass.h"; sourceTree = "<group>"; };
 		3CD4B7111E386F030040BC6A /* GJContactToUpload+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GJContactToUpload+CoreDataClass.m"; sourceTree = "<group>"; };
 		3CD4B7121E386F030040BC6A /* GJContactToUpload+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GJContactToUpload+CoreDataProperties.h"; sourceTree = "<group>"; };
@@ -271,7 +268,6 @@
 				3C9FA8BD1E2E88810022C102 /* APIClient.m */,
 				3C9FA8BE1E2E88810022C102 /* APIDefinitions.h */,
 				3C9FA8D21E3242B50022C102 /* SyncManager */,
-				3CD4B70C1E386C3F0040BC6A /* RetryManager */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -318,16 +314,6 @@
 			name = SyncManager;
 			path = ../SyncManager;
 			sourceTree = "<group>";
-		};
-		3CD4B70C1E386C3F0040BC6A /* RetryManager */ = {
-			isa = PBXGroup;
-			children = (
-				3CD4B70D1E386C3F0040BC6A /* GJContactsRetryManager.h */,
-				3CD4B70E1E386C3F0040BC6A /* GJContactsRetryManager.m */,
-			);
-			name = RetryManager;
-			path = ContactManager/RetryManager;
-			sourceTree = SOURCE_ROOT;
 		};
 		3CD4B7161E3871090040BC6A /* Views */ = {
 			isa = PBXGroup;
@@ -650,7 +636,6 @@
 				3C98149D1E2E744300A1993C /* GJContactsBookViewController.m in Sources */,
 				3C9FA8D11E3103E10022C102 /* NSString+Additions.m in Sources */,
 				3C9FA8DB1E324F4C0022C102 /* UIColor+HexString.m in Sources */,
-				3CD4B70F1E386C3F0040BC6A /* GJContactsRetryManager.m in Sources */,
 				3CD4B7051E37F4DF0040BC6A /* GJContactEntity+CoreDataProperties.m in Sources */,
 				3C9814A31E2E778B00A1993C /* ContactManager.xcdatamodeld in Sources */,
 				3C9814631E2E737800A1993C /* AppDelegate.m in Sources */,

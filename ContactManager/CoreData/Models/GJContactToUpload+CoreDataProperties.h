@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSData *image;
 @property (nonatomic) BOOL isUploading;
 @property (nonatomic) BOOL isFailed;
+@property (nonatomic) BOOL isUploadPending;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -33,4 +33,8 @@
 
 - (void)updateContact:(NSDictionary*)contactInfo WithCompletionBlock:(APICompletionBlock)completionBlock;
 
+- (void)postContact:(NSDictionary*)contactInfo withImageData:(NSData*)imageData WithCompletionBlock:(APICompletionBlock)completionBlock;
+
+- (void)uploadImage:(NSData*)imageData WithCompletionBlock:(APICompletionBlock)completionBlock;
+
 @end

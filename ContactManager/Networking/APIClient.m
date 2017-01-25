@@ -277,8 +277,17 @@ static APIClient *defaultClient = nil;
 {
     //if (![self apiDomainReachable:completionBlock]) return;
     
-    NSString *requestPath = [self requestPathWithEndpointPath:endpointPath];
-    [self.jsonSessionManager POST:requestPath parameters:parameters constructingBodyWithBlock:body progress:nil success:[self wrapSuccessBlock:completionBlock] failure:[self wrapFailureBlock:completionBlock]];
+    //NSString *requestPath = [self requestPathWithEndpointPath:endpointPath];
+    //[self.jsonSessionManager POST:endpointPath parameters:parameters constructingBodyWithBlock:body progress:nil success:[self wrapSuccessBlock:completionBlock] failure:[self wrapFailureBlock:completionBlock]];
+    
+    NSString *requestPath = endpointPath;
+    NSMutableURLRequest *request = [self.keyedSessionManager.requestSerializer multipartFormRequestWithMethod:@"POST" URLString:requestPath parameters:parameters constructingBodyWithBlock:body error:nil];
+    
+    NSURLSessionDataTask *dataTask = [self.keyedSessionManager dataTaskWithRequest:request completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
+        GJ_SAFE_BLOCK(completionBlock, error, responseObject);
+    }];
+    
+    [dataTask resume];
     
 #ifdef GJ_NETWORK_LOGGING
     NSLog(@"APIClient: POST request: %@\n%@", requestPath, parameters);
@@ -398,28 +407,31 @@ static APIClient *defaultClient = nil;
 {
     [self runPOSTRequestWithEndpoint:APIClientContactsURLPath parameters:contactInfo completion:
      ^(NSError *error, NSDictionary *data) {
-         if(data)
-         {
-             NSArray *errors = (NSArray*)[data objectForKey:@"errors"];
-             if(errors)
-             {
-                 NSError *errorInfo = [NSError errorWithDomain:@"GJ" code:1 userInfo:@{NSLocalizedDescriptionKey:[NSString stringWithFormat:@"Contact Create Failed : %@", [errors componentsJoinedByString:@","]]}];
-                 completionBlock(errorInfo, nil);
-             }
-             else
-             {
-                 completionBlock(nil, data);
-             }
-         }
-         else if(error)
-         {
-             NSError *errorInfo = [NSError errorWithDomain:@"GJ" code:1 userInfo:@{NSLocalizedDescriptionKey:@"Contact Create Failed"}];
-             completionBlock(errorInfo, nil);
-         }
-         else
-         {
-             completionBlock(nil, nil);
-         }
+         
+         completionBlock(nil, nil);
+         
+//         if(data)
+//         {
+//             NSArray *errors = (NSArray*)[data objectForKey:@"errors"];
+//             if(errors)
+//             {
+//                 NSError *errorInfo = [NSError errorWithDomain:@"GJ" code:1 userInfo:@{NSLocalizedDescriptionKey:[NSString stringWithFormat:@"Contact Create Failed : %@", [errors componentsJoinedByString:@","]]}];
+//                 completionBlock(errorInfo, nil);
+//             }
+//             else
+//             {
+//                 completionBlock(nil, data);
+//             }
+//         }
+//         else if(error)
+//         {
+//             NSError *errorInfo = [NSError errorWithDomain:@"GJ" code:1 userInfo:@{NSLocalizedDescriptionKey:@"Contact Create Failed"}];
+//             completionBlock(errorInfo, nil);
+//         }
+//         else
+//         {
+//             completionBlock(nil, nil);
+//         }
      }];
 }
 
@@ -456,6 +468,31 @@ static APIClient *defaultClient = nil;
              completionBlock(nil, nil);
          }
      }];
+}
+
+- (void)uploadImage:(NSData *)imageData WithCompletionBlock:(APICompletionBlock)completionBlock
+{   
+    [self runPOSTRequestWithEndpoint:APIUploadImageURLPath parameters:nil bodyConstructingBlock:^(id<AFMultipartFormData> formData) {
+        [formData appendPartWithFileData:imageData name:@"upload" fileName:@"profile.jpg" mimeType:@"image/jpeg"];
+        
+        NSData *daysData = [@"7" dataUsingEncoding:NSUTF8StringEncoding];
+        [formData appendPartWithFormData:daysData name:@"data[days]"];
+        
+    } completion:^(NSError *error, id data) {
+        if(data)
+        {
+            completionBlock(nil, data);
+        }
+        else if(error)
+        {
+            NSError *errorInfo = [NSError errorWithDomain:@"GJ" code:1 userInfo:@{NSLocalizedDescriptionKey:@"Image upload failed"}];
+            completionBlock(errorInfo, nil);
+        }
+        else
+        {
+            completionBlock(nil, nil);
+        }
+    }];
 }
 
 @end

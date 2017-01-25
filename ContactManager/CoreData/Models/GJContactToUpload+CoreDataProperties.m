@@ -19,5 +19,6 @@
 @dynamic image;
 @dynamic isUploading;
 @dynamic isFailed;
+@dynamic isUploadPending;
 
 @end

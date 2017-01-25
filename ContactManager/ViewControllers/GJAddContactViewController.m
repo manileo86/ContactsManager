@@ -8,7 +8,6 @@
 #import "GJAddContactViewController.h"
 #import "GJContactsSyncManager.h"
 #import "UIColor+HexString.h"
-#import <FlickrKit/FlickrKit.h>
 #import <AVFoundation/AVFoundation.h>
 #import "UIImage+FixOrientation.h"
 
@@ -116,35 +115,7 @@
     [self.view endEditing:YES];
 }
 
-- (IBAction)savePressed:(id)sender
-{
-    [self resetValidationUIHighlights];
-    
-    if(![self isInputsValid])
-    {
-        return;
-    }
-    
-    [self.view endEditing:YES];
-    
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZ"];
-    NSString *dateFromString = [dateFormatter stringFromDate:[NSDate date]];
-    
-    NSDictionary *contactInfo = @{
-        @"first_name": _firstnameField.text,
-        @"last_name": _lastnameField.text,
-        @"email": _emailField.text,
-        @"phone_number": _phoneField.text,
-        //@"profile_pic": @"",
-        @"created_at":dateFromString,
-        @"updated_at":dateFromString
-        };
-    [[GJContactsSyncManager defaultManager] postContactDetails:contactInfo withCompletionBlock:^(NSError *error, NSDictionary *data) {        
-    }];
-    
-    [self.navigationController popViewControllerAnimated:YES];
-}
+#pragma mark - Validation
 
 - (BOOL)isInputsValid
 {
@@ -221,6 +192,41 @@
     }
     
     return bOK;
+}
+
+#pragma mark - Save
+
+- (IBAction)savePressed:(id)sender
+{
+    [self resetValidationUIHighlights];
+    
+    if(![self isInputsValid])
+    {
+        return;
+    }
+    
+    [self.view endEditing:YES];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZ"];
+    NSString *dateFromString = [dateFormatter stringFromDate:[NSDate date]];
+    
+    NSDictionary *contactInfo = @{
+                                  @"first_name": _firstnameField.text,
+                                  @"last_name": _lastnameField.text,
+                                  @"email": _emailField.text,
+                                  @"phone_number": _phoneField.text,
+                                  //@"profile_pic": @"",
+                                  @"created_at":dateFromString,
+                                  @"updated_at":dateFromString
+                                  };
+    
+    [[GJContactsSyncManager defaultManager] createContactToUploadWithImage:self.imagePicked?_avatarButton.imageView.image:nil andInfo:contactInfo withCompletionBlock:^{
+        [self.navigationController popViewControllerAnimated:YES];
+    }];
+    
+//    [[GJContactsSyncManager defaultManager] postContactDetails:contactInfo withCompletionBlock:^(NSError *error, NSDictionary *data) {
+//    }];
 }
 
 #pragma mark - Photo picker

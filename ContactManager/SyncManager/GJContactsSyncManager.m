@@ -8,7 +8,6 @@
 #import "GJContactsSyncManager.h"
 #import "APIClient.h"
 #import "AppDelegate.h"
-#import "GJContactEntity+CoreDataClass.h"
 
 #define NULL_TO_NIL(obj) ({ __typeof__ (obj) __obj = (obj); __obj == [NSNull null] ? nil : obj; })
 
@@ -51,133 +50,6 @@ static NSDateFormatter * _dateFormatter = nil;
     }
 }
 
-- (void) syncContacts
-{
-    [[APIClient defaultClient] getContactsWithCompletionBlock:^(NSError *error, id data) {
-        
-        if(error)
-        {
-            [[NSNotificationCenter defaultCenter] postNotificationName:GJContactsFetchDidFailNotification object:nil];
-        }
-        else
-        {
-            [self.persistentContainer performBackgroundTask:^(NSManagedObjectContext * context) {
-                
-                NSArray *contacts = (NSArray*)data;
-                for(NSDictionary *contactInfo in contacts)
-                {
-                    GJContactEntity *contactEntity = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([GJContactEntity class]) inManagedObjectContext:context];
-                    [self fillContact:contactEntity fromDictionary:contactInfo];
-                }
-                
-                NSError *error = nil;
-                if (![context save:&error]) {
-                    NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
-                }
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"contactsFetched"];
-                    [[NSNotificationCenter defaultCenter] postNotificationName:GJContactsFetchDidEndNotification object:nil];
-                });
-            }];
-        }
-    }];
-}
-
-- (void) getContactDetailsForId:(NSString*)contactId withCompletionBlock:(ContactDetailsFetchCompletionBlock)completionBlock
-{
-    [[APIClient defaultClient] getContactDetailsForId:contactId
-                                  withCompletionBlock:^(NSError *error, id data) {
-                                      if(error)
-                                      {
-                                          [[NSNotificationCenter defaultCenter] postNotificationName:GJContactsFetchDidFailNotification object:nil];
-                                      }
-                                      else
-                                      {
-                                          [self.persistentContainer performBackgroundTask:^(NSManagedObjectContext * context) {
-                                              
-                                              NSDictionary *contactInfo = (NSDictionary*)data;
-                                              
-                                              NSPredicate *predicate = [NSPredicate predicateWithFormat:@"contactId == %@", contactId];
-                                              NSEntityDescription *entity = [NSEntityDescription entityForName:NSStringFromClass([GJContactEntity class])
-                                                                                        inManagedObjectContext:context];
-                                              NSFetchRequest *request = [[NSFetchRequest alloc] init];
-                                              request.entity = entity;
-                                              request.predicate = predicate;
-                                              request.fetchLimit = 1;
-                                              
-                                              NSError *requestError = nil;
-                                              NSArray *result = [context executeFetchRequest:request
-                                                                                       error:&requestError];
-                                              
-                                              GJContactEntity *contactEntity = result[0];
-                                              [self fillContact:contactEntity fromDictionary:contactInfo];
-                                              contactEntity.isInfoFetched = YES;
-                                              
-                                              NSError *error = nil;
-                                              if (![context save:&error]) {
-                                                  NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
-                                              }
-                                              
-                                              dispatch_async(dispatch_get_main_queue(), ^{
-                                                  completionBlock();
-                                              });
-                                          }];
-                                      }
-                                  }];
-}
-
--(void)postContactDetails:(NSDictionary *)contactInfo withCompletionBlock:(ContactCreateCompletionBlock)completionBlock
-{
-    [[APIClient defaultClient] postContact:contactInfo WithCompletionBlock:^(NSError *error, id data) {
-               
-        if(!error)
-        {
-            [self.persistentContainer performBackgroundTask:^(NSManagedObjectContext * context) {
-                
-                NSDictionary *contactInfo = (NSDictionary*)data;
-                GJContactEntity *contactEntity = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([GJContactEntity class]) inManagedObjectContext:context];
-                [self fillContact:contactEntity fromDictionary:contactInfo];
-                contactEntity.isInfoFetched = YES;
-                
-                NSError *error = nil;
-                if (![context save:&error]) {
-                    NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
-                }
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    
-                });
-            }];
-        }
-    }];
-}
-
-- (void) updateContactDetails:(NSDictionary*)contactInfo withCompletionBlock:(ContactUpdateCompletionBlock)completionBlock
-{
-    [[APIClient defaultClient] updateContact:contactInfo WithCompletionBlock:^(NSError *error, id data) {
-        
-        if(!error)
-        {
-            [self.persistentContainer performBackgroundTask:^(NSManagedObjectContext * context) {
-                
-                NSDictionary *contactInfo = (NSDictionary*)data;
-                GJContactEntity *contactEntity = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([GJContactEntity class]) inManagedObjectContext:context];
-                [self fillContact:contactEntity fromDictionary:contactInfo];                
-                
-                NSError *error = nil;
-                if (![context save:&error]) {
-                    NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
-                }
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    
-                });
-            }];
-        }
-    }];
-}
-
 - (void)fillContact:(GJContactEntity*)contactEntity fromDictionary:(NSDictionary*)contactInfo
 {
     contactEntity.contactId = [NULL_TO_NIL([contactInfo objectForKey:@"id"]) integerValue];
@@ -217,6 +89,179 @@ static NSDateFormatter * _dateFormatter = nil;
              contactEntity.updatedAt = result.date;
          }];
     }
+}
+
+- (void) syncContacts
+{
+    [[APIClient defaultClient] getContactsWithCompletionBlock:^(NSError *error, id data) {
+        
+        if(error)
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:GJContactsFetchDidFailNotification object:nil];
+        }
+        else
+        {
+            [self.persistentContainer performBackgroundTask:^(NSManagedObjectContext * context) {
+                
+                NSArray *contacts = (NSArray*)data;
+                for(NSDictionary *contactInfo in contacts)
+                {
+                    GJContactEntity *contactEntity = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([GJContactEntity class]) inManagedObjectContext:context];
+                    [self fillContact:contactEntity fromDictionary:contactInfo];
+                }
+                
+                NSError *error = nil;
+                if (![context save:&error]) {
+                    NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
+                }
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"contactsFetched"];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:GJContactsFetchDidEndNotification object:nil];
+                });
+            }];
+        }
+    }];
+}
+
+- (void)createContactFromInfo:(NSDictionary*)contactInfo removeContactUpload:(GJContactToUpload*)contactToUpload  withCompletionBlock:(GJCompletionBlock)completionBlock;
+{
+    [self.persistentContainer performBackgroundTask:^(NSManagedObjectContext * context) {
+        
+        GJContactEntity *contactEntity = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([GJContactEntity class]) inManagedObjectContext:context];
+        [self fillContact:contactEntity fromDictionary:contactInfo];
+        
+        NSError *error = nil;
+        if (![context save:&error]) {
+            NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [context deleteObject:contactToUpload];
+            completionBlock();
+        });
+    }];
+}
+
+- (void) updateContactDetails:(NSDictionary*)contactInfo withCompletionBlock:(ContactUpdateCompletionBlock)completionBlock
+{
+    [[APIClient defaultClient] updateContact:contactInfo WithCompletionBlock:^(NSError *error, id data) {
+        
+        if(!error)
+        {
+            [self.persistentContainer performBackgroundTask:^(NSManagedObjectContext * context) {
+                
+                NSDictionary *contactInfo = (NSDictionary*)data;
+                GJContactEntity *contactEntity = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([GJContactEntity class]) inManagedObjectContext:context];
+                [self fillContact:contactEntity fromDictionary:contactInfo];
+                
+                NSError *error = nil;
+                if (![context save:&error]) {
+                    NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
+                }
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                });
+            }];
+        }
+    }];
+}
+
+-(void)postContactDetails:(NSDictionary *)contactInfo withCompletionBlock:(ContactCreateCompletionBlock)completionBlock
+{
+    [[APIClient defaultClient] postContact:contactInfo WithCompletionBlock:^(NSError *error, id data) {
+        
+        if(!error)
+        {
+            [self.persistentContainer performBackgroundTask:^(NSManagedObjectContext * context) {
+                
+                NSDictionary *contactInfo = (NSDictionary*)data;
+                GJContactEntity *contactEntity = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([GJContactEntity class]) inManagedObjectContext:context];
+                [self fillContact:contactEntity fromDictionary:contactInfo];
+                contactEntity.isInfoFetched = YES;
+                
+                NSError *error = nil;
+                if (![context save:&error]) {
+                    NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
+                }
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                });
+            }];
+        }
+    }];
+}
+
+- (void)createContactToUploadWithImage:(UIImage*)image andInfo:(NSDictionary*)contactInfo withCompletionBlock:(GJCompletionBlock)completionBlock
+{
+    [self.persistentContainer performBackgroundTask:^(NSManagedObjectContext * context) {
+        
+        NSData *imageData = UIImageJPEGRepresentation(image, 0.7); // 0.7 is JPG quality
+        NSData *contactData = [NSKeyedArchiver archivedDataWithRootObject:contactInfo];
+
+        GJContactToUpload *contactToUpload = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([GJContactToUpload class]) inManagedObjectContext:context];
+        contactToUpload.params = contactData;
+        contactToUpload.image = imageData;
+        contactToUpload.isUploading = NO;
+        contactToUpload.isFailed = NO;
+        contactToUpload.isUploadPending = YES;
+        
+        NSError *error = nil;
+        if (![context save:&error]) {
+            NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completionBlock();
+        });
+    }];
+}
+
+- (void) uploadImageData:(NSData*)imageData withCompletionBlock:(ImageUploadCompletionBlock)completionBlock
+{
+    
+    // sample response
+    /*
+    {
+        data =     {
+            "delete_key" = 6141369940031ec8;
+            "img_attr" = "width=\"750\" height=\"750\"";
+            "img_bytes" = 95076;
+            "img_height" = 750;
+            "img_name" = "nWuVa.jpg";
+            "img_size" = "92.8 KB";
+            "img_url" = "http://sm.uploads.im/nWuVa.jpg";
+            "img_view" = "http://uploads.im/nWuVa.jpg";
+            "img_width" = 750;
+            resized = 0;
+            source = "base64 image string";
+            "thumb_height" = 360;
+            "thumb_url" = "http://sm.uploads.im/t/nWuVa.jpg";
+            "thumb_width" = 360;
+        };
+        "status_code" = 200;
+        "status_txt" = OK;
+     }
+        */
+    
+    [[APIClient defaultClient] uploadImage:imageData WithCompletionBlock:^(NSError *error, id data) {
+        if(!error)
+        {
+            NSDictionary *imageInfo = (NSDictionary*)data;
+            NSDictionary *imageDataDict = imageInfo[@"data"];
+            NSString *imageUrl = imageDataDict[@"img_url"];
+            completionBlock(nil, imageUrl);
+        }
+        else
+        {
+            completionBlock(error, nil);
+        }
+        
+    }];
+    
 }
 
 @end

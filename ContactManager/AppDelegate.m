@@ -7,7 +7,6 @@
 
 #import "AppDelegate.h"
 #import "UIColor+HexString.h"
-#import <FlickrKit/FlickrKit.h>
 
 @interface AppDelegate ()
 
@@ -26,8 +25,6 @@
                                                            nil]];
     [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(-60, -60)
                                                          forBarMetrics:UIBarMetricsDefault];
-
-    [[FlickrKit sharedFlickrKit] initializeWithAPIKey:@"2c2294bbd72b87ac19f2b4bd80e1f1c4" sharedSecret:@"75aa204edd4a8c48"];
     
     return YES;
 }

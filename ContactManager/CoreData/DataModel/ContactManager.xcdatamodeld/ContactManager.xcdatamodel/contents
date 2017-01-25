@@ -16,10 +16,11 @@
         <attribute name="image" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="isFailed" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isUploading" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isUploadPending" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="params" optional="YES" attributeType="Binary" syncable="YES"/>
     </entity>
     <elements>
         <element name="GJContactEntity" positionX="-63" positionY="-18" width="128" height="195"/>
-        <element name="GJContactToUpload" positionX="-54" positionY="63" width="128" height="105"/>
+        <element name="GJContactToUpload" positionX="-54" positionY="63" width="128" height="120"/>
     </elements>
 </model>

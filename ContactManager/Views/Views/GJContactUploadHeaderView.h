@@ -14,4 +14,6 @@
 
 @property(nonatomic, strong) GJContactToUpload *contactToUpload;
 
+- (void)loadViewWithContactToUpload:(GJContactToUpload*)contactToUpload;
+
 @end

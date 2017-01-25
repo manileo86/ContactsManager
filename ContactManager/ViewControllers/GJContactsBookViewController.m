@@ -44,13 +44,13 @@
     self.navigationController.navigationBarHidden = NO;
     self.title = @"Contact Book";
     [self loadContacts];
+    [self loadContactsToUpload];
     [self applyShadowToAddContactButton];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self loadContactsToUpload];
 }
 
 - (void)viewDidLayoutSubviews{
@@ -82,13 +82,15 @@
     [self.contactToUploadFRC performFetch:nil];
     
     GJContactToUpload *contactToUpload = [self.contactToUploadFRC.fetchedObjects firstObject];
-    if(contactToUpload)
+    if(!contactToUpload)
     {
+        [self.headerView loadViewWithContactToUpload:nil];
         self.tableView.tableHeaderView = nil;
     }
     else
     {
         self.tableView.tableHeaderView = self.headerView;
+        [self.headerView loadViewWithContactToUpload:contactToUpload];
     }
 }
 
@@ -151,7 +153,7 @@
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     GJContactDetailsViewController *detailsVC = [storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([GJContactDetailsViewController class])];
-    detailsVC.contactId = ((GJContactEntity*)[self.contactsFRC objectAtIndexPath:indexPath]).contactId;    
+    detailsVC.contactId = ((GJContactEntity*)[self.contactsFRC objectAtIndexPath:indexPath]).contactId;
     [self.navigationController pushViewController:detailsVC animated:YES];
 }
 
@@ -159,12 +161,28 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
-    [self refreshUI];
+    if(controller == _contactsFRC)
+        [self refreshUI];
+    else
+    {
+        GJContactToUpload *contactToUpload = [self.contactToUploadFRC.fetchedObjects firstObject];
+        if(!contactToUpload)
+        {
+            [self.headerView loadViewWithContactToUpload:nil];
+            self.tableView.tableHeaderView = nil;
+        }
+        else
+        {
+            self.tableView.tableHeaderView = self.headerView;
+            [self.headerView loadViewWithContactToUpload:contactToUpload];
+        }
+    }
 }
 
 - (void)refreshUI
 {
     [self.tableView reloadData];
+    //[self loadContactsToUpload];
 }
 
 - (void) refreshData:(NSNotification *)notif {

@@ -7,6 +7,8 @@
 
 #import "GJContactUploadHeaderView.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "GJContactsSyncManager.h"
+#import "GJContactEntity+CoreDataClass.h"
 
 @interface GJContactUploadHeaderView ()
 
@@ -20,35 +22,42 @@
 
 @implementation GJContactUploadHeaderView
 
-+ (instancetype)viewFromNib {
-    return [self viewFromNib:nil bundle:nil];
-}
+//- (void)awakeFromNib
+//{
+//    [super awakeFromNib];
+//    [self commonInit];
+//}
 
-+ (instancetype)viewFromNib:(NSString *)nib bundle:(NSBundle *)bundle {
-    Class viewClass = self.class;
-    
-    NSString * nibName = nib ?: NSStringFromClass(viewClass);
-    NSBundle * nibBundle = bundle ?: [NSBundle mainBundle];
-    
-    NSArray * loadedObjects = [nibBundle loadNibNamed:nibName owner:nil options:nil];
-    for (id object in loadedObjects) {
-        if ( [object isKindOfClass:viewClass] ) {
-            return object;
-        }
-    }
-    
-    return nil;
-}
+//- (void)setContactToUpload:(GJContactToUpload *)contactToUpload
+//{
+//    _contactToUpload = contactToUpload;
+//    [self commonInit];
+//}
 
-- (void)awakeFromNib
+- (void)loadViewWithContactToUpload:(GJContactToUpload*)contactToUpload
 {
-    [super awakeFromNib];
+    self.contactToUpload = contactToUpload;
     [self commonInit];
 }
 
 - (void)commonInit
 {
-    //_contactNameLabel.text = _contactToUpload
+    if(!self.contactToUpload)
+        return;
+    
+    __block NSDictionary *contactInfo = (NSDictionary*) [NSKeyedUnarchiver unarchiveObjectWithData:_contactToUpload.params];
+    
+    _contactNameLabel.text = [NSString stringWithFormat:@"%@ %@", contactInfo[@"first_name"], contactInfo[@"last_name"]];
+    
+    if(_contactToUpload.image)
+        _avatarView.image = [UIImage imageWithData:_contactToUpload.image];
+    else
+        _avatarView.image = [UIImage imageNamed:@"default_avatar"];
+    
+    if(_contactToUpload.isUploadPending)
+    {
+        [self tryUploading];
+    }
     
     if(_contactToUpload.isUploading)
     {
@@ -73,7 +82,88 @@
 
 - (IBAction)retryPressed:(id)sender
 {
+    [self tryUploading];
+}
+
+- (void)tryUploading
+{
+    if(_contactToUpload.isUploading)
+    {
+        return;
+    }
     
+    _contactToUpload.isUploading = YES;
+        
+    __block NSDictionary *contactInfo = (NSDictionary*) [NSKeyedUnarchiver unarchiveObjectWithData:_contactToUpload.params];
+    
+    if(_contactToUpload.image)
+    {
+        [[GJContactsSyncManager defaultManager] uploadImageData:_contactToUpload.image withCompletionBlock:^(NSError *error, NSString *imageId) {
+            if(!error)
+            {
+                __block NSMutableDictionary *updatedInfo = [contactInfo mutableCopy];
+                [updatedInfo setObject:imageId forKey:@"profile_pic"];
+                _contactToUpload.params = [NSKeyedArchiver archivedDataWithRootObject:updatedInfo];
+                NSError *error = nil;
+                if (![_contactToUpload.managedObjectContext save:&error]) {
+                    NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
+                }
+                
+                [[GJContactsSyncManager defaultManager] postContactDetails:updatedInfo withCompletionBlock:^(NSError *error, NSDictionary *data) {
+                    if(!error)
+                    {
+                        [[GJContactsSyncManager defaultManager] createContactFromInfo:contactInfo removeContactUpload:_contactToUpload withCompletionBlock:^{
+                            
+                        }];
+                    }
+                    else
+                    {
+                        _contactToUpload.isFailed = YES;
+                        _contactToUpload.isUploading = NO;
+                        _contactToUpload.isUploadPending = NO;
+                        NSError *error = nil;
+                        if (![_contactToUpload.managedObjectContext save:&error]) {
+                            NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
+                        }
+                        [self commonInit];
+                    }
+                }];
+            }
+            else
+            {
+                _contactToUpload.isFailed = YES;
+                _contactToUpload.isUploading = NO;
+                _contactToUpload.isUploadPending = NO;
+                NSError *error = nil;
+                if (![_contactToUpload.managedObjectContext save:&error]) {
+                    NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
+                }
+                [self commonInit];
+            }
+        }];
+    }
+    else
+    {
+        [[GJContactsSyncManager defaultManager] postContactDetails:contactInfo withCompletionBlock:^(NSError *error, NSDictionary *data) {
+            if(!error)
+            {
+                [[GJContactsSyncManager defaultManager] createContactFromInfo:contactInfo removeContactUpload:_contactToUpload withCompletionBlock:^{
+                    
+                }];
+            }
+            else
+            {
+                _contactToUpload.isFailed = YES;
+                _contactToUpload.isUploading = NO;
+                _contactToUpload.isUploadPending = NO;
+                NSError *error = nil;
+                if (![_contactToUpload.managedObjectContext save:&error]) {
+                    NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
+                }
+                [self commonInit];
+            }
+        }];
+    }
 }
 
 + (CGFloat)viewHeight

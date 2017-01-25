@@ -16,6 +16,9 @@ static NSString * const APIUrlPath                         = @"https://gojek-con
 static NSString * const APIClientContactsURLPath                    = @"contacts.json";
 static NSString * const APIClientGetContactDetailsURLPath           = @"contacts/%@.json";
 
+//static NSString * const APIUploadImageURLPath                       = @"http://www.tiikoni.com/tis/upload/upload.php";
+static NSString * const APIUploadImageURLPath                       = @"http://uploads.im/api?format=json";
+
 /* Request headers */
 static NSString * const APIContentTypeHeader                        = @"application/json; charset=utf-8";
 static NSString * const APIContentTypeMultipartHeader               = @"multipart/form-data";
