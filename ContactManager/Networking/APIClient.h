@@ -29,12 +29,14 @@
 
 - (void)getContactDetailsForId:(NSString*)contactId withCompletionBlock:(APICompletionBlock)completionBlock;
 
-- (void)postContact:(NSDictionary*)contactInfo WithCompletionBlock:(APICompletionBlock)completionBlock;
+- (void)postContact:(NSDictionary*)contactInfo withImageData:(NSData*)imageData withCompletionBlock:(APICompletionBlock)completionBlock;
 
-- (void)updateContact:(NSDictionary*)contactInfo WithCompletionBlock:(APICompletionBlock)completionBlock;
+- (void)postContact:(NSDictionary*)contactInfo withCompletionBlock:(APICompletionBlock)completionBlock;
 
-- (void)postContact:(NSDictionary*)contactInfo withImageData:(NSData*)imageData WithCompletionBlock:(APICompletionBlock)completionBlock;
+- (void)updateContact:(NSDictionary*)contactInfo withCompletionBlock:(APICompletionBlock)completionBlock;
 
-- (void)uploadImage:(NSData*)imageData WithCompletionBlock:(APICompletionBlock)completionBlock;
+- (void)postContact:(NSDictionary*)contactInfo withImageData:(NSData*)imageData withCompletionBlock:(APICompletionBlock)completionBlock;
+
+- (void)uploadImage:(NSData*)imageData withCompletionBlock:(APICompletionBlock)completionBlock;
 
 @end

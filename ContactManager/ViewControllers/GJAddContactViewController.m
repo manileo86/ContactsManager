@@ -10,6 +10,7 @@
 #import "UIColor+HexString.h"
 #import <AVFoundation/AVFoundation.h>
 #import "UIImage+FixOrientation.h"
+#import "GJContactsRetryManager.h"
 
 @interface GJAddContactViewController ()<UITextFieldDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
@@ -216,27 +217,23 @@
                                   @"last_name": _lastnameField.text,
                                   @"email": _emailField.text,
                                   @"phone_number": _phoneField.text,
+                                  @"favorite":@"false",
                                   //@"profile_pic": @"",
                                   @"created_at":dateFromString,
                                   @"updated_at":dateFromString
                                   };
     
     [[GJContactsSyncManager defaultManager] createContactToUploadWithImage:self.imagePicked?_avatarButton.imageView.image:nil andInfo:contactInfo withCompletionBlock:^{
+        NSLog(@"CONTACT TO UPLOAD CREATED");
+        [[GJContactsRetryManager defaultManager] checkAndStartUpload];
         [self.navigationController popViewControllerAnimated:YES];
     }];
-    
-//    [[GJContactsSyncManager defaultManager] postContactDetails:contactInfo withCompletionBlock:^(NSError *error, NSDictionary *data) {
-//    }];
 }
 
 #pragma mark - Photo picker
 
 -(IBAction)avatarPressed:(id)sender
 {
-//    NSMutableArray *buttons = [@[@"Open Camera", @"Select from Gallery"] mutableCopy];
-//    if(self.imagePicked)
-//        [buttons addObject:@"Remove Photo"];
-    
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                  delegate:self
                         cancelButtonTitle:@"Cancel"

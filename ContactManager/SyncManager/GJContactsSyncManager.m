@@ -167,29 +167,9 @@ static NSDateFormatter * _dateFormatter = nil;
                                   }];
 }
 
-- (void)createContactFromInfo:(NSDictionary*)contactInfo removeContactUpload:(GJContactToUpload*)contactToUpload  withCompletionBlock:(GJCompletionBlock)completionBlock;
-{
-    [self.persistentContainer performBackgroundTask:^(NSManagedObjectContext * context) {
-        
-        GJContactEntity *contactEntity = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([GJContactEntity class]) inManagedObjectContext:context];
-        [self fillContact:contactEntity fromDictionary:contactInfo];
-        
-        NSError *error = nil;
-        if (![context save:&error]) {
-            NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
-        }
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            [context deleteObject:contactToUpload];
-            completionBlock();
-        });
-    }];
-}
-
 - (void) updateContactDetails:(NSDictionary*)contactInfo withCompletionBlock:(ContactUpdateCompletionBlock)completionBlock
 {
-    [[APIClient defaultClient] updateContact:contactInfo WithCompletionBlock:^(NSError *error, id data) {
+    [[APIClient defaultClient] updateContact:contactInfo withCompletionBlock:^(NSError *error, id data) {
         
         if(!error)
         {
@@ -214,27 +194,34 @@ static NSDateFormatter * _dateFormatter = nil;
 
 -(void)postContactDetails:(NSDictionary *)contactInfo withCompletionBlock:(ContactCreateCompletionBlock)completionBlock
 {
-    [[APIClient defaultClient] postContact:contactInfo WithCompletionBlock:^(NSError *error, id data) {
+    [[APIClient defaultClient] postContact:contactInfo withCompletionBlock:^(NSError *error, id data) {
         
         if(!error)
         {
-            [self.persistentContainer performBackgroundTask:^(NSManagedObjectContext * context) {
-                
-                NSDictionary *contactInfo = (NSDictionary*)data;
-                GJContactEntity *contactEntity = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([GJContactEntity class]) inManagedObjectContext:context];
-                [self fillContact:contactEntity fromDictionary:contactInfo];
-                contactEntity.isInfoFetched = YES;
-                
-                NSError *error = nil;
-                if (![context save:&error]) {
-                    NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
-                }
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    
-                });
-            }];
+            completionBlock(nil, data);                        
         }
+        else
+        {
+            completionBlock(error, nil);
+        }
+    }];
+}
+
+- (void)createContactFromInfo:(NSDictionary*)contactInfo removeContactUpload:(GJContactToUpload*)contactToUpload  withCompletionBlock:(GJCompletionBlock)completionBlock;
+{
+    [self.persistentContainer performBackgroundTask:^(NSManagedObjectContext * context) {
+        
+        GJContactEntity *contactEntity = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([GJContactEntity class]) inManagedObjectContext:context];
+        [self fillContact:contactEntity fromDictionary:contactInfo];
+        
+        NSError *error = nil;
+        if (![context save:&error]) {
+            NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completionBlock();
+        });
     }];
 }
 
@@ -290,7 +277,7 @@ static NSDateFormatter * _dateFormatter = nil;
      }
         */
     
-    [[APIClient defaultClient] uploadImage:imageData WithCompletionBlock:^(NSError *error, id data) {
+    [[APIClient defaultClient] uploadImage:imageData withCompletionBlock:^(NSError *error, id data) {
         if(!error)
         {
             NSDictionary *imageInfo = (NSDictionary*)data;
@@ -305,6 +292,20 @@ static NSDateFormatter * _dateFormatter = nil;
         
     }];
     
+}
+
+-(void)postContactDetails:(NSDictionary *)contactInfo withImageData:(NSData*)imageData withCompletionBlock:(ContactCreateCompletionBlock)completionBlock
+{
+    [[APIClient defaultClient] postContact:contactInfo withImageData:imageData withCompletionBlock:^(NSError *error, id data) {        
+        if(!error)
+        {
+            completionBlock(nil, data);
+        }
+        else
+        {
+            completionBlock(error, nil);
+        }
+    }];
 }
 
 @end

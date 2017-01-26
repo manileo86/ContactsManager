@@ -401,8 +401,23 @@ static APIClient *defaultClient = nil;
      }];
 }
 
-- (void)postContact:(NSDictionary*)contactInfo WithCompletionBlock:(APICompletionBlock)completionBlock
+- (void)postContact:(NSDictionary*)contactInfo withCompletionBlock:(APICompletionBlock)completionBlock
 {
+    NSString *requestPath = [self requestPathWithEndpointPath:APIClientContactsURLPath];
+    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    
+    [manager POST:requestPath parameters:contactInfo progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        completionBlock(nil, (NSDictionary*)responseObject);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSString* errResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
+        NSLog(@"%@",errResponse);
+        completionBlock(error, nil);
+    }];
+    
+    return;
+    
     [self runPOSTRequestWithEndpoint:APIClientContactsURLPath parameters:contactInfo completion:
      ^(NSError *error, NSDictionary *data) {
          
@@ -433,7 +448,27 @@ static APIClient *defaultClient = nil;
      }];
 }
 
-- (void)updateContact:(NSDictionary*)contactInfo WithCompletionBlock:(APICompletionBlock)completionBlock
+- (void)postContact:(NSDictionary*)contactInfo withImageData:(NSData*)imageData withCompletionBlock:(APICompletionBlock)completionBlock
+{
+    NSString *requestPath = [self requestPathWithEndpointPath:@"contacts"];
+    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    
+    [manager POST:requestPath
+       parameters:contactInfo
+constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+    [formData appendPartWithFileData:imageData name:@"profile_pic" fileName:@"profile.jpg" mimeType:@"image/jpeg"];
+} progress:nil
+          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+              completionBlock(nil, responseObject);
+          }
+          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+              completionBlock(error, nil);
+          }];
+}
+
+- (void)updateContact:(NSDictionary*)contactInfo withCompletionBlock:(APICompletionBlock)completionBlock
 {
     NSString *path = [NSString stringWithFormat:APIClientGetContactDetailsURLPath, [contactInfo objectForKey:@"id"]];
     
@@ -467,11 +502,10 @@ static APIClient *defaultClient = nil;
      }];
 }
 
-- (void)uploadImage:(NSData *)imageData WithCompletionBlock:(APICompletionBlock)completionBlock
+- (void)uploadImage:(NSData *)imageData withCompletionBlock:(APICompletionBlock)completionBlock
 {   
     [self runPOSTRequestWithEndpoint:APIUploadImageURLPath parameters:nil bodyConstructingBlock:^(id<AFMultipartFormData> formData) {
-        [formData appendPartWithFileData:imageData name:@"upload" fileName:@"profile.jpg" mimeType:@"image/jpeg"];
-        
+        [formData appendPartWithFileData:imageData name:@"upload" fileName:@"profile.jpg" mimeType:@"image/jpeg"];        
         NSData *daysData = [@"7" dataUsingEncoding:NSUTF8StringEncoding];
         [formData appendPartWithFormData:daysData name:@"data[days]"];
         

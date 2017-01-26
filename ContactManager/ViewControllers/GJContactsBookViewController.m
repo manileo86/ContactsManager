@@ -16,11 +16,11 @@
 #import "UIColor+HexString.h"
 #import "GJContactToUpload+CoreDataClass.h"
 #import "GJContactUploadHeaderView.h"
+#import "GJContactsRetryManager.h"
 
 @interface GJContactsBookViewController ()<NSFetchedResultsControllerDelegate, UITableViewDataSource, UITableViewDelegate, GJContactTableViewCellDelegate>
 
 @property (strong, nonatomic) NSFetchedResultsController *contactsFRC;
-@property (strong, nonatomic) NSFetchedResultsController *contactToUploadFRC;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *addContactButton;
 @property (weak, nonatomic) IBOutlet UIView *noContactView;
@@ -37,21 +37,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(refreshData:)
-                                                 name:NSManagedObjectContextDidSaveNotification
-                                               object:nil];
-    
+    [self subscribeForNotifications];
     self.navigationController.navigationBarHidden = NO;
     self.title = @"Contact Book";
     [self loadContacts];
-    [self loadContactsToUpload];
+    [self loadContactsToUpload:nil];
     [self applyShadowToAddContactButton];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
+     [super viewWillAppear:animated];
 }
 
 - (void)viewDidLayoutSubviews{
@@ -63,10 +59,23 @@
     }
 }
 
+- (void)subscribeForNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(refreshData:)
+                                                 name:NSManagedObjectContextDidSaveNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(contactToUploadUpdated:)
+                                                 name:GJContactUploadNotification
+                                               object:nil];
+}
+
 - (void)loadContacts
 {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([GJContactEntity class])];
-    NSSortDescriptor *sd = [NSSortDescriptor sortDescriptorWithKey:@"firstName" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+    NSSortDescriptor *sd = [NSSortDescriptor sortDescriptorWithKey:@"firstName" ascending:NO selector:@selector(localizedCaseInsensitiveCompare:)];
     fetchRequest.sortDescriptors = @[sd];
     self.contactsFRC = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[self persistentContainer].viewContext sectionNameKeyPath:@"firstName.stringGroupByFirstInitial" cacheName:nil];
     self.contactsFRC.delegate = self;
@@ -76,25 +85,24 @@
     _tableView.hidden = (self.contactsFRC.fetchedObjects.count==0);
 }
 
-- (void)loadContactsToUpload
+- (void)loadContactsToUpload:(GJContactToUpload*)contactToUpload
 {
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([GJContactToUpload class])];
-    fetchRequest.sortDescriptors = @[];
-    self.contactToUploadFRC = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[self persistentContainer].viewContext sectionNameKeyPath:nil cacheName:nil];
-    self.contactToUploadFRC.delegate = self;
-    [self.contactToUploadFRC performFetch:nil];
-    
-    GJContactToUpload *contactToUpload = [self.contactToUploadFRC.fetchedObjects firstObject];
     if(!contactToUpload)
-    {
-        [self.headerView loadViewWithContactToUpload:nil];
-        self.tableView.tableHeaderView = nil;
+        contactToUpload = [[GJContactsRetryManager defaultManager] currentContactToUpload];
+    
+    [self.headerView loadViewWithContactToUpload:contactToUpload];
+    
+    CGRect expectedFrame = CGRectMake(0.0,0.0,self.tableView.bounds.size.width, [GJContactUploadHeaderView viewHeight]);
+    if (!CGRectEqualToRect(self.headerView.frame, expectedFrame)) {
+        self.headerView.frame = expectedFrame;
     }
-    else
-    {
-        self.tableView.tableHeaderView = self.headerView;
-        [self.headerView loadViewWithContactToUpload:contactToUpload];
-    }
+    self.tableView.tableHeaderView = contactToUpload?self.headerView:nil;
+}
+
+- (void)contactToUploadUpdated:(NSNotification*)notification
+{
+    GJContactToUpload *contactToUpload = (GJContactToUpload*)[notification object];
+    [self loadContactsToUpload:contactToUpload];
 }
 
 //- (NSArray *)sectionIndexTitlesForTableView: (UITableView *) tableView
@@ -164,26 +172,12 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
-    if(controller == _contactsFRC)
-        [self refreshUI];
-    else
-    {
-        GJContactToUpload *contactToUpload = [self.contactToUploadFRC.fetchedObjects firstObject];
-        if(!contactToUpload)
-        {            
-            self.tableView.tableHeaderView = nil;
-        }
-        else
-        {
-            self.tableView.tableHeaderView = self.headerView;
-        }
-    }
+    [self refreshUI];
 }
 
 - (void)refreshUI
 {
-    [self.tableView reloadData];
-    //[self loadContactsToUpload];
+    [self.tableView reloadData];    
 }
 
 - (void) refreshData:(NSNotification *)notif {
