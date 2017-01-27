@@ -33,6 +33,7 @@
 		3CD4B71D1E38765D0040BC6A /* loading_bar.gif in Resources */ = {isa = PBXBuildFile; fileRef = 3CD4B71C1E38765D0040BC6A /* loading_bar.gif */; };
 		3CD4B7651E39249A0040BC6A /* GJContactEntity+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD4B7631E39249A0040BC6A /* GJContactEntity+CoreDataProperties.m */; };
 		3CD4B7691E3A79920040BC6A /* GJContactsRetryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD4B7681E3A79920040BC6A /* GJContactsRetryManager.m */; };
+		3CD4B76C1E3AC2CB0040BC6A /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD4B76B1E3AC2CB0040BC6A /* NSData+Base64.m */; };
 		6133BCC9756E46278C17B570 /* libPods-ContactManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FA082CCF02B05EF8B40FD9B /* libPods-ContactManager.a */; };
 		FD7A26D290FB0F3BEACC9080 /* libPods-ContactManagerUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 747468EAAF980BC9C1608E34 /* libPods-ContactManagerUITests.a */; };
 /* End PBXBuildFile section */
@@ -111,6 +112,8 @@
 		3CD4B7631E39249A0040BC6A /* GJContactEntity+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GJContactEntity+CoreDataProperties.m"; sourceTree = "<group>"; };
 		3CD4B7671E3A79920040BC6A /* GJContactsRetryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJContactsRetryManager.h; sourceTree = "<group>"; };
 		3CD4B7681E3A79920040BC6A /* GJContactsRetryManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJContactsRetryManager.m; sourceTree = "<group>"; };
+		3CD4B76A1E3AC2CB0040BC6A /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
+		3CD4B76B1E3AC2CB0040BC6A /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
 		71FEC61C165A2F971DFA0BB0 /* Pods-ContactManagerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ContactManagerTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ContactManagerTests/Pods-ContactManagerTests.release.xcconfig"; sourceTree = "<group>"; };
 		747468EAAF980BC9C1608E34 /* libPods-ContactManagerUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ContactManagerUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		89699E9B1D083F5AD4202E49 /* Pods-ContactManagerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ContactManagerUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ContactManagerUITests/Pods-ContactManagerUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -305,6 +308,8 @@
 				3CD4B6FE1E37E5EB0040BC6A /* UIButton+Position.m */,
 				3CD4B7091E3865700040BC6A /* UIImage+FixOrientation.h */,
 				3CD4B70A1E3865700040BC6A /* UIImage+FixOrientation.m */,
+				3CD4B76A1E3AC2CB0040BC6A /* NSData+Base64.h */,
+				3CD4B76B1E3AC2CB0040BC6A /* NSData+Base64.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -646,6 +651,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3CD4B76C1E3AC2CB0040BC6A /* NSData+Base64.m in Sources */,
 				3C98149C1E2E744300A1993C /* GJContactDetailsViewController.m in Sources */,
 				3C98149D1E2E744300A1993C /* GJContactsBookViewController.m in Sources */,
 				3C9FA8D11E3103E10022C102 /* NSString+Additions.m in Sources */,

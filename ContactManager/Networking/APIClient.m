@@ -7,6 +7,7 @@
 
 
 #import "APIClient.h"
+#import "NSData+Base64.h"
 
 #define GJ_SAFE_BLOCK(block, ...) block ? block(__VA_ARGS__) : nil
 #define GJ_WEAK_SELF __weak __typeof(self)
@@ -448,24 +449,56 @@ static APIClient *defaultClient = nil;
      }];
 }
 
+//- (void)postContact:(NSDictionary*)contactInfo withImageData:(NSData*)imageData withCompletionBlock:(APICompletionBlock)completionBlock
+//{
+//    NSString *requestPath = [self requestPathWithEndpointPath:@"contacts"];
+//    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+//    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+//    [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+//    
+//    [manager POST:requestPath
+//       parameters:contactInfo
+//constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+//    [formData appendPartWithFileData:imageData name:@"profile_pic" fileName:@"profile.jpg" mimeType:@"image/jpeg"];
+//} progress:nil
+//          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+//              completionBlock(nil, responseObject);
+//          }
+//          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//              completionBlock(error, nil);
+//          }];
+//}
+
 - (void)postContact:(NSDictionary*)contactInfo withImageData:(NSData*)imageData withCompletionBlock:(APICompletionBlock)completionBlock
 {
     NSString *requestPath = [self requestPathWithEndpointPath:@"contacts"];
-    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    NSMutableDictionary *body = [contactInfo mutableCopy];
+    NSString *imageString = [imageData base64EncodedStringWithOptions:0];
+    [body setValue:imageString forKey:@"profile_pic"];
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:body options:0 error:&error];
+    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     
-    [manager POST:requestPath
-       parameters:contactInfo
-constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-    [formData appendPartWithFileData:imageData name:@"profile_pic" fileName:@"profile.jpg" mimeType:@"image/jpeg"];
-} progress:nil
-          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-              completionBlock(nil, responseObject);
-          }
-          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-              completionBlock(error, nil);
-          }];
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    
+    NSMutableURLRequest *req = [[AFJSONRequestSerializer serializer] requestWithMethod:@"POST" URLString:requestPath parameters:nil error:nil];
+    
+    req.timeoutInterval= [[[NSUserDefaults standardUserDefaults] valueForKey:@"timeoutInterval"] longValue];
+    [req setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [req setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [req setHTTPBody:[jsonString dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    
+    [[manager dataTaskWithRequest:req completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+        
+        if (!error) {
+            NSLog(@"Reply JSON: %@", responseObject);
+            completionBlock(nil, responseObject);
+        } else {
+            NSLog(@"Error: %@, %@, %@", error, response, responseObject);
+            completionBlock(error, nil);
+        }
+    }] resume];
 }
 
 - (void)updateContact:(NSDictionary*)contactInfo withCompletionBlock:(APICompletionBlock)completionBlock

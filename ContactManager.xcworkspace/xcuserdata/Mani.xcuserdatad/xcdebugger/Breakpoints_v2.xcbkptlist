@@ -16,22 +16,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ContactManager/Views/Views/GJContactUploadHeaderView.m"
-            timestampString = "507164436.492708"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "34"
-            endingLineNumber = "34"
-            landmarkName = "-commonInit"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -51,30 +35,14 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ContactManager/RetryManager/GJContactsRetryManager.m"
-            timestampString = "507164931.632107"
+            filePath = "ContactManager/Networking/APIClient.m"
+            timestampString = "507167799.802187"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "166"
-            endingLineNumber = "166"
-            landmarkName = "-postContactWithImage"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ContactManager/SyncManager/GJContactsSyncManager.m"
-            timestampString = "507162591.321161"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "300"
-            endingLineNumber = "300"
-            landmarkName = "-postContactDetails:withImageData:withCompletionBlock:"
-            landmarkType = "7">
+            startingLineNumber = "454"
+            endingLineNumber = "454"
+            landmarkName = "@implementation APIClient"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -84,13 +52,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ContactManager/Networking/APIClient.m"
-            timestampString = "507166304.369313"
+            timestampString = "507167799.802187"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "453"
-            endingLineNumber = "453"
-            landmarkName = "-postContact:withImageData:withCompletionBlock:"
-            landmarkType = "7">
+            startingLineNumber = "459"
+            endingLineNumber = "459"
+            landmarkName = "@implementation APIClient"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -100,13 +68,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ContactManager/Networking/APIClient.m"
-            timestampString = "507166304.369313"
+            timestampString = "507167799.802187"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "458"
-            endingLineNumber = "458"
-            landmarkName = "-postContact:withImageData:withCompletionBlock:"
-            landmarkType = "7">
+            startingLineNumber = "465"
+            endingLineNumber = "465"
+            landmarkName = "@implementation APIClient"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -116,13 +84,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ContactManager/Networking/APIClient.m"
-            timestampString = "507166304.369313"
+            timestampString = "507167799.802187"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "464"
-            endingLineNumber = "464"
-            landmarkName = "-postContact:withImageData:withCompletionBlock:"
-            landmarkType = "7">
+            startingLineNumber = "462"
+            endingLineNumber = "462"
+            landmarkName = "@implementation APIClient"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -132,29 +100,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ContactManager/Networking/APIClient.m"
-            timestampString = "507166304.369313"
+            timestampString = "507167799.802187"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "461"
-            endingLineNumber = "461"
-            landmarkName = "-postContact:withImageData:withCompletionBlock:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ContactManager/Networking/APIClient.m"
-            timestampString = "507166304.369313"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "467"
-            endingLineNumber = "467"
-            landmarkName = "-postContact:withImageData:withCompletionBlock:"
-            landmarkType = "7">
+            startingLineNumber = "468"
+            endingLineNumber = "468"
+            landmarkName = "@implementation APIClient"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -170,6 +122,54 @@
             startingLineNumber = "70"
             endingLineNumber = "70"
             landmarkName = "-commonInit"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ContactManager/Networking/APIClient.m"
+            timestampString = "507168012.285416"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "496"
+            endingLineNumber = "496"
+            landmarkName = "-postContact:withImageData:withCompletionBlock:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ContactManager/Networking/APIClient.m"
+            timestampString = "507167777.660511"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "474"
+            endingLineNumber = "474"
+            landmarkName = "-postContact:withImageData:withCompletionBlock:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ContactManager/Networking/APIClient.m"
+            timestampString = "507168266.738648"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "477"
+            endingLineNumber = "477"
+            landmarkName = "-postContact:withImageData:withCompletionBlock:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -229,7 +229,7 @@ static NSDateFormatter * _dateFormatter = nil;
 {
     [self.persistentContainer performBackgroundTask:^(NSManagedObjectContext * context) {
         
-        NSData *imageData = UIImageJPEGRepresentation(image, 0.7); // 0.7 is JPG quality
+        NSData *imageData = UIImagePNGRepresentation(image); // 0.7 is JPG quality
         NSData *contactData = [NSKeyedArchiver archivedDataWithRootObject:contactInfo];
 
         GJContactToUpload *contactToUpload = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([GJContactToUpload class]) inManagedObjectContext:context];

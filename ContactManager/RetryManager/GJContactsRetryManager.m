@@ -104,8 +104,8 @@ static NSDateFormatter * _dateFormatter = nil;
     // check for image
     if(_contactToUpload.image)
     {
-        [self uploadImage];
-        //[self postContactWithImage];
+        //[self uploadImage];
+        [self postContactWithImage];
     }
     else
     {
