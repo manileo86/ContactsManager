@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *addContactButton;
 @property (weak, nonatomic) IBOutlet UIView *noContactView;
+@property (weak, nonatomic) IBOutlet UILabel *noContactLabel;
 @property (weak, nonatomic) IBOutlet GJContactUploadHeaderView *headerView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *headerViewHeightContraint;
 @property (strong, nonatomic) UIBarButtonItem *favoriteButton;
@@ -77,7 +78,7 @@
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isFavorite == 1"];
         fetchRequest.predicate = predicate;
     }
-    NSSortDescriptor *sd = [NSSortDescriptor sortDescriptorWithKey:@"firstName" ascending:NO selector:@selector(localizedCaseInsensitiveCompare:)];
+    NSSortDescriptor *sd = [NSSortDescriptor sortDescriptorWithKey:@"firstName" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
     fetchRequest.sortDescriptors = @[sd];
     self.contactsFRC = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[self persistentContainer].viewContext sectionNameKeyPath:@"firstName.stringGroupByFirstInitial" cacheName:nil];
     self.contactsFRC.delegate = self;
@@ -85,6 +86,7 @@
     [self.tableView reloadData];
     
     _tableView.hidden = (self.contactsFRC.fetchedObjects.count==0);
+    _noContactLabel.text = self.isFavoritesFilterOn?@"No Favortie Contacts":@"No Contact Found";
 }
 
 - (void)loadContactsToUpload:(GJContactToUpload*)contactToUpload

@@ -227,6 +227,7 @@
                         <outlet property="addContactButton" destination="MpL-Eh-ERt" id="kZc-lm-9WR"/>
                         <outlet property="headerView" destination="3jF-mK-jMP" id="Sgw-Jf-dQp"/>
                         <outlet property="headerViewHeightContraint" destination="owH-Qa-Ygf" id="Qn4-7X-eHw"/>
+                        <outlet property="noContactLabel" destination="XDQ-gr-8A5" id="bdq-bN-7MW"/>
                         <outlet property="noContactView" destination="hQ0-id-CoN" id="wbl-u8-D0x"/>
                         <outlet property="tableView" destination="yxs-wr-gAi" id="ndb-Qk-geH"/>
                     </connections>

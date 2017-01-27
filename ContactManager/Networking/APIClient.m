@@ -423,13 +423,11 @@ static APIClient *defaultClient = nil;
 //    NSString *requestPath = [self requestPathWithEndpointPath:@"contacts"];
 //    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
 //    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-//    [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+//    [manager.requestSerializer setValue:@"multipart/form-data" forHTTPHeaderField:@"Content-Type"];
 //    
-//    [manager POST:requestPath
-//       parameters:contactInfo
-//constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-//    [formData appendPartWithFileData:imageData name:@"profile_pic" fileName:@"profile.jpg" mimeType:@"image/jpeg"];
-//} progress:nil
+//    [manager POST:requestPath parameters:contactInfo constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+//        [formData appendPartWithFileData:imageData name:@"profile_pic" fileName:@"profile.png" mimeType:@"image/png"];}
+//         progress:nil
 //          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
 //              completionBlock(nil, responseObject);
 //          }
@@ -469,6 +467,74 @@ static APIClient *defaultClient = nil;
         }
     }] resume];
 }
+
+//- (void)postContact:(NSDictionary *)contactInfo withImageData:(NSData *)imageData withCompletionBlock:(APICompletionBlock)completionBlock
+//{
+//    NSString *requestPath = [self requestPathWithEndpointPath:APIClientContactsURLPath];
+//    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:requestPath]];
+//    
+//    [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
+//    [request setHTTPShouldHandleCookies:NO];
+//    [request setTimeoutInterval:60];
+//    [request setHTTPMethod:@"POST"];
+//    
+//    NSString *boundary = @"9A308E53-3D8C-47EF-B2B7-4DFF9AE74A0E";
+//    
+//    // set Content-Type in HTTP header
+//    NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
+//    [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
+//    
+//    // post body
+//    NSMutableData *body = [NSMutableData data];
+//    
+//    [contactInfo enumerateKeysAndObjectsUsingBlock:^(NSString *parameterKey, NSString *parameterValue, BOOL *stop) {
+//        [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+//        [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", parameterKey] dataUsingEncoding:NSUTF8StringEncoding]];
+//        [body appendData:[[NSString stringWithFormat:@"%@\r\n", parameterValue] dataUsingEncoding:NSUTF8StringEncoding]];
+//    }];
+//    
+//    // add image data
+//    if (imageData) {
+//        [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+//        [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=%@; filename=imageName.jpg\r\n", @"imageFormKey"] dataUsingEncoding:NSUTF8StringEncoding]];
+//        [body appendData:[@"Content-Type: image/jpeg\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+//        [body appendData:imageData];
+//        [body appendData:[[NSString stringWithFormat:@"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+//    }
+//    
+//    [body appendData:[[NSString stringWithFormat:@"--%@--\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+//    
+//    // setting the body of the post to the reqeust
+//    [request setHTTPBody:body];
+//    
+//    // set the content-length
+//    NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[body length]];
+//    [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+//    
+//    
+//    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue currentQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+//        
+//        if (!error) {
+//            NSError *jsonError = nil;
+//            NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonError];
+//            if (jsonError)
+//            {
+//                NSLog(@"Error parsing JSON.");
+//            }
+//            else
+//            {
+//                NSLog(@"Response: %@", responseObject);
+//            }
+//            
+//            completionBlock(nil, responseObject);
+//        }
+//        else
+//        {
+//            NSLog(@"Error: %@, %@", error, response);
+//            completionBlock(error, nil);
+//        }
+//    }];
+//}
 
 - (void)updateContact:(NSDictionary*)contactInfo withCompletionBlock:(APICompletionBlock)completionBlock
 {
