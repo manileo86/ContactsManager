@@ -50,7 +50,7 @@ static NSDateFormatter * _dateFormatter = nil;
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([GJContactToUpload class])];
         fetchRequest.sortDescriptors = @[];
         self.contactToUploadFRC = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[self persistentContainer].viewContext sectionNameKeyPath:nil cacheName:nil];
-        self.contactToUploadFRC.delegate = self;
+        self.contactToUploadFRC.delegate = nil;
     }
     [self.contactToUploadFRC performFetch:nil];
     self.contactToUpload = [self.contactToUploadFRC.fetchedObjects firstObject];
@@ -262,10 +262,10 @@ static NSDateFormatter * _dateFormatter = nil;
 
 #pragma mark - NSFetchedResultsControllerDelegate
 
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
-{
-    [self sendUpdateNotification];
-}
+//- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+//{
+//    [self sendUpdateNotification];
+//}
 
 #pragma mark - Notifications
 

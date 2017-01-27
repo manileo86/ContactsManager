@@ -25,7 +25,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *addContactButton;
 @property (weak, nonatomic) IBOutlet UIView *noContactView;
 @property (weak, nonatomic) IBOutlet GJContactUploadHeaderView *headerView;
-
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *headerViewHeightContraint;
 @end
 
 @implementation GJContactsBookViewController
@@ -48,15 +48,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
      [super viewWillAppear:animated];
-}
-
-- (void)viewDidLayoutSubviews{
-    [super viewDidLayoutSubviews];
-    CGRect expectedFrame = CGRectMake(0.0,0.0,self.tableView.bounds.size.width, [GJContactUploadHeaderView viewHeight]);
-    if (!CGRectEqualToRect(self.headerView.frame, expectedFrame)) {
-        self.headerView.frame = expectedFrame;
-        self.tableView.tableHeaderView = self.headerView;
-    }
 }
 
 - (void)subscribeForNotifications
@@ -89,14 +80,14 @@
 {
     if(!contactToUpload)
         contactToUpload = [[GJContactsRetryManager defaultManager] currentContactToUpload];
-    
+
+    self.headerViewHeightContraint.constant = contactToUpload?[GJContactUploadHeaderView viewHeight]:0;
+    self.headerView.hidden = contactToUpload?NO:YES;
     [self.headerView loadViewWithContactToUpload:contactToUpload];
-    
-    CGRect expectedFrame = CGRectMake(0.0,0.0,self.tableView.bounds.size.width, [GJContactUploadHeaderView viewHeight]);
-    if (!CGRectEqualToRect(self.headerView.frame, expectedFrame)) {
-        self.headerView.frame = expectedFrame;
-    }
-    self.tableView.tableHeaderView = contactToUpload?self.headerView:nil;
+    [self.view setNeedsUpdateConstraints];
+    [UIView animateWithDuration:0.25f animations:^{
+        [self.view layoutIfNeeded];
+    }];
 }
 
 - (void)contactToUploadUpdated:(NSNotification*)notification
@@ -197,6 +188,16 @@
 
 -(IBAction)addContactButtonPressed:(id)sender
 {
+    if([[GJContactsRetryManager defaultManager] currentContactToUpload])
+    {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@""
+                                                            message:@"A Contact is being uploaded, Please wait.. "
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"Ok"
+                                                  otherButtonTitles:nil, nil];
+        [alertView show];
+        return;
+    }
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     GJAddContactViewController *addVC = [storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([GJAddContactViewController class])];
     [self.navigationController pushViewController:addVC animated:YES];
