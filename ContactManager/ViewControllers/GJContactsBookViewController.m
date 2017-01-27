@@ -26,6 +26,9 @@
 @property (weak, nonatomic) IBOutlet UIView *noContactView;
 @property (weak, nonatomic) IBOutlet GJContactUploadHeaderView *headerView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *headerViewHeightContraint;
+@property (strong, nonatomic) UIBarButtonItem *favoriteButton;
+@property (assign, nonatomic) BOOL isFavoritesFilterOn;
+
 @end
 
 @implementation GJContactsBookViewController
@@ -43,6 +46,9 @@
     [self loadContacts];
     [self applyShadowToAddContactButton];
     [GJContactsRetryManager sharedManager];
+    
+    self.favoriteButton = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"heart_grey"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(favoritePressed)];
+    self.navigationItem.rightBarButtonItem = self.favoriteButton;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -66,6 +72,11 @@
 - (void)loadContacts
 {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([GJContactEntity class])];
+    if(self.isFavoritesFilterOn)
+    {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isFavorite == 1"];
+        fetchRequest.predicate = predicate;
+    }
     NSSortDescriptor *sd = [NSSortDescriptor sortDescriptorWithKey:@"firstName" ascending:NO selector:@selector(localizedCaseInsensitiveCompare:)];
     fetchRequest.sortDescriptors = @[sd];
     self.contactsFRC = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[self persistentContainer].viewContext sectionNameKeyPath:@"firstName.stringGroupByFirstInitial" cacheName:nil];
@@ -206,6 +217,16 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Favorites
+
+- (void)favoritePressed
+{
+    self.isFavoritesFilterOn = !self.isFavoritesFilterOn;
+    self.favoriteButton = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:self.isFavoritesFilterOn?@"heart":@"heart_grey"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(favoritePressed)];
+    self.navigationItem.rightBarButtonItem = self.favoriteButton;
+    [self loadContacts];
 }
 
 @end

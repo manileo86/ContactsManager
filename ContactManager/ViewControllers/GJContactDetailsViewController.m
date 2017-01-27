@@ -40,10 +40,8 @@
     // Do any additional setup after loading the view, typically from a nib.
     self.title = @"Detail";
     
-    UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"share_contact"] style:UIBarButtonItemStylePlain target:self action:@selector(sharePressed)];
-    self.navigationItem.rightBarButtonItem = anotherButton;
-    
-
+    UIBarButtonItem *rButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"share_contact"] style:UIBarButtonItemStylePlain target:self action:@selector(sharePressed)];
+    self.navigationItem.rightBarButtonItem = rButton;
     
     _nameButton.hidden = YES;
     _phoneButton.hidden = YES;
