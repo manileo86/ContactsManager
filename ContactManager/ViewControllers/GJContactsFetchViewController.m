@@ -27,7 +27,7 @@
     // Do any additional setup after loading the view, typically from a nib.
     self.navigationController.navigationBarHidden = YES;
     
-    [[GJContactsSyncManager defaultManager] fetchContacts];
+    [[GJContactsSyncManager sharedManager] fetchContacts];
 }
 
 - (void) setupListeners {
@@ -70,7 +70,7 @@
 - (IBAction)retryPressed:(id)sender
 {
     self.retryButton.hidden = YES;    
-    [[GJContactsSyncManager defaultManager] fetchContacts];
+    [[GJContactsSyncManager sharedManager] fetchContacts];
 }
 
 - (void)didReceiveMemoryWarning {

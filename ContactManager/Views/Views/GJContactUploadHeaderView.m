@@ -80,7 +80,7 @@
 
 - (IBAction)retryPressed:(id)sender
 {
-    [[GJContactsRetryManager defaultManager] checkAndStartUpload];
+    [[GJContactsRetryManager sharedManager] checkAndStartUpload];
 }
 
 + (CGFloat)viewHeight

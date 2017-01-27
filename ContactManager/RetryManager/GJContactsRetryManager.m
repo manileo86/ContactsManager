@@ -25,7 +25,7 @@ static NSDateFormatter * _dateFormatter = nil;
     return ((AppDelegate *)[UIApplication sharedApplication].delegate).persistentContainer;
 }
 
-+ (instancetype) defaultManager
++ (instancetype) sharedManager
 {
     static GJContactsRetryManager * retryManager = nil;
     static dispatch_once_t onceToken;
@@ -120,7 +120,7 @@ static NSDateFormatter * _dateFormatter = nil;
     {
         NSLog(@"IMAGE UPLOAD STARTED");
         // Upload Image
-        [[GJContactsSyncManager defaultManager] uploadImageData:_contactToUpload.image withCompletionBlock:^(NSError *error, NSString *imageId) {
+        [[GJContactsSyncManager sharedManager] uploadImageData:_contactToUpload.image withCompletionBlock:^(NSError *error, NSString *imageId) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 if(!error)
                 {
@@ -160,7 +160,7 @@ static NSDateFormatter * _dateFormatter = nil;
     __block NSDictionary *contactInfo = (NSDictionary*) [NSKeyedUnarchiver unarchiveObjectWithData:_contactToUpload.params];
     // Post Contact
     NSLog(@"POST CONTACT STARTED");
-    [[GJContactsSyncManager defaultManager] postContactDetails:contactInfo withImageData:_contactToUpload.image withCompletionBlock:^(NSError *error, NSDictionary *data) {
+    [[GJContactsSyncManager sharedManager] postContactDetails:contactInfo withImageData:_contactToUpload.image withCompletionBlock:^(NSError *error, NSDictionary *data) {
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if(!error)
@@ -168,7 +168,7 @@ static NSDateFormatter * _dateFormatter = nil;
                 NSLog(@"POST CONTACT SUCCEDED");
                 // Post Contact Succeded
                 NSDictionary *contactInfoFromResponse = (NSDictionary*)data;
-                [[GJContactsSyncManager defaultManager] createContactFromInfo:contactInfoFromResponse removeContactUpload:_contactToUpload withCompletionBlock:^{
+                [[GJContactsSyncManager sharedManager] createContactFromInfo:contactInfoFromResponse removeContactUpload:_contactToUpload withCompletionBlock:^{
                     dispatch_async(dispatch_get_main_queue(), ^{
                         NSLog(@"CONTACT CREATED");
                         [self clearContactToUpload];
@@ -198,14 +198,14 @@ static NSDateFormatter * _dateFormatter = nil;
     __block NSDictionary *contactInfo = (NSDictionary*) [NSKeyedUnarchiver unarchiveObjectWithData:_contactToUpload.params];
     // Post Contact
     NSLog(@"POST CONTACT STARTED");
-    [[GJContactsSyncManager defaultManager] postContactDetails:contactInfo withCompletionBlock:^(NSError *error, NSDictionary *data) {
+    [[GJContactsSyncManager sharedManager] postContactDetails:contactInfo withCompletionBlock:^(NSError *error, NSDictionary *data) {
         dispatch_async(dispatch_get_main_queue(), ^{
             if(!error)
             {
                 NSLog(@"POST CONTACT SUCCEDED");
                 // Post Contact Succeded
                 NSDictionary *contactInfoFromResponse = (NSDictionary*)data;
-                [[GJContactsSyncManager defaultManager] createContactFromInfo:contactInfoFromResponse removeContactUpload:_contactToUpload withCompletionBlock:^{
+                [[GJContactsSyncManager sharedManager] createContactFromInfo:contactInfoFromResponse removeContactUpload:_contactToUpload withCompletionBlock:^{
                     dispatch_async(dispatch_get_main_queue(), ^{
                         NSLog(@"CONTACT CREATED");
                         [self clearContactToUpload];

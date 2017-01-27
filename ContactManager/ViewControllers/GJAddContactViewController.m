@@ -223,9 +223,9 @@
                                   @"updated_at":dateFromString
                                   };
     
-    [[GJContactsSyncManager defaultManager] createContactToUploadWithImage:self.imagePicked?_avatarButton.imageView.image:nil andInfo:contactInfo withCompletionBlock:^{
+    [[GJContactsSyncManager sharedManager] createContactToUploadWithImage:self.imagePicked?_avatarButton.imageView.image:nil andInfo:contactInfo withCompletionBlock:^{
         NSLog(@"CONTACT TO UPLOAD CREATED");
-        [[GJContactsRetryManager defaultManager] checkAndStartUpload];
+        [[GJContactsRetryManager sharedManager] checkAndStartUpload];
         [self.navigationController popViewControllerAnimated:YES];
     }];
 }

@@ -22,7 +22,7 @@ typedef enum ContactUpload_State
 
 @interface GJContactsRetryManager : NSObject
 
-+ (instancetype) defaultManager;
++ (instancetype) sharedManager;
 - (GJContactToUpload*)currentContactToUpload;
 
 - (void)checkAndStartUpload;

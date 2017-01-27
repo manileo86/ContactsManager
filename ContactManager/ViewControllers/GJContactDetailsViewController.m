@@ -82,7 +82,7 @@
     
     if(!_contactEntity.isInfoFetched)
     {
-        [[GJContactsSyncManager defaultManager] getContactDetailsForId:[NSString stringWithFormat:@"%lld",_contactEntity.contactId] withCompletionBlock:^{
+        [[GJContactsSyncManager sharedManager] getContactDetailsForId:[NSString stringWithFormat:@"%lld",_contactEntity.contactId] withCompletionBlock:^{
         }];
     }
     [self refreshUI];
@@ -118,8 +118,7 @@
 {
     NSString *vcf = [VCFGenerator generateVCardStringFor:self.contactEntity];
     NSURL *tmpDirURL = [NSURL fileURLWithPath:NSTemporaryDirectory() isDirectory:YES];
-    NSURL *fileURL = [[tmpDirURL URLByAppendingPathComponent:@"contact"] URLByAppendingPathExtension:@"vcf"];
-    NSLog(@"fileURL: %@", [fileURL path]);
+    NSURL *fileURL = [[tmpDirURL URLByAppendingPathComponent:@"contact"] URLByAppendingPathExtension:@"vcf"];    
     // remove old file
     NSError *error;
     if([[NSFileManager defaultManager] fileExistsAtPath:[fileURL absoluteString]])
@@ -168,7 +167,7 @@
                                   @"favorite":favStatus?@"true":@"false",
                                   @"updated_at":dateFromString
                                   };
-    [[GJContactsSyncManager defaultManager] updateContactDetails:contactInfo withCompletionBlock:^(NSError *error, NSDictionary *data) {
+    [[GJContactsSyncManager sharedManager] updateContactDetails:contactInfo withCompletionBlock:^(NSError *error, NSDictionary *data) {
     }];
 }
 

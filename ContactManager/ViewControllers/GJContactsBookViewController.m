@@ -79,7 +79,7 @@
 - (void)loadContactsToUpload:(GJContactToUpload*)contactToUpload
 {
     if(!contactToUpload)
-        contactToUpload = [[GJContactsRetryManager defaultManager] currentContactToUpload];
+        contactToUpload = [[GJContactsRetryManager sharedManager] currentContactToUpload];
 
     self.headerViewHeightContraint.constant = contactToUpload?[GJContactUploadHeaderView viewHeight]:0;
     self.headerView.hidden = contactToUpload?NO:YES;
@@ -188,7 +188,7 @@
 
 -(IBAction)addContactButtonPressed:(id)sender
 {
-    if([[GJContactsRetryManager defaultManager] currentContactToUpload])
+    if([[GJContactsRetryManager sharedManager] currentContactToUpload])
     {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@""
                                                             message:@"A Contact is being uploaded, Please wait.. "

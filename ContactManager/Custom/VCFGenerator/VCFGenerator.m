@@ -1,9 +1,8 @@
 //
 //  VCFGenerator.m
-//  EasyContact
+//  ContactManager
 //
-//  Created by dosonleung on 2/29/16.
-//  Copyright © 2016 dosonleung. All rights reserved.
+//  Created by Manigandan Parthasarathi on 17/01/17.
 //
 
 #import "VCFGenerator.h"
@@ -17,7 +16,7 @@
 {
     NSString *vcard = @"BEGIN:VCARD\nVERSION:3.0\n";
     
-    // Name
+    // First name / Last name
     vcard = [vcard stringByAppendingFormat:@"N:%@;%@;;;\n",
              ((contact.lastName && contact.lastName.length>0) ? contact.lastName : @""),
              ((contact.firstName && contact.firstName.length>0) ? contact.firstName : @"")];
@@ -25,21 +24,22 @@
     vcard = [vcard stringByAppendingFormat:@"FN:%@ %@\n",
              ((contact.firstName && contact.firstName.length>0) ? contact.firstName : @""),
              ((contact.lastName && contact.lastName.length>0) ? contact.lastName : @"")];
-    // Mail
-    if (contact.email && contact.email.length>0)
-    {
-        NSString *emailString = [NSString stringWithFormat:@"EMAIL;type=INTERNET;type=HOME:%@\n",contact.email];
-        vcard = [vcard stringByAppendingString:emailString];
-    }
     
-    // Tel
+    // Phone
     if (contact.phone && contact.phone.length>0)
     {
         NSString *phoneString = [NSString stringWithFormat:@"TEL;type=CELL:%@\n",contact.phone];
         vcard = [vcard stringByAppendingString:phoneString];
     }
     
-    // Avatar
+    // Email
+    if (contact.email && contact.email.length>0)
+    {
+        NSString *emailString = [NSString stringWithFormat:@"EMAIL;type=INTERNET;type=HOME:%@\n",contact.email];
+        vcard = [vcard stringByAppendingString:emailString];
+    }
+    
+    // Profile Pic
     if (contact.imageUrl && contact.imageUrl.length>0){
         if([[SDWebImageManager sharedManager] diskImageExistsForURL:[NSURL URLWithString:contact.imageUrl]])
         {

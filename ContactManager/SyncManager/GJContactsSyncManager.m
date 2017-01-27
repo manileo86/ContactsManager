@@ -19,7 +19,7 @@ static NSDateFormatter * _dateFormatter = nil;
     return ((AppDelegate *)[UIApplication sharedApplication].delegate).persistentContainer;
 }
 
-+ (instancetype) defaultManager
++ (instancetype) sharedManager
 {
     static GJContactsSyncManager * syncManager = nil;
     static dispatch_once_t onceToken;

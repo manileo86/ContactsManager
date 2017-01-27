@@ -22,7 +22,7 @@ typedef void (^ImageUploadCompletionBlock)(NSError *error, NSString *imageUrl);
 @interface GJContactsSyncManager : NSObject
 
 + (BOOL) isContactsFetchDone;
-+ (instancetype) defaultManager;
++ (instancetype) sharedManager;
 
 - (void) fetchContacts;
 - (void) getContactDetailsForId:(NSString*)contactId withCompletionBlock:(GJCompletionBlock)completionBlock;

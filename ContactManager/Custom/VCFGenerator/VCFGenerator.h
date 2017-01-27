@@ -1,9 +1,8 @@
 //
 //  VCFGenerator.h
-//  EasyContact
+//  ContactManager
 //
-//  Created by dosonleung on 2/29/16.
-//  Copyright © 2016 dosonleung. All rights reserved.
+//  Created by Manigandan Parthasarathi on 17/01/17.
 //
 
 #import <Foundation/Foundation.h>
