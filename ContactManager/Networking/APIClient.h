@@ -29,8 +29,6 @@
 
 - (void)getContactDetailsForId:(NSString*)contactId withCompletionBlock:(APICompletionBlock)completionBlock;
 
-- (void)postContact:(NSDictionary*)contactInfo withImageData:(NSData*)imageData withCompletionBlock:(APICompletionBlock)completionBlock;
-
 - (void)postContact:(NSDictionary*)contactInfo withCompletionBlock:(APICompletionBlock)completionBlock;
 
 - (void)updateContact:(NSDictionary*)contactInfo withCompletionBlock:(APICompletionBlock)completionBlock;

@@ -11,6 +11,7 @@
 #import "UIButton+Position.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <MessageUI/MessageUI.h>
+#import "VCFGenerator.h"
 
 @interface GJContactDetailsViewController ()<NSFetchedResultsControllerDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate>
 
@@ -38,6 +39,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     self.title = @"Detail";
+    
+    UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"share_contact"] style:UIBarButtonItemStylePlain target:self action:@selector(sharePressed)];
+    self.navigationItem.rightBarButtonItem = anotherButton;
+    
+
     
     _nameButton.hidden = YES;
     _phoneButton.hidden = YES;
@@ -107,6 +113,42 @@
 }
 
 #pragma mark - Actions
+
+- (void)sharePressed
+{
+    NSString *vcf = [VCFGenerator generateVCardStringFor:self.contactEntity];
+    NSURL *tmpDirURL = [NSURL fileURLWithPath:NSTemporaryDirectory() isDirectory:YES];
+    NSURL *fileURL = [[tmpDirURL URLByAppendingPathComponent:@"contact"] URLByAppendingPathExtension:@"vcf"];
+    NSLog(@"fileURL: %@", [fileURL path]);
+    // remove old file
+    NSError *error;
+    if([[NSFileManager defaultManager] fileExistsAtPath:[fileURL absoluteString]])
+    {
+        [[NSFileManager defaultManager] removeItemAtPath:[fileURL absoluteString] error:&error];
+        if(error)
+        {
+            NSLog(@"Old file not deleted");
+        }
+    }
+
+    
+    BOOL succeed = [vcf writeToFile:[NSTemporaryDirectory() stringByAppendingPathComponent:@"contact.vcf"]
+                              atomically:YES encoding:NSUTF8StringEncoding error:&error];
+    if (succeed)
+    {
+        UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[self.contactEntity.firstName, fileURL] applicationActivities:nil];
+        [self presentViewController:activityViewController animated:YES completion:nil];
+    }
+    else
+    {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@""
+                                                            message:@"Sorry, Not able to share this contact"
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"Ok"
+                                                  otherButtonTitles:nil, nil];
+        [alertView show];
+    }
+}
 
 - (IBAction)nameButtonPressed:(id)sender
 {

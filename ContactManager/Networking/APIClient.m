@@ -416,37 +416,6 @@ static APIClient *defaultClient = nil;
         NSLog(@"%@",errResponse);
         completionBlock(error, nil);
     }];
-    
-    return;
-    
-    [self runPOSTRequestWithEndpoint:APIClientContactsURLPath parameters:contactInfo completion:
-     ^(NSError *error, NSDictionary *data) {
-         
-         completionBlock(nil, nil);
-         
-//         if(data)
-//         {
-//             NSArray *errors = (NSArray*)[data objectForKey:@"errors"];
-//             if(errors)
-//             {
-//                 NSError *errorInfo = [NSError errorWithDomain:@"GJ" code:1 userInfo:@{NSLocalizedDescriptionKey:[NSString stringWithFormat:@"Contact Create Failed : %@", [errors componentsJoinedByString:@","]]}];
-//                 completionBlock(errorInfo, nil);
-//             }
-//             else
-//             {
-//                 completionBlock(nil, data);
-//             }
-//         }
-//         else if(error)
-//         {
-//             NSError *errorInfo = [NSError errorWithDomain:@"GJ" code:1 userInfo:@{NSLocalizedDescriptionKey:@"Contact Create Failed"}];
-//             completionBlock(errorInfo, nil);
-//         }
-//         else
-//         {
-//             completionBlock(nil, nil);
-//         }
-     }];
 }
 
 //- (void)postContact:(NSDictionary*)contactInfo withImageData:(NSData*)imageData withCompletionBlock:(APICompletionBlock)completionBlock
