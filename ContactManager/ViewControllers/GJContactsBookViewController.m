@@ -41,8 +41,8 @@
     self.navigationController.navigationBarHidden = NO;
     self.title = @"Contact Book";
     [self loadContacts];
-    [self loadContactsToUpload:nil];
     [self applyShadowToAddContactButton];
+    [GJContactsRetryManager sharedManager];
 }
 
 - (void)viewWillAppear:(BOOL)animated

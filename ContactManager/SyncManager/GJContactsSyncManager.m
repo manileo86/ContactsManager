@@ -207,6 +207,8 @@ static NSDateFormatter * _dateFormatter = nil;
     }];
 }
 
+#pragma mark - Contact Upload
+
 - (void)createContactFromInfo:(NSDictionary*)contactInfo removeContactUpload:(GJContactToUpload*)contactToUpload  withCompletionBlock:(GJCompletionBlock)completionBlock;
 {
     [self.persistentContainer performBackgroundTask:^(NSManagedObjectContext * context) {
@@ -237,7 +239,7 @@ static NSDateFormatter * _dateFormatter = nil;
         contactToUpload.image = imageData;
         contactToUpload.isUploading = NO;
         contactToUpload.isFailed = NO;
-        contactToUpload.isUploadPending = YES;
+        contactToUpload.isUploadPending = NO;
         
         NSError *error = nil;
         if (![context save:&error]) {

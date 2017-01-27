@@ -70,7 +70,7 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="yxs-wr-gAi">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="75" width="375" height="592"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="GJContactTableViewCell" rowHeight="50" id="4mE-98-Eyt" customClass="GJContactTableViewCell">
@@ -121,10 +121,10 @@
                                 </connections>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3jF-mK-jMP" customClass="GJContactUploadHeaderView">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="0.0"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="75"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="fMj-uv-s9f">
-                                        <rect key="frame" x="20" y="-20" width="40" height="40"/>
+                                        <rect key="frame" x="20" y="18" width="40" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="40" id="LVS-Fh-AZa"/>
                                             <constraint firstAttribute="height" constant="40" id="aA2-PW-36C"/>
@@ -137,7 +137,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Firstname Lastname" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BoD-f4-2LX">
-                                        <rect key="frame" x="75" y="-20" width="220" height="20"/>
+                                        <rect key="frame" x="75" y="27.5" width="220" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="KKU-6U-qmp"/>
                                         </constraints>
@@ -145,35 +145,35 @@
                                         <color key="textColor" red="0.086693026130000003" green="0.083239622410000005" blue="0.1060726345" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SFB-3W-TBM" userLabel="Progress Image View">
-                                        <rect key="frame" x="60" y="0.0" width="150" height="20"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="150" id="49W-cW-4SF"/>
-                                            <constraint firstAttribute="height" constant="20" id="esk-PS-oSO"/>
-                                        </constraints>
-                                    </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="alN-tg-QFF">
-                                        <rect key="frame" x="303" y="0.0" width="72" height="0.0"/>
+                                        <rect key="frame" x="303" y="0.0" width="72" height="75"/>
                                         <state key="normal" image="retry"/>
                                         <connections>
                                             <action selector="retryPressed:" destination="3jF-mK-jMP" eventType="touchUpInside" id="4JJ-xe-3Lj"/>
                                         </connections>
                                     </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SFB-3W-TBM" userLabel="Progress Image View">
+                                        <rect key="frame" x="0.0" y="65" width="375" height="10"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="10" id="qzP-vY-2ea"/>
+                                        </constraints>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="alN-tg-QFF" secondAttribute="bottom" id="4mz-yA-2xD"/>
                                     <constraint firstAttribute="trailing" secondItem="alN-tg-QFF" secondAttribute="trailing" id="BIW-CR-lK4"/>
-                                    <constraint firstItem="BoD-f4-2LX" firstAttribute="centerY" secondItem="fMj-uv-s9f" secondAttribute="centerY" constant="-10" id="J7V-7O-nma"/>
+                                    <constraint firstItem="SFB-3W-TBM" firstAttribute="leading" secondItem="3jF-mK-jMP" secondAttribute="leading" id="Dhu-yW-ceu"/>
                                     <constraint firstItem="alN-tg-QFF" firstAttribute="leading" secondItem="BoD-f4-2LX" secondAttribute="trailing" constant="8" id="JeA-ph-6IO"/>
                                     <constraint firstItem="BoD-f4-2LX" firstAttribute="leading" secondItem="fMj-uv-s9f" secondAttribute="trailing" constant="15" id="Krg-h5-gSL"/>
-                                    <constraint firstItem="SFB-3W-TBM" firstAttribute="centerY" secondItem="fMj-uv-s9f" secondAttribute="centerY" constant="10" id="Pu3-qe-vAC"/>
                                     <constraint firstAttribute="trailing" secondItem="BoD-f4-2LX" secondAttribute="trailing" constant="80" id="QbY-2g-kp9"/>
                                     <constraint firstItem="fMj-uv-s9f" firstAttribute="leading" secondItem="3jF-mK-jMP" secondAttribute="leading" constant="20" id="S6c-JZ-maM"/>
-                                    <constraint firstItem="SFB-3W-TBM" firstAttribute="leading" secondItem="fMj-uv-s9f" secondAttribute="trailing" id="djK-dU-PS6"/>
-                                    <constraint firstAttribute="height" id="owH-Qa-Ygf"/>
+                                    <constraint firstAttribute="bottom" secondItem="SFB-3W-TBM" secondAttribute="bottom" id="Zis-CV-TZP"/>
+                                    <constraint firstAttribute="trailing" secondItem="SFB-3W-TBM" secondAttribute="trailing" id="jaD-hc-9b4"/>
+                                    <constraint firstAttribute="height" constant="75" id="owH-Qa-Ygf"/>
                                     <constraint firstItem="alN-tg-QFF" firstAttribute="top" secondItem="3jF-mK-jMP" secondAttribute="top" id="rud-H9-2FK"/>
                                     <constraint firstItem="fMj-uv-s9f" firstAttribute="centerY" secondItem="3jF-mK-jMP" secondAttribute="centerY" id="wAc-Ev-msb"/>
+                                    <constraint firstItem="BoD-f4-2LX" firstAttribute="centerY" secondItem="fMj-uv-s9f" secondAttribute="centerY" id="yks-m1-UoV"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>

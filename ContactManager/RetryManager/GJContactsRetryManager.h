@@ -26,5 +26,6 @@ typedef enum ContactUpload_State
 - (GJContactToUpload*)currentContactToUpload;
 
 - (void)checkAndStartUpload;
+- (void)clearContactToUpload;
 
 @end

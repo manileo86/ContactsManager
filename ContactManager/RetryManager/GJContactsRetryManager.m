@@ -40,10 +40,15 @@ static NSDateFormatter * _dateFormatter = nil;
 
 - (void)subscribeForNotifications
 {
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshData:) name:NSManagedObjectContextDidSaveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshData:) name:NSManagedObjectContextDidSaveNotification object:nil];
 }
 
-- (void)loadContactsToUpload
+- (GJContactToUpload*)currentContactToUpload
+{
+    return self.contactToUpload;
+}
+
+- (void)refreshFRC
 {
     if(!self.contactToUploadFRC)
     {
@@ -54,24 +59,27 @@ static NSDateFormatter * _dateFormatter = nil;
     }
     [self.contactToUploadFRC performFetch:nil];
     self.contactToUpload = [self.contactToUploadFRC.fetchedObjects firstObject];
+}
+
+- (void)loadContactsToUpload
+{
+    [self refreshFRC];
     
     if(self.contactToUpload.isUploadPending)
     {
-        _contactToUpload.isUploadPending = NO;
-        [self saveContactToUpload];
-        [self checkAndStartUpload];
+        // start uploading contact
+        
+        NSLog(@"CONTACT UPLOAD STARTED");
+        
+        [self startPostingContact];
     }
-}
-
-- (GJContactToUpload*)currentContactToUpload
-{
-    return self.contactToUpload;
 }
 
 - (void)checkAndStartUpload
 {
     NSLog(@"CONTACT UPLOAD STARTED");
-    [self loadContactsToUpload];
+    
+    [self refreshFRC];
     if(self.contactToUpload)
     {
         if(self.contactToUpload.isUploading)
@@ -98,7 +106,7 @@ static NSDateFormatter * _dateFormatter = nil;
 {
     self.contactToUpload.isUploading = YES;
     self.contactToUpload.isFailed = NO;
-    self.contactToUpload.isUploadPending = NO;
+    self.contactToUpload.isUploadPending = YES;
     [self saveContactToUpload];
     
     // check for image
@@ -138,6 +146,7 @@ static NSDateFormatter * _dateFormatter = nil;
                     NSLog(@"IMAGE UPLOAD FAILED");
                     // Upload Image Failed
                     _contactToUpload.isFailed = YES;
+                    _contactToUpload.isUploadPending = NO;
                     _contactToUpload.isUploading = NO;
                     NSError *error = nil;
                     if (![_contactToUpload.managedObjectContext save:&error]) {
@@ -186,6 +195,7 @@ static NSDateFormatter * _dateFormatter = nil;
                 NSLog(@"POST CONTACT FAILED");
                 // Post Contact Failed
                 _contactToUpload.isFailed = YES;
+                _contactToUpload.isUploadPending = YES;
                 _contactToUpload.isUploading = NO;
                 [self saveContactToUpload];
             }
@@ -223,6 +233,7 @@ static NSDateFormatter * _dateFormatter = nil;
                 NSLog(@"POST CONTACT FAILED");
                 // Post Contact Failed
                 _contactToUpload.isFailed = YES;
+                _contactToUpload.isUploadPending = YES;
                 _contactToUpload.isUploading = NO;
                 [self saveContactToUpload];
             }
@@ -262,10 +273,14 @@ static NSDateFormatter * _dateFormatter = nil;
 
 #pragma mark - NSFetchedResultsControllerDelegate
 
-//- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
-//{
-//    [self sendUpdateNotification];
-//}
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+{
+    [self sendUpdateNotification];
+}
+
+- (void) refreshData:(NSNotification *)notif {
+    [[[self contactToUpload] managedObjectContext] mergeChangesFromContextDidSaveNotification:notif];
+}
 
 #pragma mark - Notifications
 
