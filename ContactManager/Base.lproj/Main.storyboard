@@ -115,6 +115,9 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="Contacts Table"/>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <outlet property="dataSource" destination="X3Q-Jl-Lz8" id="JtI-Ms-IWs"/>
                                     <outlet property="delegate" destination="X3Q-Jl-Lz8" id="mWm-C0-Drs"/>
@@ -341,11 +344,12 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X0V-LR-say" userLabel="Avatar Button">
                                 <rect key="frame" x="138" y="40" width="100" height="100"/>
+                                <accessibility key="accessibilityConfiguration" label="Avatar Button"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="NbA-kX-5O6"/>
                                     <constraint firstAttribute="width" constant="100" id="NbM-tc-cEH"/>
                                 </constraints>
-                                <state key="normal" title="Button" image="default_avatar"/>
+                                <state key="normal" image="default_avatar"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                         <integer key="value" value="50"/>
@@ -359,6 +363,7 @@
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="First name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7ST-tL-CKA">
                                 <rect key="frame" x="20" y="160" width="335" height="44"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <accessibility key="accessibilityConfiguration" label="First Name Field"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="rOG-zF-XxW"/>
                                 </constraints>
@@ -372,6 +377,7 @@
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Last name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="etI-dB-1Oy">
                                 <rect key="frame" x="20" y="226" width="335" height="44"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <accessibility key="accessibilityConfiguration" label="Last Name Field"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="bbA-lT-4Ar"/>
                                 </constraints>
@@ -385,6 +391,7 @@
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Mobile Number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hAP-7S-Mmw">
                                 <rect key="frame" x="20" y="292" width="335" height="44"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <accessibility key="accessibilityConfiguration" label="Mobile Number Field"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="d33-zi-7iz"/>
                                 </constraints>
@@ -398,6 +405,7 @@
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dty-9c-m91">
                                 <rect key="frame" x="20" y="358" width="335" height="44"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <accessibility key="accessibilityConfiguration" label="Email Field"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="Is2-5y-oPk"/>
                                 </constraints>
@@ -435,6 +443,7 @@
                             </button>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="First name not valid" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UXO-tO-lIv">
                                 <rect key="frame" x="30" y="206" width="325" height="15"/>
+                                <accessibility key="accessibilityConfiguration" label="First Name Error Label"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="15" id="aNH-Jt-grs"/>
                                 </constraints>
@@ -444,6 +453,7 @@
                             </label>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last name not valid" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZRV-w0-9ne">
                                 <rect key="frame" x="30" y="272" width="325" height="15"/>
+                                <accessibility key="accessibilityConfiguration" label="Last Name Error Label"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="15" id="CQf-a0-FLr"/>
                                 </constraints>
@@ -453,6 +463,7 @@
                             </label>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mobile phone number not valid" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qwt-yy-mQj">
                                 <rect key="frame" x="30" y="338" width="325" height="15"/>
+                                <accessibility key="accessibilityConfiguration" label="Mobile Number Error Label"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="15" id="2dg-l5-2Xa"/>
                                     <constraint firstAttribute="height" constant="15" id="BW4-A0-NGQ"/>
@@ -463,6 +474,7 @@
                             </label>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email not valid" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rJ6-DO-J9L">
                                 <rect key="frame" x="30" y="404" width="325" height="15"/>
+                                <accessibility key="accessibilityConfiguration" label="Email Error Label"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="15" id="GmL-6A-4Lm"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="15" id="xXQ-O7-Tl5"/>

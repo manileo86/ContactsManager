@@ -32,9 +32,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "3C9814761E2E737800A1993C"
-               BuildableName = "ContactManagerTests.xctest"
-               BlueprintName = "ContactManagerTests"
+               BlueprintIdentifier = "3C6ACEEF1E3E31FA001FBC07"
+               BuildableName = "ContactManagerUITests.xctest"
+               BlueprintName = "ContactManagerUITests"
                ReferencedContainer = "container:ContactManager.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -42,9 +42,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "3C9814811E2E737800A1993C"
-               BuildableName = "ContactManagerUITests.xctest"
-               BlueprintName = "ContactManagerUITests"
+               BlueprintIdentifier = "3C6ACF021E3E38E1001FBC07"
+               BuildableName = "UITests.xctest"
+               BlueprintName = "UITests"
                ReferencedContainer = "container:ContactManager.xcodeproj">
             </BuildableReference>
          </TestableReference>

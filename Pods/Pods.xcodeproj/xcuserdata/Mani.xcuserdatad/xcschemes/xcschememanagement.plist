@@ -9,17 +9,17 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>KIF.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-ContactManager.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-ContactManagerTests.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-ContactManagerUITests.xcscheme</key>
+		<key>Pods-UITests.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -37,7 +37,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7F2A31EF89E09A1287337374A6496428</key>
+		<key>5E6B45ABC3C3C7D9D0E8DA52A06088EA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -47,7 +47,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A1440D53EE1FF94F71432F7D190C48BF</key>
+		<key>CEFC0D48AF4612BBA0A6439A0F939785</key>
 		<dict>
 			<key>primary</key>
 			<true/>

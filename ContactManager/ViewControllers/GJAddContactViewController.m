@@ -240,6 +240,7 @@
                    destructiveButtonTitle:nil
                         otherButtonTitles:@"Open Camera", @"Select from Gallery", self.imagePicked?@"Remove Photo":nil, nil];
     actionSheet.destructiveButtonIndex = 2;
+    actionSheet.accessibilityLabel = @"ProfilePicActionSheet";
     [actionSheet showInView:self.view];
 }
 

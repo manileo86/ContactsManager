@@ -25,7 +25,7 @@
                                                            nil]];
     [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(-60, -60)
                                                          forBarMetrics:UIBarMetricsDefault];
-    
+    [self.window makeKeyAndVisible];
     return YES;
 }
 

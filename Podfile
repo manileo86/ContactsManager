@@ -10,14 +10,10 @@ target 'ContactManager' do
   pod 'AFNetworking'
   pod 'SDWebImage', '~>3.8'
 
-  target 'ContactManagerTests' do
+  target 'UITests' do
     inherit! :search_paths
     # Pods for testing
-  end
-
-  target 'ContactManagerUITests' do
-    inherit! :search_paths
-    # Pods for testing
+    pod 'KIF', '~> 3.0', :configurations => ['Debug']
   end
 
 end
