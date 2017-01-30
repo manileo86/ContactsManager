@@ -87,7 +87,7 @@
     [self.tableView reloadData];
     
     _tableView.hidden = (self.contactsFRC.fetchedObjects.count==0);
-    _noContactLabel.text = self.isFavoritesFilterOn?@"No Favortie Contacts":@"No Contact Found";
+    _noContactLabel.text = self.isFavoritesFilterOn?@"No Favorite Contacts":@"No Contact Found";
 }
 
 - (void)loadContactsToUpload:(GJContactToUpload*)contactToUpload

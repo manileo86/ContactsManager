@@ -22,7 +22,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Contacts" translatesAutoresizingMaskIntoConstraints="NO" id="rPS-SL-eDB">
-                                <rect key="frame" x="112" y="258" width="150" height="150"/>
+                                <rect key="frame" x="112" y="218.5" width="150" height="150"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="Jna-Yc-Ywz"/>
                                     <constraint firstAttribute="height" constant="150" id="LHE-Tm-FRB"/>
@@ -31,7 +31,7 @@
                         </subviews>
                         <color key="backgroundColor" red="0.11764705882352941" green="0.68627450980392157" blue="0.84705882352941175" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="rPS-SL-eDB" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="ozU-P2-C1v"/>
+                            <constraint firstItem="rPS-SL-eDB" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" constant="-40" id="ozU-P2-C1v"/>
                             <constraint firstItem="rPS-SL-eDB" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="wk9-cV-BoF"/>
                         </constraints>
                     </view>

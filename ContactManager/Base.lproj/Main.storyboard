@@ -52,7 +52,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="alert" translatesAutoresizingMaskIntoConstraints="NO" id="Ps5-1J-PxH">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="alert_message" translatesAutoresizingMaskIntoConstraints="NO" id="Ps5-1J-PxH">
                                         <rect key="frame" x="123" y="179" width="128" height="128"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="128" id="VFZ-P4-KPX"/>
@@ -620,7 +620,7 @@
     </scenes>
     <resources>
         <image name="Contacts" width="512" height="512"/>
-        <image name="alert" width="150" height="150"/>
+        <image name="alert_message" width="512" height="512"/>
         <image name="default_avatar" width="128" height="128"/>
         <image name="heart" width="32" height="32"/>
         <image name="keyboard_dismiss" width="128" height="128"/>
