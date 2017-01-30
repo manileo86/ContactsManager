@@ -49,6 +49,7 @@
     [GJContactsRetryManager sharedManager];
     
     self.favoriteButton = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"heart_grey"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(favoritePressed)];
+    self.favoriteButton.accessibilityLabel = @"Favorites Button";
     self.navigationItem.rightBarButtonItem = self.favoriteButton;
 }
 
@@ -227,6 +228,7 @@
 {
     self.isFavoritesFilterOn = !self.isFavoritesFilterOn;
     self.favoriteButton = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:self.isFavoritesFilterOn?@"heart":@"heart_grey"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(favoritePressed)];
+    self.favoriteButton.accessibilityLabel = @"Favorites Button";
     self.navigationItem.rightBarButtonItem = self.favoriteButton;
     [self loadContacts];
 }

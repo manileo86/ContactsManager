@@ -7,7 +7,7 @@
 //
 
 #import "ContactsFetchTests.h"
-#import <KIF/KIF.h>
+#import "TestHeader.h"
 
 @implementation ContactsFetchTests
 

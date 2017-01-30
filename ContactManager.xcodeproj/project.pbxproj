@@ -11,6 +11,8 @@
 		3C6ACF121E3E3910001FBC07 /* ContactsFetchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6ACF111E3E3910001FBC07 /* ContactsFetchTests.m */; };
 		3C6ACF151E3E6258001FBC07 /* AddContactValidationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6ACF141E3E6258001FBC07 /* AddContactValidationTests.m */; };
 		3C6ACF181E3E8414001FBC07 /* AddContactProfilePictureTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6ACF171E3E8414001FBC07 /* AddContactProfilePictureTests.m */; };
+		3C6ACF1B1E3F1503001FBC07 /* ContactDetailsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6ACF1A1E3F1503001FBC07 /* ContactDetailsTests.m */; };
+		3C6ACF1E1E3F3551001FBC07 /* FavoriteContactsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6ACF1D1E3F3551001FBC07 /* FavoriteContactsTests.m */; };
 		3C9814601E2E737800A1993C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C98145F1E2E737800A1993C /* main.m */; };
 		3C9814631E2E737800A1993C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C9814621E2E737800A1993C /* AppDelegate.m */; };
 		3C9814691E2E737800A1993C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C9814671E2E737800A1993C /* Main.storyboard */; };
@@ -64,6 +66,11 @@
 		3C6ACF141E3E6258001FBC07 /* AddContactValidationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddContactValidationTests.m; sourceTree = "<group>"; };
 		3C6ACF161E3E8414001FBC07 /* AddContactProfilePictureTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddContactProfilePictureTests.h; sourceTree = "<group>"; };
 		3C6ACF171E3E8414001FBC07 /* AddContactProfilePictureTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddContactProfilePictureTests.m; sourceTree = "<group>"; };
+		3C6ACF191E3F1503001FBC07 /* ContactDetailsTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactDetailsTests.h; sourceTree = "<group>"; };
+		3C6ACF1A1E3F1503001FBC07 /* ContactDetailsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactDetailsTests.m; sourceTree = "<group>"; };
+		3C6ACF1C1E3F3551001FBC07 /* FavoriteContactsTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoriteContactsTests.h; sourceTree = "<group>"; };
+		3C6ACF1D1E3F3551001FBC07 /* FavoriteContactsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavoriteContactsTests.m; sourceTree = "<group>"; };
+		3C6ACF201E3F3979001FBC07 /* TestHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestHeader.h; sourceTree = "<group>"; };
 		3C98145B1E2E737800A1993C /* ContactManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ContactManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C98145F1E2E737800A1993C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3C9814611E2E737800A1993C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -149,13 +156,18 @@
 		3C6ACF041E3E38E1001FBC07 /* UITests */ = {
 			isa = PBXGroup;
 			children = (
+				3C6ACF071E3E38E1001FBC07 /* Info.plist */,
 				3C6ACF101E3E3910001FBC07 /* ContactsFetchTests.h */,
 				3C6ACF111E3E3910001FBC07 /* ContactsFetchTests.m */,
-				3C6ACF071E3E38E1001FBC07 /* Info.plist */,
 				3C6ACF131E3E6258001FBC07 /* AddContactValidationTests.h */,
 				3C6ACF141E3E6258001FBC07 /* AddContactValidationTests.m */,
 				3C6ACF161E3E8414001FBC07 /* AddContactProfilePictureTests.h */,
 				3C6ACF171E3E8414001FBC07 /* AddContactProfilePictureTests.m */,
+				3C6ACF191E3F1503001FBC07 /* ContactDetailsTests.h */,
+				3C6ACF1A1E3F1503001FBC07 /* ContactDetailsTests.m */,
+				3C6ACF1C1E3F3551001FBC07 /* FavoriteContactsTests.h */,
+				3C6ACF1D1E3F3551001FBC07 /* FavoriteContactsTests.m */,
+				3C6ACF201E3F3979001FBC07 /* TestHeader.h */,
 			);
 			path = UITests;
 			sourceTree = "<group>";
@@ -584,7 +596,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C6ACF121E3E3910001FBC07 /* ContactsFetchTests.m in Sources */,
+				3C6ACF1B1E3F1503001FBC07 /* ContactDetailsTests.m in Sources */,
 				3C6ACF181E3E8414001FBC07 /* AddContactProfilePictureTests.m in Sources */,
+				3C6ACF1E1E3F3551001FBC07 /* FavoriteContactsTests.m in Sources */,
 				3C6ACF151E3E6258001FBC07 /* AddContactValidationTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -652,6 +666,8 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = EP6LLUE53J;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = UITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.avaamo.test.UITests;
@@ -666,6 +682,8 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = EP6LLUE53J;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = UITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.avaamo.test.UITests;

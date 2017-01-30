@@ -41,6 +41,7 @@
     self.title = @"Detail";
     
     UIBarButtonItem *rButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"share_contact"] style:UIBarButtonItemStylePlain target:self action:@selector(sharePressed)];
+    rButton.accessibilityLabel = @"Details Share Button";
     self.navigationItem.rightBarButtonItem = rButton;
     
     _nameButton.hidden = YES;
@@ -114,26 +115,28 @@
 
 - (void)sharePressed
 {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSURL *tmpDirURL = [NSURL fileURLWithPath:NSTemporaryDirectory()];
+    NSURL *fileURL = [[tmpDirURL URLByAppendingPathComponent:@"contact"] URLByAppendingPathExtension:@"vcf"];
+    NSString *fileURLPath = [fileURL path];
+    
     NSString *vcf = [VCFGenerator generateVCardStringFor:self.contactEntity];
-    NSURL *tmpDirURL = [NSURL fileURLWithPath:NSTemporaryDirectory() isDirectory:YES];
-    NSURL *fileURL = [[tmpDirURL URLByAppendingPathComponent:@"contact"] URLByAppendingPathExtension:@"vcf"];    
-    // remove old file
+
     NSError *error;
-    if([[NSFileManager defaultManager] fileExistsAtPath:[fileURL absoluteString]])
+    if([fileManager fileExistsAtPath:fileURLPath])
     {
-        [[NSFileManager defaultManager] removeItemAtPath:[fileURL absoluteString] error:&error];
+        [fileManager removeItemAtPath:fileURLPath error:&error];
         if(error)
         {
             NSLog(@"Old file not deleted");
         }
     }
-
     
-    BOOL succeed = [vcf writeToFile:[NSTemporaryDirectory() stringByAppendingPathComponent:@"contact.vcf"]
-                              atomically:YES encoding:NSUTF8StringEncoding error:&error];
+    BOOL succeed = [vcf writeToFile:fileURLPath atomically:YES encoding:NSUTF8StringEncoding error:&error];
     if (succeed)
     {
-        UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[self.contactEntity.firstName, fileURL] applicationActivities:nil];
+        UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[fileURL] applicationActivities:nil];
+        activityViewController.view.accessibilityLabel = @"Share Contact Activity Controller";
         [self presentViewController:activityViewController animated:YES completion:nil];
     }
     else

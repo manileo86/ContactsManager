@@ -7,7 +7,7 @@
 //
 
 #import "AddContactValidationTests.h"
-#import <KIF/KIFTestStepValidation.h>
+#import "TestHeader.h"
 
 @implementation AddContactValidationTests
 

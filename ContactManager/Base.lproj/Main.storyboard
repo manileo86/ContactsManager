@@ -253,6 +253,9 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8K9-F5-ZA5">
                                 <rect key="frame" x="112" y="40" width="150" height="150"/>
+                                <accessibility key="accessibilityConfiguration" label="Details Profile Pic Image View">
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="7r9-CO-zMI"/>
                                     <constraint firstAttribute="height" constant="150" id="CI3-i7-F6q"/>
@@ -266,6 +269,7 @@
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dq7-LU-2nT" userLabel="Name">
                                 <rect key="frame" x="20" y="222" width="335" height="40"/>
+                                <accessibility key="accessibilityConfiguration" label="Details Name Button"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="C3F-iV-APN"/>
                                 </constraints>
@@ -279,6 +283,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="836-wW-Agf" userLabel="Phone">
                                 <rect key="frame" x="20" y="267" width="335" height="40"/>
+                                <accessibility key="accessibilityConfiguration" label="Details Phone Button"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="vPF-rQ-wew"/>
                                 </constraints>
@@ -292,6 +297,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p93-dQ-1dA" userLabel="Email">
                                 <rect key="frame" x="20" y="312" width="335" height="40"/>
+                                <accessibility key="accessibilityConfiguration" label="Details Email Button"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="LM9-yA-ZWc"/>
                                 </constraints>
